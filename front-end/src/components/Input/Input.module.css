@@ -1,0 +1,29 @@
+.input-box {
+  height: 50px;
+  font-size: 1.3rem;
+  width: calc(100% - 50px);
+}
+
+.input {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.input-send-message {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(45deg);
+}
+
+.input-send-message img {
+  transition: height 100ms ease-in;
+  height: 50px;
+}
+
+.input-send-message img:hover {
+  height: 60px;
+}

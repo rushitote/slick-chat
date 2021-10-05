@@ -1,0 +1,17 @@
+.message {
+  padding: 1em;
+  display: flex;
+  gap: 10px;
+  border: 2px solid pink;
+}
+
+.message-user-image {
+  height: 50px;
+  width: 50px;
+}
+
+.message-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

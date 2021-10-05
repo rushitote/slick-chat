@@ -1,0 +1,14 @@
+.chat-messages {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.chat-messages-container {
+  height: 100%;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column-reverse;
+}
