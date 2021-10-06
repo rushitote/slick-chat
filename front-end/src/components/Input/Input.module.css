@@ -2,6 +2,14 @@
   height: 50px;
   font-size: 1.3rem;
   width: calc(100% - 50px);
+  border-radius: 10px;
+  padding: 1em;
+  outline: none;
+  border: 2px solid #4cc9f0;
+}
+
+.input-box:focus {
+  border: 2px solid #4895ef;
 }
 
 .input {

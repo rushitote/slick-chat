@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   gap: 1em;
-  border: 2px solid red;
   padding: 2em;
   height: 90%;
-  width: 70%;
+  width: min(70%, 1500px);
+  background-color: #f0efeb;
+  border-radius: 20px;
 }

@@ -3,7 +3,7 @@ import ChatWindow from './components/Chat/ChatWindow'
 import messageContext, { Message } from './utils/messagesContext'
 
 import { useState } from 'react'
-import avatar from './images/avatar.jpg'
+import avatar from './images/avatar.png'
 export interface IAppProps {}
 
 export default function App(props: IAppProps) {

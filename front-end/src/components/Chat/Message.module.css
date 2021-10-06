@@ -2,7 +2,6 @@
   padding: 1em;
   display: flex;
   gap: 10px;
-  border: 2px solid pink;
 }
 
 .message-user-image {
@@ -14,4 +13,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.message-time {
+  margin-left: auto;
+  color: #3d5a80;
 }
