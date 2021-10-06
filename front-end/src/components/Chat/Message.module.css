@@ -1,0 +1,21 @@
+.message {
+  padding: 1em;
+  display: flex;
+  gap: 10px;
+}
+
+.message-user-image {
+  height: 50px;
+  width: 50px;
+}
+
+.message-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.message-time {
+  margin-left: auto;
+  color: #3d5a80;
+}
