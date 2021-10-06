@@ -21,15 +21,14 @@ passport.use(
   new LocalStrategy((username, password, done) => {
     checkUser(username, password, Users)
       .then(user => {
-        console.log('status: ', user)
         if (user.status) {
-          return done(null, user.user)
+          return done(undefined, user.user)
         } else {
           return done(undefined, false, { message: user.err })
         }
       })
       .catch(err => {
-        console.log("ok", err)
+        console.log("passportLocalError:", err)
       })
   })
 )
@@ -66,19 +65,21 @@ export function login(req: Request, res: Response) {
     'local',
     {
       session: true,
+      // failureRedirect: '/login',
+      // successRedirect: '/home',
     },
-    (err, user) => {
+    (err, user, info) => {
       if (err) {
-        return res.status(400).json({ err: err })
+        return res.status(400).json({ message: info.message })
       } else {
-        req.session.save()
         req.logIn(user, err => {
           if (err) {
-            console.log(err)
-            return res.status(400).json({ err: err })
+            return res.status(400).json({ message: info.message })
+          } else {
+            req.session.save()
+            return res.status(200).json({ message: 'Successfully logged in.' })
           }
         })
-        return res.status(200).json({ message: 'Successfully logged in.' })
       }
     }
   )(req, res)
@@ -90,7 +91,7 @@ export function logout(req, res) {
   res.status(200).send('Logged out successfully')
 }
 
-export function getTest(req: Request, res: Response) {
+export function getTestAuth(req: Request, res: Response) {
   isAuthenticated(req, res, () => {
     res.status(200).send('Currently logged in.')
   })

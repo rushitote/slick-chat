@@ -5,6 +5,6 @@ import *  as passportConfig from './controllers/auth'
 router.post("/login", passportConfig.login);
 router.post("/logout", passportConfig.logout);
 router.post("/create", passportConfig.create);
-router.get("/test-auth", passportConfig.getTest);
+router.get("/test-auth", passportConfig.getTestAuth);
 
 export default router;
