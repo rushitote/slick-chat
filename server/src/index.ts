@@ -1,7 +1,7 @@
 require('dotenv').config()
 import * as http from 'http'
 import { DB, PORT } from './var/config'
-import { Socket } from './socket/index'
+import { SocketIO as Socket } from './socket/index'
 import app from './server'
 
 const server: http.Server = http.createServer(app)
@@ -14,20 +14,12 @@ server.on('error', (e: Error) => {
 })
 
 server.on('listening', () => {
-  if (DB) {
-    console.log(
-      `Server started on port ${PORT} on env ${process.env.NODE_ENV ||
-        'dev'} dbcon ${DB}`,
-    )
-  } else {
-    console.log(
-      `Server started on port ${PORT} on env ${process.env.NODE_ENV ||
-        'dev'}`,
-    )
-  }
+  console.log(
+    `Server started on port ${PORT} on env ${process.env.NODE_ENV || 'dev'}`
+  )
 })
 
-export default {
+export {
   server,
   socket,
 }
