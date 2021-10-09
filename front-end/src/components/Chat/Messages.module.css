@@ -11,12 +11,12 @@
   scroll-behavior: smooth;
   display: flex;
   flex-direction: column-reverse;
-  scrollbar-color: #4cc9f0 #f0efeb;
+  scrollbar-color: #4cc9f0 #232526;
   scrollbar-width: auto;
 }
 
 .chat-messages-container::-webkit-scrollbar {
-  background-color: #f0efeb;
+  background-color: #232526;
   width: 8px;
 }
 

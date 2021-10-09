@@ -2,14 +2,25 @@
   height: 50px;
   font-size: 1.3rem;
   width: calc(100% - 50px);
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 1em;
   outline: none;
-  border: 2px solid #4cc9f0;
+  /* border: 2px solid #4cc9f0; */
+  background-color: #262729;
+  /* box-shadow: 0px 0px 5px 1px rgba(243, 114, 44, 0.95); */
+  /* background: linear-gradient(to bottom left, #414345, #232526);
+  border: 2px solid transparent;
+  border-image: linear-gradient(to top right, #7f7fd5, #86a8e7, #91eae4);
+  border-radius: 0.1em;
+  border-image-slice: 1;
+  color: white; */
+  color: white;
+  border: none;
+  box-shadow: 0 0 5px 1px rgba(0, 132, 255, 0.7);
 }
 
 .input-box:focus {
-  border: 2px solid #4895ef;
+  /* border: 2px solid #4895ef; */
 }
 
 .input {
