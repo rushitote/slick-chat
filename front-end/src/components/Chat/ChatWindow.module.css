@@ -5,6 +5,6 @@
   padding: 2em;
   height: 90%;
   width: min(70%, 1500px);
-  background-color: #f0efeb;
-  border-radius: 20px;
+  box-shadow: 0px 0px 7px 1px rgba(156, 229, 247, 0.8);
+  border-radius: 10px;
 }
