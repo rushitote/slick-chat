@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styles from './Message.module.css'
 export interface IMessageProps {
-  text: string
+  content: string
   image: string
   username: string
 }
@@ -16,7 +16,7 @@ export default function Message(props: IMessageProps) {
       />
       <div className={styles['message-body']}>
         <div className={styles['message-user-name']}>{props.username}</div>
-        <div className={styles['message-body-text']}>{props.text}</div>
+        <div className={styles['message-body-text']}>{props.content}</div>
       </div>
     </div>
   )
