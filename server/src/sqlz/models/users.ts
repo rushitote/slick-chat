@@ -1,10 +1,13 @@
-import { Model, STRING } from 'sequelize'
+import { STRING } from 'sequelize'
 import sequelize from './index'
 
 const Users = sequelize.define(
   'Users',
   {
-    // Model attributes are defined here
+    userId: {
+      type: STRING,
+      primaryKey: true,
+    },
     username: {
       type: STRING,
       allowNull: false,
@@ -17,7 +20,6 @@ const Users = sequelize.define(
   },
   {
     tableName: 'Users',
-    // Other model options go here
   }
 )
 
