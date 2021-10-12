@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 
 export interface Message {
-  text: string
+  content: string
   username: string
   image?: string
 }

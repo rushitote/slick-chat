@@ -13,7 +13,7 @@ export default function Input(props: IInputProps) {
     if (messageBoxRef.current !== null) {
       if (messageBoxRef.current.value.trim().length !== 0) {
         const message: Message = {
-          text: messageBoxRef.current.value,
+          content: messageBoxRef.current.value,
           username: 'Me',
         }
         ctx.sendMessage(message)
