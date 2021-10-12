@@ -2,17 +2,17 @@ import passport from 'passport'
 import passportLocal from 'passport-local'
 
 import Users from '../../sqlz/models/users'
-import { addUser, checkUser, findById } from '../../sqlz'
+import { addUser, checkUser, findById } from '../../sqlz/ops/users'
 import { Request, Response, NextFunction } from 'express'
 
 const LocalStrategy = passportLocal.Strategy
 
 passport.serializeUser<any, any>((req, user, done) => {
-  done(undefined, (user as any).id)
+  done(undefined, (user as any).userId)
 })
 
-passport.deserializeUser((id, done) => {
-  findById(id, Users).then(user => {
+passport.deserializeUser((userId, done) => {
+  findById(userId, Users).then(user => {
     done(user.err, user.user)
   })
 })
@@ -28,7 +28,7 @@ passport.use(
         }
       })
       .catch(err => {
-        console.log("passportLocalError:", err)
+        console.log('passportLocalError:', err)
       })
   })
 )
@@ -93,6 +93,8 @@ export function logout(req, res) {
 
 export function getTestAuth(req: Request, res: Response) {
   isAuthenticated(req, res, () => {
-    res.status(200).send('Currently logged in.')
+    res
+      .status(200)
+      .send('Currently logged in.\n' + 'Username: ' + (req.user as any).username)
   })
 }

@@ -1,26 +1,38 @@
-import { Server } from 'http'
-import socket from 'socket.io'
+import * as http from 'http'
+import { Server, Socket } from 'socket.io'
 
-export class Socket {
-  public io: socket.Server
+export class SocketIO {
+  public io: Server
 
-  constructor(server: Server) {
-    this.io = socket(server)
+  constructor(server: http.Server) {
+    this.io = new Server(server)
     this.connect()
   }
 
   public connect() {
-    this.io.on('connection', (client: socket.Socket) => {
+    this.io.on('connection', (socket: Socket) => {
       // tslint:disable-next-line: no-console
-      console.info(` connected : ${client.id}`)
-      this.handlers(client)
+      console.info(` connected : ${socket.id}`)
+      this.handlers(socket)
     })
   }
 
-  public handlers(client: socket.Socket) {
-    client.on('disconnect', () => {
+  public handlers(socket: Socket) {
+    socket.on('disconnect', () => {
       // tslint:disable-next-line: no-console
-      console.info(`Socket disconnected : ${client.id}`)
+      console.info(`Socket disconnected : ${socket.id}`)
+    })
+
+    socket.on('joinRoom', msg => {
+      const { roomId } = JSON.parse(msg)
+      console.log('Socket:', socket.id, 'joined', roomId)
+      socket.join(roomId)
+    })
+
+    socket.on('newMessage', msg => {
+      const { roomId, content } = JSON.parse(msg)
+      console.log('Socket:', socket.id, 'sent', content, 'in', roomId)
+      socket.broadcast.to(roomId).emit('newMessage', { roomId, content })
     })
   }
 }
