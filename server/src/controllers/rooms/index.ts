@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 
 export function createRoom(req: Request, res: Response) {
   if (!req.isAuthenticated()) {
-    res.status(401).send('Unauthorised user')
+    return res.status(401).send('Unauthorised user')
   }
   const username = (req.user as any).username
   const { roomName } = req.body
@@ -18,3 +18,4 @@ export function createRoom(req: Request, res: Response) {
     res.status(500)
   }
 }
+
