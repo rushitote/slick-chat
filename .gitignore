@@ -104,3 +104,4 @@ dist
 .tern-port
 server/package-lock.json
 server/src/sqlz/config/config.json
+build
