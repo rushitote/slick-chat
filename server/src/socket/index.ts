@@ -1,11 +1,28 @@
 import * as http from 'http'
 import { Server, Socket } from 'socket.io'
+import passport from 'passport'
+import { sessionMiddleware } from '../server/index'
 
 export class SocketIO {
   public io: Server
 
   constructor(server: http.Server) {
     this.io = new Server(server)
+    const wrap = middleware => (socket, next) =>
+      middleware(socket.request, {}, next)
+
+    this.io.use(wrap(sessionMiddleware))
+    this.io.use(wrap(passport.initialize()))
+    this.io.use(wrap(passport.session()))
+    this.io.use((socket, next) => {
+      const request: any = socket.request
+      console.log(request.user)
+      if (request.user) {
+        next()
+      } else {
+        next(new Error('unauthorized'))
+      }
+    })
     this.connect()
   }
 
