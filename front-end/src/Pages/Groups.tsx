@@ -5,6 +5,8 @@ import UsersList from '../components/LeftPane/Users/UsersList'
 import { Route, useParams } from 'react-router-dom'
 import { useState } from 'react'
 import avatar from '../images/avatar.png'
+import { io } from 'socket.io-client'
+const socket = io('localhost:3000')
 
 export interface Group {
   id: string
@@ -43,7 +45,7 @@ export default function App(props: IAppProps) {
           users: usersList,
         }}
       >
-        <UsersList image={avatar} />
+        <UsersList image={avatar} socket={socket} groupId={params.id} />
         <ChatWindow />
       </messageContext.Provider>
     </Route>
