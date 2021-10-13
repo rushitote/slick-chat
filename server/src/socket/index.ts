@@ -16,10 +16,12 @@ export class SocketIO {
     this.io.use(wrap(passport.session()))
     this.io.use((socket, next) => {
       const request: any = socket.request
-      console.log(request.user)
+
       if (request.user) {
+        console.log('logged in')
         next()
       } else {
+        console.log('unauthorized')
         next(new Error('unauthorized'))
       }
     })

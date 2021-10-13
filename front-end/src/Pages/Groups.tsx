@@ -7,7 +7,6 @@ import { useState } from 'react'
 import avatar from '../images/avatar.png'
 import { io } from 'socket.io-client'
 const socket = io('localhost:3000')
-
 export interface Group {
   id: string
 }
