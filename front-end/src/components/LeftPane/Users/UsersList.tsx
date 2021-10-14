@@ -5,7 +5,6 @@ import { Socket } from 'socket.io-client'
 import { useEffect } from 'react'
 export interface IUsersListProps {
   image: string
-  groupId: string
 }
 
 export default function UsersList(props: IUsersListProps) {

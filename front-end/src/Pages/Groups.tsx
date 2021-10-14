@@ -38,7 +38,7 @@ export default function App(props: IAppProps) {
       setReceivedMessages(
         receivedMessages.concat({
           image: avatar,
-          username: 'Someone',
+          username: data.username,
           content: data.content,
         })
       )
@@ -59,7 +59,7 @@ export default function App(props: IAppProps) {
         }}
       >
         <socketContext.Provider value={{ socket, roomId: params.id }}>
-          <UsersList image={avatar} groupId={params.id} />
+          <UsersList image={avatar} />
           <ChatWindow />
         </socketContext.Provider>
       </messageContext.Provider>
