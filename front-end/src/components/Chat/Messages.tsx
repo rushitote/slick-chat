@@ -19,7 +19,7 @@ export default function Messages(props: IMessagesProps) {
         {ctx.received.map((message) => {
           return (
             <Message
-              text={message.text}
+              content={message.content}
               image={message.image || avatar}
               username={message.username}
               key={Math.random()}

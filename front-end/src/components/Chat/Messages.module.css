@@ -11,16 +11,16 @@
   scroll-behavior: smooth;
   display: flex;
   flex-direction: column-reverse;
-  scrollbar-color: #4cc9f0 #f0efeb;
+  scrollbar-color: var(--username-color) var(--secondary-color);
   scrollbar-width: auto;
 }
 
 .chat-messages-container::-webkit-scrollbar {
-  background-color: #f0efeb;
+  background-color: var(--secondary-color);
   width: 8px;
 }
 
 .chat-messages-container::-webkit-scrollbar-thumb {
-  background-color: #4cc9f0;
+  background-color: var(--username-color);
   -webkit-border-radius: 10px;
 }

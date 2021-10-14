@@ -19,6 +19,7 @@ export class SocketIO {
       const request: any = socket.request
 
       if (request.user) {
+        console.log('logged in')
         next()
       } else {
         console.log('unauthorized: ' + socket.id)
