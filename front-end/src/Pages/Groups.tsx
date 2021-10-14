@@ -16,14 +16,14 @@ export interface IAppProps {}
 export default function App(props: IAppProps) {
   const [socket, setSocket] = useState<Socket>()
   const params = useParams<Group>()
-  const [sentMessages, setSentMessages] = useState([])
-  const [receivedMessages, setReceivedMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<Message[]>([])
   const [usersList, setUsersList] = useState(['Shashwat', 'Varun', 'Rushikesh'])
   const sendMessage = (message: Message) => {
-    setReceivedMessages((prevState: any) => {
+    setMessages((prevState: any) => {
       return prevState.concat(message)
     })
   }
+
   useEffect(() => {
     const newSocket = io('http://localhost:3000', { transports: ['websocket'] })
     setSocket(newSocket)
@@ -35,8 +35,8 @@ export default function App(props: IAppProps) {
       })
     )
     newSocket.on('newMessage', (data: Message) => {
-      setReceivedMessages(
-        receivedMessages.concat({
+      setMessages(
+        messages.concat({
           image: avatar,
           username: data.username,
           content: data.content,
@@ -47,13 +47,12 @@ export default function App(props: IAppProps) {
     return () => {
       newSocket.close()
     }
-  }, [params.id, receivedMessages])
+  }, [params.id, messages])
   return (
     <Route path="/group/:id">
       <messageContext.Provider
         value={{
-          sent: sentMessages,
-          received: receivedMessages,
+          messages,
           sendMessage,
           users: usersList,
         }}

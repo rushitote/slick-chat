@@ -7,15 +7,13 @@ export interface Message {
 }
 
 interface globalContext {
-  sent: Message[]
-  received: Message[]
+  messages: Message[]
   sendMessage: Function
   users: string[]
 }
 
 const messageContext = createContext<globalContext>({
-  sent: [],
-  received: [],
+  messages: [],
   sendMessage: (message: Message) => {},
   users: [],
 })
