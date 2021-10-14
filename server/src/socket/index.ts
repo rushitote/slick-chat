@@ -52,7 +52,12 @@ export class SocketIO {
       const { roomId, content } = JSON.parse(msg)
       console.log('Socket:', socket.id, 'sent', content, 'in', roomId)
       const messageId = postMessage(socket.request, content, roomId)
-      socket.broadcast.to(roomId).emit('newMessage', { messageId, roomId, content })
+      socket.broadcast.to(roomId).emit('newMessage', {
+        username: (socket.request as any).user.dataValues.username,
+        messageId,
+        roomId,
+        content,
+      })
     })
   }
 }
