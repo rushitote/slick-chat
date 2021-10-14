@@ -58,7 +58,6 @@ export class SocketIO {
         roomId,
         content,
       })
-      socket.broadcast.to(roomId).emit('newMessage', { messageId, roomId, content })
     })
   }
 }
