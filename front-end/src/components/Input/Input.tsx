@@ -3,10 +3,12 @@ import image from '../../images/send.png'
 import { KeyboardEvent, useRef } from 'react'
 import { useContext } from 'react'
 import messageContext, { Message } from '../../utils/messagesContext'
+import socketContext from '../../utils/socketContext'
 export interface IInputProps {}
 
 export default function Input(props: IInputProps) {
   const ctx = useContext(messageContext)
+  const { socket, roomId } = useContext(socketContext)
   const messageBoxRef = useRef<HTMLInputElement>(null)
 
   const sendMessage = () => {
@@ -18,6 +20,13 @@ export default function Input(props: IInputProps) {
         }
         ctx.sendMessage(message)
         messageBoxRef.current.value = ''
+        socket?.emit(
+          'newMessage',
+          JSON.stringify({
+            roomId,
+            content: message.content,
+          })
+        )
       }
     }
   }
