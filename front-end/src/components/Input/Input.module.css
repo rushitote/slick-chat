@@ -2,14 +2,17 @@
   height: 50px;
   font-size: 1.3rem;
   width: calc(100% - 50px);
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 1em;
   outline: none;
-  border: 2px solid #4cc9f0;
+  background-color: #262729;
+  transition: box-shadow 200ms ease;
+  color: white;
+  border: none;
 }
 
 .input-box:focus {
-  border: 2px solid #4895ef;
+  box-shadow: 0 0 5px 1px rgba(0, 132, 255, 0.7);
 }
 
 .input {

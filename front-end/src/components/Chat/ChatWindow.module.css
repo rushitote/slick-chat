@@ -3,8 +3,13 @@
   flex-direction: column;
   gap: 1em;
   padding: 2em;
-  height: 90%;
-  width: min(70%, 1500px);
-  background-color: #f0efeb;
-  border-radius: 20px;
+  max-height: 100vh;
+  width: 100%;
+  background: linear-gradient(
+    to bottom left,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+
+  border-radius: 10px;
 }
