@@ -18,13 +18,33 @@ export default function App(props: IAppProps) {
   const params = useParams<Group>()
   const [messages, setMessages] = useState<Message[]>([])
   const [usersList, setUsersList] = useState(['Shashwat', 'Varun', 'Rushikesh'])
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const sendMessage = (message: Message) => {
     setMessages((prevState: any) => {
       return prevState.concat(message)
     })
   }
-
   useEffect(() => {
+    const isAuthenticated = async () => {
+      const response = await fetch('http://localhost:3000/authenticated', {
+        method: 'GET',
+        credentials: 'include', //includes the cookies
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+      })
+      const { authenticated } = await response.json()
+      // response is of format { authenticated: true|false}
+      setIsAuthenticated(authenticated)
+    }
+    isAuthenticated()
+  }, [params.id])
+  useEffect(() => {
+    if (!isAuthenticated) {
+      // no need to run any of the following code
+      return
+    }
     const newSocket = io('http://localhost:3000', { transports: ['websocket'] })
     setSocket(newSocket)
     newSocket?.connect()
@@ -47,8 +67,8 @@ export default function App(props: IAppProps) {
     return () => {
       newSocket.close()
     }
-  }, [params.id, messages])
-  return (
+  }, [params.id, messages, isAuthenticated])
+  return isAuthenticated ? (
     <Route path="/group/:id">
       <messageContext.Provider
         value={{
@@ -63,5 +83,7 @@ export default function App(props: IAppProps) {
         </socketContext.Provider>
       </messageContext.Provider>
     </Route>
+  ) : (
+    <h1 id="error-heading">Not authenticated</h1>
   )
 }

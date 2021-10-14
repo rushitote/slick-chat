@@ -9,7 +9,7 @@ import { checkIfAuthenticated } from './helpers'
 router.post('/login', passportConfig.login)
 router.post('/logout', passportConfig.logout)
 router.post('/create', passportConfig.create)
-router.get('/test-auth', passportConfig.getTestAuth)
+router.get('/authenticated', passportConfig.getIsAuthenticated)
 
 router.use('/rooms/:url', function(req, res, next) {
   if (checkIfAuthenticated(req, res)) next()

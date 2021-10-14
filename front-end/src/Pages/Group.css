@@ -22,3 +22,7 @@ body {
   --text-color: #edf6f9;
   --username-color: #4cc9f0;
 }
+
+#error-heading {
+  color: white;
+}
