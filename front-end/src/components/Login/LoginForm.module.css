@@ -1,0 +1,35 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 1em;
+  align-items: center;
+  grid-area: form;
+  padding-top: 4em;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 10px;
+  font-size: 2rem;
+}
+
+input {
+  font-size: 1.8rem;
+  padding: 10px;
+  color: var(--text-color);
+  background-color: var(--secondary-color);
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
+
+input:focus {
+  box-shadow: 0 0 5px 1px var(--primary-color);
+}
+
+label {
+  color: var(--text-color);
+  text-align: center;
+}

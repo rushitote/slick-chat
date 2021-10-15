@@ -1,0 +1,18 @@
+.btn {
+  width: min-content;
+  font-size: 1rem;
+  padding: 0.5em 1em;
+  background-color: var(--username-color);
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 1px rgba(134, 134, 134, 0.8);
+  transition: background-color 100ms ease-in, box-shadow 100ms ease-in;
+}
+
+.btn:hover {
+  background-color: #41accc;
+}
+
+.btn:active {
+  box-shadow: none;
+}

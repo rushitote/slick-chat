@@ -1,9 +1,17 @@
-.form {
-  display: flex;
-  flex-direction: column;
-  color: var(--text-color);
-  gap: 1em;
-  background-color: var(--primary-color);
-  padding: 2em;
-  border-radius: 15px;
+.root {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    '. .'
+    'about form'
+    '. .';
+  align-items: center;
+  background-image: linear-gradient(
+    to bottom right,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
+  justify-items: center;
 }
