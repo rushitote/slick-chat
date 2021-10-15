@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Route } from 'react-router-dom'
 import Groups from './Pages/Groups'
 import Login from './Pages/Login'
@@ -9,21 +9,16 @@ import './App.css'
 export interface IAppProps {}
 
 export default function App(props: IAppProps) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { isLoggedIn, setIsLoggedIn } = useContext(loggedInContext)
   useEffect(() => {
     const asyncWrapper = async () => {
       console.log('running')
       setIsLoggedIn(await isAuthenticated())
     }
     asyncWrapper()
-  }, [])
+  }, [setIsLoggedIn])
   return (
-    <loggedInContext.Provider
-      value={{
-        isLoggedIn: isLoggedIn,
-        updateLogIn: setIsLoggedIn,
-      }}
-    >
+    <>
       <Route path="/group/:id">
         <Groups />
       </Route>
@@ -33,6 +28,6 @@ export default function App(props: IAppProps) {
       <Route path="/testAuth">
         <Status />
       </Route>
-    </loggedInContext.Provider>
+    </>
   )
 }

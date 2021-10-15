@@ -5,7 +5,7 @@ import styles from './Login.module.css'
 export interface ILoginProps {}
 
 export default function Login(props: ILoginProps) {
-  const { isLoggedIn, updateLogIn } = useContext(loggedInContext)
+  const { isLoggedIn, setIsLoggedIn } = useContext(loggedInContext)
   const usernameRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
   const loginInHandler = (e: any) => {
@@ -26,11 +26,13 @@ export default function Login(props: ILoginProps) {
       if (validCredentials) {
         console.log('Logged in successfully')
       }
-      updateLogIn(validCredentials)
+      setIsLoggedIn(validCredentials)
     }
     login()
   }
-  if (!isLoggedIn) {
+  if (isLoggedIn === undefined) {
+    return null
+  } else if (!isLoggedIn) {
     return (
       <Container>
         <form className={styles['form']}>

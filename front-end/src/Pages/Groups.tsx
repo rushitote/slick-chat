@@ -2,7 +2,7 @@ import styles from './Group.module.css'
 import ChatWindow from '../components/Chat/ChatWindow'
 import globalContext, { Message } from '../utils/Contexts/messagesContext'
 import UsersList from '../components/LeftPane/Users/UsersList'
-import { Route, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useState, useEffect, useContext } from 'react'
 import avatar from '../images/avatar.png'
 import { io, Socket } from 'socket.io-client'
@@ -73,6 +73,8 @@ export default function App(props: IAppProps) {
       <h1>Not authenticated</h1>
     )
   } else {
-    return <div>Loading Website</div>
+    // this means authentication is in process
+    // do nothing
+    return null
   }
 }

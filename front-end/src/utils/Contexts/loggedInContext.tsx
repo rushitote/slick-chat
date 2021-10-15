@@ -1,13 +1,23 @@
-import { createContext } from 'react'
+import { createContext, useState } from 'react'
 
 interface loggedInContextInterface {
-  isLoggedIn: boolean
-  updateLogIn: Function
+  isLoggedIn: boolean | undefined
+  setIsLoggedIn: Function
 }
 
 const loggedInContext = createContext<loggedInContextInterface>({
-  isLoggedIn: false,
-  updateLogIn: (val: boolean) => {},
+  isLoggedIn: undefined,
+  setIsLoggedIn: (val: boolean) => {},
 })
 
+const LoggedInProvider = (props: any) => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(undefined)
+  return (
+    <loggedInContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+      {props.children}
+    </loggedInContext.Provider>
+  )
+}
+
+export { LoggedInProvider }
 export default loggedInContext
