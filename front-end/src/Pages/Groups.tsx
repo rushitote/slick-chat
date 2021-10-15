@@ -1,12 +1,13 @@
-import './Group.css'
+import styles from './Group.module.css'
 import ChatWindow from '../components/Chat/ChatWindow'
-import messageContext, { Message } from '../utils/messagesContext'
+import globalContext, { Message } from '../utils/Contexts/messagesContext'
 import UsersList from '../components/LeftPane/Users/UsersList'
 import { Route, useParams } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import avatar from '../images/avatar.png'
 import { io, Socket } from 'socket.io-client'
-import socketContext from '../utils/socketContext'
+import socketContext from '../utils/Contexts/socketContext'
+import loggedInContext from '../utils/Contexts/loggedInContext'
 
 export interface Group {
   id: string
@@ -18,28 +19,12 @@ export default function App(props: IAppProps) {
   const params = useParams<Group>()
   const [messages, setMessages] = useState<Message[]>([])
   const [usersList, setUsersList] = useState(['Shashwat', 'Varun', 'Rushikesh'])
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const { isLoggedIn: isAuthenticated } = useContext(loggedInContext)
   const sendMessage = (message: Message) => {
     setMessages((prevState: any) => {
       return prevState.concat(message)
     })
   }
-  useEffect(() => {
-    const isAuthenticated = async () => {
-      const response = await fetch('http://localhost:3000/authenticated', {
-        method: 'GET',
-        credentials: 'include', //includes the cookies
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        mode: 'cors',
-      })
-      const { authenticated } = await response.json()
-      // response is of format { authenticated: true|false}
-      setIsAuthenticated(authenticated)
-    }
-    isAuthenticated()
-  }, [params.id])
   useEffect(() => {
     if (!isAuthenticated) {
       // no need to run any of the following code
@@ -68,9 +53,9 @@ export default function App(props: IAppProps) {
       newSocket.close()
     }
   }, [params.id, messages, isAuthenticated])
-  return isAuthenticated ? (
-    <Route path="/group/:id">
-      <messageContext.Provider
+  if (isAuthenticated !== undefined) {
+    return isAuthenticated ? (
+      <globalContext.Provider
         value={{
           messages,
           sendMessage,
@@ -78,12 +63,16 @@ export default function App(props: IAppProps) {
         }}
       >
         <socketContext.Provider value={{ socket, roomId: params.id }}>
-          <UsersList image={avatar} />
-          <ChatWindow />
+          <div id={styles['root']}>
+            <UsersList image={avatar} />
+            <ChatWindow />
+          </div>
         </socketContext.Provider>
-      </messageContext.Provider>
-    </Route>
-  ) : (
-    <h1 id="error-heading">Not authenticated</h1>
-  )
+      </globalContext.Provider>
+    ) : (
+      <h1>Not authenticated</h1>
+    )
+  } else {
+    return <div>Loading Website</div>
+  }
 }

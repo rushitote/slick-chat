@@ -1,5 +1,5 @@
-import messageContext from '../../utils/messagesContext'
 import styles from './Messages.module.css'
+import messageContext from '../../utils/Contexts/messagesContext'
 import { useContext, useRef, useEffect } from 'react'
 import Message from './Message'
 import avatar from '../../images/avatar.png'

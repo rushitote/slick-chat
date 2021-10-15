@@ -1,0 +1,15 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 1.1rem;
+  --primary-color: #414345;
+  --secondary-color: #232526;
+  --text-color: #edf6f9;
+  --username-color: #4cc9f0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}

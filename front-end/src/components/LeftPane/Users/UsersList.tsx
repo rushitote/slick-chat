@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import messageContext from '../../../utils/messagesContext'
+import messageContext from '../../../utils/Contexts/messagesContext'
 import styles from './UsersList.module.css'
 import { Socket } from 'socket.io-client'
 import { useEffect } from 'react'

@@ -1,33 +1,55 @@
-import * as React from 'react'
-import { useEffect } from 'react'
+import { useRef, useContext } from 'react'
+import Container from '../components/UI/Container'
+import loggedInContext from '../utils/Contexts/loggedInContext'
+import styles from './Login.module.css'
 export interface ILoginProps {}
 
 export default function Login(props: ILoginProps) {
-  useEffect(() => {
-    const data = {
-      username: 'shashwat',
-      password: 'password',
+  const { isLoggedIn, updateLogIn } = useContext(loggedInContext)
+  const usernameRef = useRef<HTMLInputElement>(null)
+  const passwordRef = useRef<HTMLInputElement>(null)
+  const loginInHandler = (e: any) => {
+    e.preventDefault()
+    const login = async () => {
+      const response = await fetch('http://localhost:3000/login', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: usernameRef.current?.value,
+          password: passwordRef.current?.value,
+        }),
+      })
+      const validCredentials = response.ok
+      if (validCredentials) {
+        console.log('Logged in successfully')
+      }
+      updateLogIn(validCredentials)
     }
-    const response = fetch('http://localhost:3000/login', {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      // mode: 'cors', // no-cors, *cors, same-origin
-      // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'include', // include, *same-origin, omit
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      // redirect: 'follow', // manual, *follow, error
-      // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
-    })
-      .then((resp) => resp.text())
-      .then((d) => {
-        console.log(d)
-      })
-      .catch((e) => {
-        console.log(e)
-      })
-    console.log(response)
-  }, [])
-  return <div></div>
+    login()
+  }
+  if (!isLoggedIn) {
+    return (
+      <Container>
+        <form className={styles['form']}>
+          <label htmlFor="username">Username</label>
+          <input type="text" name="username" id="username" ref={usernameRef} />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            ref={passwordRef}
+          />
+          <button type="submit" onClick={loginInHandler}>
+            Login
+          </button>
+        </form>
+      </Container>
+    )
+  } else {
+    return <h1>Logged in successfully</h1>
+  }
 }
