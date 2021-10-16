@@ -70,7 +70,7 @@ export default function App(props: IAppProps) {
         </socketContext.Provider>
       </globalContext.Provider>
     ) : (
-      <h1>Not authenticated</h1>
+      <h1>Not authenticated </h1>
     )
   } else {
     // this means authentication is in process

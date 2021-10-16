@@ -1,9 +1,10 @@
 import styles from './SignUpForm.module.css'
 import { useRef } from 'react'
 import Button from '../UI/Button'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
+import notificationContext from '../../utils/Contexts/notificationContext'
 
 function App(props: any) {
   const usernameRef = useRef<HTMLInputElement>(null)
@@ -11,6 +12,7 @@ function App(props: any) {
   const confirmPasswordRef = useRef<HTMLInputElement>(null)
   const [errorShow, setErrorShow] = useState<Boolean>(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const notifContext = useContext(notificationContext)
   const signUpHandler = (e: any) => {
     e.preventDefault()
     if (usernameRef.current?.value.trim().length === 0) {
@@ -42,7 +44,7 @@ function App(props: any) {
           setErrorMessage(msg)
           setErrorShow(true)
         } else {
-          props.setPrompt(true)
+          notifContext.showNotification('Account created successfully In')
           props.history.push('/login')
         }
       }
