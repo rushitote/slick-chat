@@ -42,6 +42,7 @@ function App(props: any) {
           setErrorMessage(msg)
           setErrorShow(true)
         } else {
+          props.setPrompt(true)
           props.history.push('/login')
         }
       }

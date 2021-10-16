@@ -17,16 +17,20 @@ export default function App(props: IAppProps) {
     }
     asyncWrapper()
   }, [setIsLoggedIn])
+  const [registeredSuccessfully, setRegisteredSuccessfully] = useState(false)
   return (
     <>
       <Route path="/group/:id">
         <Groups />
       </Route>
       <Route path="/login">
-        <Login />
+        <Login
+          showPrompt={registeredSuccessfully}
+          setPrompt={setRegisteredSuccessfully}
+        />
       </Route>
       <Route path="/signUp">
-        <SignUp />
+        <SignUp setPrompt={setRegisteredSuccessfully} />
       </Route>
     </>
   )
