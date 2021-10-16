@@ -2,9 +2,10 @@ import styles from './SignUpForm.module.css'
 import { useRef } from 'react'
 import Button from '../UI/Button'
 import { useState } from 'react'
-export interface IAppProps {}
+import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router'
 
-export default function App(props: IAppProps) {
+function App(props: any) {
   const usernameRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
   const confirmPasswordRef = useRef<HTMLInputElement>(null)
@@ -20,6 +21,31 @@ export default function App(props: IAppProps) {
     ) {
       setErrorMessage("Your passwords don't match")
       setErrorShow(true)
+    } else {
+      setErrorShow(false)
+      setErrorMessage('')
+
+      const signUp = async () => {
+        const response = await fetch('http://localhost:3000/create', {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: usernameRef.current?.value,
+            password: passwordRef.current?.value,
+          }),
+        })
+        if (!response.ok) {
+          const { msg } = await response.json()
+          setErrorMessage(msg)
+          setErrorShow(true)
+        } else {
+          props.history.push('/login')
+        }
+      }
+      signUp()
     }
   }
   return (
@@ -67,10 +93,12 @@ export default function App(props: IAppProps) {
         <div className={styles['register-text']}>
           <p>Already have an account?</p>
           <p>
-            Login by clicking <a href="#"> here</a>
+            Login by clicking <Link to="/login"> here</Link>
           </p>
         </div>
       </div>
     </form>
   )
 }
+
+export default withRouter(App)

@@ -2,6 +2,7 @@ import styles from './LoginForm.module.css'
 import { useContext, useRef } from 'react'
 import loggedInContext from '../../utils/Contexts/loggedInContext'
 import Button from '../UI/Button'
+import { Link } from 'react-router-dom'
 export interface IAppProps {}
 
 export default function App(props: IAppProps) {
@@ -51,7 +52,7 @@ export default function App(props: IAppProps) {
       <div className={styles['register-text']}>
         <p> Not registered? </p>
         <p>
-          You can create an account for free <a href="#"> here</a>
+          You can create an account for free <Link to="/signUp"> here</Link>
         </p>
       </div>
     </form>

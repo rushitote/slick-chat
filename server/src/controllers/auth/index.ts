@@ -56,7 +56,11 @@ export function create(req: Request, res: Response) {
       if (!result.status) {
         res.status(400).send({ msg: result.err })
       } else {
+<<<<<<< HEAD
         res.status(200).send({ msg: 'Successfully created user.' })
+=======
+        res.status(200).send({ msg: 'Successfully created user' })
+>>>>>>> 4ad7423 (added redirects)
       }
     })
     .catch(err => {
