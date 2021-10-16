@@ -10,7 +10,5 @@
 }
 
 .about h1 {
-  font-size: 5rem;
-}
-.about p {
+  font-size: max(60px, 5vw);
 }

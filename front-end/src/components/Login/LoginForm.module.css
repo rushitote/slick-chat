@@ -3,7 +3,6 @@
   flex-direction: column;
   width: 50%;
   gap: 1em;
-  align-items: center;
   grid-area: form;
   padding-top: 4em;
 }
@@ -12,17 +11,19 @@
   display: grid;
   grid-template-columns: 1fr;
   row-gap: 10px;
-  font-size: 2rem;
+  font-size: clamp(15px, 3vw, 30px);
+  width: 100%;
 }
 
 input {
-  font-size: 1.8rem;
+  font-size: clamp(12px, 2vw, 30px);
   padding: 10px;
   color: var(--text-color);
   background-color: var(--secondary-color);
   border: none;
   border-radius: 5px;
   outline: none;
+  width: 100%;
 }
 
 input:focus {
@@ -32,4 +33,11 @@ input:focus {
 label {
   color: var(--text-color);
   text-align: left;
+}
+
+.register-text {
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }

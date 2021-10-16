@@ -17,3 +17,8 @@ body {
 #root {
   min-height: 100vh;
 }
+
+a:visited,
+a {
+  color: var(--username-color);
+}

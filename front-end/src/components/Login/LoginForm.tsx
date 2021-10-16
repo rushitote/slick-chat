@@ -48,6 +48,12 @@ export default function App(props: IAppProps) {
         />
       </div>
       <Button text="Login" loginHandler={loginHandler} />
+      <div className={styles['register-text']}>
+        <p> Not registered? </p>
+        <p>
+          You can create an account for free <a href="#"> here</a>
+        </p>
+      </div>
     </form>
   )
 }
