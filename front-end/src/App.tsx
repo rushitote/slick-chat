@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { Route } from 'react-router-dom'
 import Groups from './Pages/Groups'
 import Login from './Pages/Login'
-import Status from './Pages/Status'
+import SignUp from './Pages/SignUp'
 import loggedInContext from './utils/Contexts/loggedInContext'
 import isAuthenticated from './utils/isAuthenticated'
 import './App.css'
@@ -25,8 +25,8 @@ export default function App(props: IAppProps) {
       <Route path="/login">
         <Login />
       </Route>
-      <Route path="/testAuth">
-        <Status />
+      <Route path="/signUp">
+        <SignUp />
       </Route>
     </>
   )

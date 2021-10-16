@@ -1,7 +1,7 @@
 .root {
   display: grid;
   height: 100vh;
-  grid-template-columns: 500px 1fr;
+  grid-template-columns: 0.5fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas:
     '. .'

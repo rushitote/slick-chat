@@ -47,7 +47,7 @@ export default function App(props: IAppProps) {
           ref={passwordRef}
         />
       </div>
-      <Button text="Login" loginHandler={loginHandler} />
+      <Button text="Login" onClick={loginHandler} />
       <div className={styles['register-text']}>
         <p> Not registered? </p>
         <p>
