@@ -1,10 +1,11 @@
 .about {
-  color: var(--text-color);
-  max-width: 600px;
+  background: var(--gradient-to-right);
+  background-clip: text;
+  color: transparent;
   grid-area: about;
   justify-self: flex-end;
 }
 
 .about h1 {
-  font-size: max(60px, 5vw);
+  font-size: max(60px, 8vw);
 }

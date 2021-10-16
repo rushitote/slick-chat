@@ -30,7 +30,7 @@ input {
 
 .error-message {
   text-align: center;
-  color: red;
+  color: var(--danger-color);
   opacity: 0;
   transition: opacity 250ms ease-in-out;
 }

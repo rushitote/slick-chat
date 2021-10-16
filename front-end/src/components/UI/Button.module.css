@@ -2,15 +2,16 @@
   width: 100%;
   font-size: 1rem;
   padding: 0.5em 1em;
-  background-color: var(--username-color);
+  background: var(--gradient-to-bottom-left);
+  background-size: 200% 200%;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 1px 1px rgba(134, 134, 134, 0.8);
-  transition: background-color 100ms ease-in, box-shadow 100ms ease-in;
+  transition: background-position 200ms ease-in, box-shadow 100ms ease-in;
 }
 
 .btn:hover {
-  background-color: #41accc;
+  background-position: 50% 50%;
 }
 
 .btn:active {

@@ -6,6 +6,14 @@ body {
   --secondary-color: #232526;
   --text-color: #edf6f9;
   --username-color: #4cc9f0;
+  --gradient-to-right: linear-gradient(to right, #29ffc6, #20e3b2, #0cebeb);
+  --gradient-to-bottom-left: linear-gradient(
+    to bottom right,
+    #29ffc6,
+    #20e3b2,
+    #0cebeb
+  );
+  --danger-color: #e63946;
 }
 
 * {
