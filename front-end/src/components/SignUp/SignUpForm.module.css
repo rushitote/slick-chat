@@ -30,9 +30,12 @@ input {
 
 .error-message {
   text-align: center;
-  color: var(--danger-color);
+  background: var(--danger-gradient);
+  background-clip: text;
+  color: transparent;
   opacity: 0;
   transition: opacity 250ms ease-in-out;
+  font-weight: bold;
 }
 .error-message.show {
   opacity: 1;

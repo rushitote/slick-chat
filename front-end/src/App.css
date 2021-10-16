@@ -13,7 +13,7 @@ body {
     #20e3b2,
     #0cebeb
   );
-  --danger-color: #e63946;
+  --danger-gradient: linear-gradient(to left, #ee0979, #ff6a00);
 }
 
 * {
