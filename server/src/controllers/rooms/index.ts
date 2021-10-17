@@ -1,21 +1,19 @@
 import * as roomOps from '../../sqlz/ops/rooms'
+import * as mappingOps from '../../sqlz/ops/mappingUserToRoom'
 import { Request, Response } from 'express'
 
 export function createRoom(req: Request, res: Response) {
-  if (!req.isAuthenticated()) {
-    return res.status(401).send('Unauthorised user')
-  }
   const username = (req.user as any).username
   const { roomName } = req.body
   try {
-    roomOps.createRoom(username, roomName).then((roomId) => {
+    roomOps.createRoom(username, roomName).then(roomId => {
+      mappingOps.addUserRoomMapping(username, roomId)
       res.status(200).send({
-        message: 'Room successfully created.',
-        roomId: roomId
+        msg: 'Room successfully created.',
+        roomId: roomId,
       })
     })
   } catch (err) {
     res.status(500)
   }
 }
-

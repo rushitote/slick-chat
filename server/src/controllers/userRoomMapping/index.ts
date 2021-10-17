@@ -1,18 +1,13 @@
 import * as mappingOps from '../../sqlz/ops/mappingUserToRoom'
 import { Request, Response } from 'express'
-import users from 'sqlz/models/users'
 
 export function addUserRoomMapping(req: Request, res: Response) {
-  if (!req.isAuthenticated()) {
-    return res.status(401).send('Unauthorised user')
-  }
-
   const username = (req.user as any).username
   const { roomId } = req.body
 
   try {
     mappingOps.addUserRoomMapping(username, roomId).then(() => {
-      res.status(200)
+      res.status(200).send({ msg: 'Mapping added successfully.' })
     })
   } catch (err) {
     res.status(500)
@@ -20,10 +15,6 @@ export function addUserRoomMapping(req: Request, res: Response) {
 }
 
 export function getRoomsOfUser(req: Request, res: Response) {
-  if (!req.isAuthenticated()) {
-    return res.status(401).send('Unauthorised user')
-  }
-
   const username = (req.user as any).username
 
   try {
@@ -38,10 +29,6 @@ export function getRoomsOfUser(req: Request, res: Response) {
 }
 
 export function getUsersOfRoom(req: Request, res: Response) {
-  if (!req.isAuthenticated()) {
-    return res.status(401).send('Unauthorised user')
-  }
-
   const { roomId } = req.body
 
   try {
@@ -54,16 +41,12 @@ export function getUsersOfRoom(req: Request, res: Response) {
 }
 
 export function removeUserRoomMapping(req: Request, res: Response) {
-  if (!req.isAuthenticated()) {
-    return res.status(401).send('Unauthorised user')
-  }
-
   const username = (req.user as any).username
   const { roomId } = req.body
 
   try {
     mappingOps.removeUserRoomMapping(username, roomId).then(() => {
-      res.status(200)
+      res.status(200).send({ msg: 'Successfully removed mapping.' })
     })
   } catch (err) {
     res.status(500)

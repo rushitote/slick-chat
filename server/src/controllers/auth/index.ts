@@ -50,9 +50,9 @@ export function create(req: Request, res: Response) {
   addUser(username, password)
     .then(result => {
       if (!result.status) {
-        res.status(400).send({ err: result.err })
+        res.status(400).send({ msg: result.err })
       } else {
-        res.status(200).send('Successfully created user.')
+        res.status(200).send({ msg: 'Successfully created user.' })
       }
     })
     .catch(err => {
@@ -70,14 +70,14 @@ export function login(req: Request, res: Response) {
     },
     (err, user, info) => {
       if (err) {
-        return res.status(400).json({ message: info.message })
+        return res.status(400).send({ msg: info.message })
       } else {
         req.logIn(user, err => {
           if (err) {
-            return res.status(400).json({ message: info.message })
+            return res.status(400).send({ msg: info.message })
           } else {
             req.session.save()
-            return res.status(200).json({ message: 'Successfully logged in.' })
+            return res.status(200).send({ msg: 'Successfully logged in.' })
           }
         })
       }
@@ -88,13 +88,15 @@ export function login(req: Request, res: Response) {
 export function logout(req, res) {
   req.logout()
   req.session.destroy()
-  res.status(200).send('Logged out successfully')
+  res.status(200).send({ msg: 'Logged out successfully' })
 }
 
 export function getTestAuth(req: Request, res: Response) {
   isAuthenticated(req, res, () => {
     res
       .status(200)
-      .send('Currently logged in.\n' + 'Username: ' + (req.user as any).username)
+      .send(
+        'Currently logged in.\n' + 'Username: ' + (req.user as any).username
+      )
   })
 }
