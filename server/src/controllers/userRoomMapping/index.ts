@@ -29,7 +29,7 @@ export function getRoomsOfUser(req: Request, res: Response) {
 }
 
 export function getUsersOfRoom(req: Request, res: Response) {
-  const { roomId } = req.body
+  const roomId = req.query.roomId.toString()
 
   try {
     mappingOps.getUsersOfRoom(roomId).then(users => {

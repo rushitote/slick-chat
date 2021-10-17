@@ -16,7 +16,7 @@ router.use('/rooms/:url', function(req, res, next) {
 })
 
 router.post('/rooms/create', roomConfig.createRoom)
-router.post('/rooms/get', mappingConfig.getUsersOfRoom)
+router.get('/rooms/get', mappingConfig.getUsersOfRoom)
 router.post('/rooms/add', mappingConfig.addUserRoomMapping)
 router.post('/rooms/remove', mappingConfig.removeUserRoomMapping)
 
@@ -25,6 +25,6 @@ router.use('/messages/:url', function(req, res, next) {
 })
 
 router.post('/messages/post', messagesConfig.postMessage)
-router.post('/messages/get', messagesConfig.getMessages)
+router.get('/messages/get', messagesConfig.getMessages)
 
 export default router

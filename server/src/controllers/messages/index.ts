@@ -19,7 +19,7 @@ export function postMessage(req: Request, res: Response) {
 
 export function getMessages(req: Request, res: Response) {
   const username = (req.user as any).username
-  const { roomId } = req.body
+  const roomId = req.query.roomId.toString()
   try {
     mappingOps.addUserRoomMapping(username, roomId)
     messageOps.getMessages(roomId).then(messages => {
