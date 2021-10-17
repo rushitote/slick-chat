@@ -47,6 +47,10 @@ export const isAuthenticated = (
 export function create(req: Request, res: Response) {
   const { username, password } = req.body
 
+  if (username === undefined || password === undefined) {
+    return res.status(422).send()
+  }
+
   addUser(username, password)
     .then(result => {
       if (!result.status) {

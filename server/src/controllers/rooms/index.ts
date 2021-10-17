@@ -5,6 +5,11 @@ import { Request, Response } from 'express'
 export function createRoom(req: Request, res: Response) {
   const username = (req.user as any).username
   const { roomName } = req.body
+
+  if (roomName === undefined) {
+    return res.status(422).send()
+  }
+
   try {
     roomOps.createRoom(username, roomName).then(roomId => {
       mappingOps.addUserRoomMapping(username, roomId)
@@ -14,6 +19,6 @@ export function createRoom(req: Request, res: Response) {
       })
     })
   } catch (err) {
-    res.status(500)
+    res.status(500).send()
   }
 }

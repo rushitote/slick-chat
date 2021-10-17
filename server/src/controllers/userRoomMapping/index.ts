@@ -5,12 +5,16 @@ export function addUserRoomMapping(req: Request, res: Response) {
   const username = (req.user as any).username
   const { roomId } = req.body
 
+  if (roomId === undefined) {
+    return res.status(422).send()
+  }
+
   try {
     mappingOps.addUserRoomMapping(username, roomId).then(() => {
       res.status(200).send({ msg: 'Mapping added successfully.' })
     })
   } catch (err) {
-    res.status(500)
+    res.status(500).send()
   }
 }
 
@@ -24,19 +28,23 @@ export function getRoomsOfUser(req: Request, res: Response) {
       })
     })
   } catch (err) {
-    res.status(500)
+    res.status(500).send()
   }
 }
 
 export function getUsersOfRoom(req: Request, res: Response) {
-  const roomId = req.query.roomId.toString()
+  const roomId = req.query.roomId?.toString()
+
+  if (roomId === undefined) {
+    return res.status(422).send()
+  }
 
   try {
     mappingOps.getUsersOfRoom(roomId).then(users => {
       res.status(200).send({ users })
     })
   } catch (err) {
-    res.status(500)
+    res.status(500).send()
   }
 }
 
@@ -44,11 +52,15 @@ export function removeUserRoomMapping(req: Request, res: Response) {
   const username = (req.user as any).username
   const { roomId } = req.body
 
+  if (roomId === undefined) {
+    return res.status(422).send()
+  }
+
   try {
     mappingOps.removeUserRoomMapping(username, roomId).then(() => {
       res.status(200).send({ msg: 'Successfully removed mapping.' })
     })
   } catch (err) {
-    res.status(500)
+    res.status(500).send()
   }
 }
