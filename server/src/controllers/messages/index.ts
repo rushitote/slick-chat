@@ -3,12 +3,12 @@ import * as mappingOps from '../../sqlz/ops/mappingUserToRoom'
 import { Request, Response } from 'express'
 
 export function postMessage(req: Request, res: Response) {
-  if (!req.isAuthenticated()) {
-    return res.status(401).send('Unauthorised user')
-  }
-
   const username = (req.user as any).username
   const { roomId, content } = req.body
+
+  if (roomId === undefined || content === undefined) {
+    return res.status(422).send({})
+  }
 
   try {
     messageOps.postMessage(username, content, roomId).then(messageId => {
@@ -17,23 +17,28 @@ export function postMessage(req: Request, res: Response) {
       })
     })
   } catch (err) {
-    res.status(500)
+    res.status(500).send({
+      msg: 'Internal server error',
+    })
   }
 }
 
 export function getMessages(req: Request, res: Response) {
-  if (!req.isAuthenticated()) {
-    return res.status(401).send('Unauthorised user')
+  const username = (req.user as any).username
+  const roomId = req.query.roomId?.toString()
+
+  if (roomId === undefined) {
+    return res.status(422).send({})
   }
 
-  const username = (req.user as any).username
-  const { roomId } = req.body
   try {
     mappingOps.addUserRoomMapping(username, roomId)
     messageOps.getMessages(roomId).then(messages => {
-      res.status(200).send(messages)
+      res.status(200).send({ messages })
     })
   } catch (err) {
-    res.status(500)
+    res.status(500).send({
+      msg: 'Internal server error',
+    })
   }
 }
