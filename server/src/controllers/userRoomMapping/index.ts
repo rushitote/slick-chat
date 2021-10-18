@@ -6,7 +6,7 @@ export function addUserRoomMapping(req: Request, res: Response) {
   const { roomId } = req.body
 
   if (roomId === undefined) {
-    return res.status(422).send()
+    return res.status(422).send({})
   }
 
   try {
@@ -14,7 +14,9 @@ export function addUserRoomMapping(req: Request, res: Response) {
       res.status(200).send({ msg: 'Mapping added successfully.' })
     })
   } catch (err) {
-    res.status(500).send()
+    res.status(500).send({
+      msg: 'Internal server error',
+    })
   }
 }
 
@@ -28,7 +30,9 @@ export function getRoomsOfUser(req: Request, res: Response) {
       })
     })
   } catch (err) {
-    res.status(500).send()
+    res.status(500).send({
+      msg: 'Internal server error',
+    })
   }
 }
 
@@ -36,7 +40,7 @@ export function getUsersOfRoom(req: Request, res: Response) {
   const roomId = req.query.roomId?.toString()
 
   if (roomId === undefined) {
-    return res.status(422).send()
+    return res.status(422).send({})
   }
 
   try {
@@ -44,7 +48,9 @@ export function getUsersOfRoom(req: Request, res: Response) {
       res.status(200).send({ users })
     })
   } catch (err) {
-    res.status(500).send()
+    res.status(500).send({
+      msg: 'Internal server error',
+    })
   }
 }
 
@@ -53,7 +59,7 @@ export function removeUserRoomMapping(req: Request, res: Response) {
   const { roomId } = req.body
 
   if (roomId === undefined) {
-    return res.status(422).send()
+    return res.status(422).send({})
   }
 
   try {
@@ -61,6 +67,8 @@ export function removeUserRoomMapping(req: Request, res: Response) {
       res.status(200).send({ msg: 'Successfully removed mapping.' })
     })
   } catch (err) {
-    res.status(500).send()
+    res.status(500).send({
+      msg: 'Internal server error',
+    })
   }
 }

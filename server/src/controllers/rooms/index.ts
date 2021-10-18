@@ -7,7 +7,7 @@ export function createRoom(req: Request, res: Response) {
   const { roomName } = req.body
 
   if (roomName === undefined) {
-    return res.status(422).send()
+    return res.status(422).send({})
   }
 
   try {
@@ -19,6 +19,8 @@ export function createRoom(req: Request, res: Response) {
       })
     })
   } catch (err) {
-    res.status(500).send()
+    res.status(500).send({
+      msg: 'Internal server error',
+    })
   }
 }

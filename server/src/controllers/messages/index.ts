@@ -7,7 +7,7 @@ export function postMessage(req: Request, res: Response) {
   const { roomId, content } = req.body
 
   if (roomId === undefined || content === undefined) {
-    return res.status(422).send()
+    return res.status(422).send({})
   }
 
   try {
@@ -17,7 +17,9 @@ export function postMessage(req: Request, res: Response) {
       })
     })
   } catch (err) {
-    res.status(500).send()
+    res.status(500).send({
+      msg: 'Internal server error',
+    })
   }
 }
 
@@ -26,7 +28,7 @@ export function getMessages(req: Request, res: Response) {
   const roomId = req.query.roomId?.toString()
 
   if (roomId === undefined) {
-    return res.status(422).send()
+    return res.status(422).send({})
   }
 
   try {
@@ -35,6 +37,8 @@ export function getMessages(req: Request, res: Response) {
       res.status(200).send({ messages })
     })
   } catch (err) {
-    res.status(500).send()
+    res.status(500).send({
+      msg: 'Internal server error',
+    })
   }
 }
