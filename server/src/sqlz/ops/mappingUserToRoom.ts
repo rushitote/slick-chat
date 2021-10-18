@@ -23,35 +23,38 @@ export async function getRoomsOfUser(username: string) {
     roomIdsOfUser.push({ roomId: mapping.roomId })
   })
 
-  const roomsOfUser = (await Rooms.findAll({ [Op.or]: roomIdsOfUser })).map(
-    (roomInfo: any) => {
-      return {
-        roomId: roomInfo.roomId,
-        roomName: roomInfo.roomName,
-      }
+  const roomsOfUser = (
+    await Rooms.findAll({ where: { [Op.or]: roomIdsOfUser } })
+  ).map((roomInfo: any) => {
+    return {
+      roomId: roomInfo.roomId,
+      roomName: roomInfo.roomName,
     }
-  )
+  })
 
   return roomsOfUser
 }
 
 export async function getUsersOfRoom(roomId: string) {
-  const userIdList = (await Rooms.findAll({ where: { roomId: roomId } })).map(
-    (mapping: any) => {
-      return { userId: mapping.userId }
-    }
-  )
+  const userIdList = (
+    await mappingUserToRoom.findAll({ where: { roomId: roomId } })
+  ).map((mapping: any) => {
+    return { userId: mapping.userId }
+  })
 
-  const userList = (await Users.findAll({ [Op.or]: userIdList })).map(
-    (user: any) => {
+  if (userIdList.length != 0) {
+    const userList = (
+      await Users.findAll({ where: { [Op.or]: userIdList } })
+    ).map((user: any) => {
       return {
         userId: user.userId,
         username: user.username,
       }
-    }
-  )
-
-  return userList
+    })
+    return userList
+  } else {
+    return []
+  }
 }
 
 export async function removeUserRoomMapping(username: string, roomId: string) {
