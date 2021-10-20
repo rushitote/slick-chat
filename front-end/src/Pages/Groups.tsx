@@ -14,7 +14,20 @@ export interface Group {
 }
 export interface IAppProps {}
 
-export default function App(props: IAppProps) {
+const roomExists = (id: string) => {
+  const asyncWrapper = async () => {
+    const response = await fetch(`http://localhost:3000/rooms/get/${id}`, {
+      method: 'GET',
+      credentials: 'include',
+    })
+    const data = await response.json()
+    console.log(data)
+  }
+  asyncWrapper()
+  return true
+}
+
+export default function Groups(props: IAppProps) {
   const [socket, setSocket] = useState<Socket>()
   const params = useParams<Group>()
   const [messages, setMessages] = useState<Message[]>([])
@@ -27,30 +40,33 @@ export default function App(props: IAppProps) {
   }
   useEffect(() => {
     if (!isAuthenticated) {
-      // no need to run any of the following code
       return
-    }
-    const newSocket = io('http://localhost:3000', { transports: ['websocket'] })
-    setSocket(newSocket)
-    newSocket?.connect()
-    newSocket?.emit(
-      'joinRoom',
-      JSON.stringify({
-        roomId: params.id,
+    } else if (!roomExists(params.id)) {
+    } else {
+      const newSocket = io('http://localhost:3000', {
+        transports: ['websocket'],
       })
-    )
-    newSocket.on('newMessage', (data: Message) => {
-      setMessages(
-        messages.concat({
-          image: avatar,
-          username: data.username,
-          content: data.content,
+      setSocket(newSocket)
+      newSocket?.connect()
+      newSocket?.emit(
+        'joinRoom',
+        JSON.stringify({
+          roomId: params.id,
         })
       )
-    })
+      newSocket.on('newMessage', (data: Message) => {
+        setMessages(
+          messages.concat({
+            image: avatar,
+            username: data.username,
+            content: data.content,
+          })
+        )
+      })
 
-    return () => {
-      newSocket.close()
+      return () => {
+        newSocket.close()
+      }
     }
   }, [params.id, messages, isAuthenticated])
   if (isAuthenticated !== undefined) {
