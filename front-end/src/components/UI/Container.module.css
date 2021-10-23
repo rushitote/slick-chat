@@ -1,7 +1,12 @@
-.container {
+.flex-container {
   display: flex;
-  height: 100%;
+}
+
+.grid-container {
+  display: grid;
+}
+
+.container {
+  min-height: 100vh;
   width: 100vw;
-  justify-content: center;
-  align-items: center;
 }

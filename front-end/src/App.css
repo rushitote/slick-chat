@@ -13,7 +13,13 @@ body {
     #20e3b2,
     #0cebeb
   );
+  --gradient-danger: linear-gradient(to right, #da4453, #89216b);
   --danger-gradient: linear-gradient(to left, #ee0979, #ff6a00);
+  --background-gradient: linear-gradient(
+    to bottom right,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
 }
 
 * {

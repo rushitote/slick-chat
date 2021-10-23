@@ -8,30 +8,41 @@ import avatar from '../images/avatar.png'
 import { io, Socket } from 'socket.io-client'
 import socketContext from '../utils/Contexts/socketContext'
 import loggedInContext from '../utils/Contexts/loggedInContext'
-
+import axios from 'axios'
+import User from '../Interfaces/UserResponse'
+import ErrorPage from '../components/UI/Error'
 export interface Group {
   id: string
 }
 export interface IAppProps {}
 
-const roomExists = (id: string) => {
+const getUsersInRoom = (id: string) => {
+  let users: User[] = []
   const asyncWrapper = async () => {
-    const response = await fetch(`http://localhost:3000/rooms/get/${id}`, {
-      method: 'GET',
-      credentials: 'include',
-    })
-    const data = await response.json()
-    console.log(data)
+    axios
+      .get('http://localhost:3000/rooms/get', {
+        params: {
+          roomId: id,
+        },
+        withCredentials: true,
+      })
+      .then((response) => {
+        // probably should use an interface here
+        users = (response.data as any).users
+      })
+      .catch((e) => {
+        console.log(e)
+      })
   }
   asyncWrapper()
-  return true
+  return users
 }
 
 export default function Groups(props: IAppProps) {
   const [socket, setSocket] = useState<Socket>()
   const params = useParams<Group>()
   const [messages, setMessages] = useState<Message[]>([])
-  const [usersList, setUsersList] = useState(['Shashwat', 'Varun', 'Rushikesh'])
+  const [usersList, setUsersList] = useState<User[]>([])
   const { isLoggedIn: isAuthenticated } = useContext(loggedInContext)
   const sendMessage = (message: Message) => {
     setMessages((prevState: any) => {
@@ -39,9 +50,12 @@ export default function Groups(props: IAppProps) {
     })
   }
   useEffect(() => {
+    let users = getUsersInRoom(params.id)
+    setUsersList(users)
     if (!isAuthenticated) {
       return
-    } else if (!roomExists(params.id)) {
+    } else if (users.length === 0) {
+      console.log('Room not found')
     } else {
       const newSocket = io('http://localhost:3000', {
         transports: ['websocket'],
@@ -70,23 +84,41 @@ export default function Groups(props: IAppProps) {
     }
   }, [params.id, messages, isAuthenticated])
   if (isAuthenticated !== undefined) {
-    return isAuthenticated ? (
-      <globalContext.Provider
-        value={{
-          messages,
-          sendMessage,
-          users: usersList,
-        }}
-      >
-        <socketContext.Provider value={{ socket, roomId: params.id }}>
-          <div id={styles['root']}>
-            <UsersList image={avatar} />
-            <ChatWindow />
-          </div>
-        </socketContext.Provider>
-      </globalContext.Provider>
-    ) : (
-      <h1>Not authenticated </h1>
+    if (isAuthenticated) {
+      return (
+        <globalContext.Provider
+          value={{
+            messages,
+            sendMessage,
+            users: usersList,
+          }}
+        >
+          <socketContext.Provider value={{ socket, roomId: params.id }}>
+            <div id={styles['root']}>
+              <UsersList image={avatar} />
+              <ChatWindow />
+            </div>
+          </socketContext.Provider>
+        </globalContext.Provider>
+      )
+    } else {
+      return (
+        <ErrorPage
+          title="Not logged in"
+          message="You need to login to join rooms"
+          recommend="You can login by going"
+          link="/login"
+        />
+      )
+    }
+  } else if (usersList.length === 0) {
+    return (
+      <ErrorPage
+        title="Room not found"
+        message="The room you are trying to access doesn't exist"
+        recommend="You can go back to the homepage"
+        link="/"
+      />
     )
   } else {
     // this means authentication is in process

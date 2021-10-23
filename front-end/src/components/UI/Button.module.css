@@ -2,12 +2,21 @@
   width: 100%;
   font-size: 1rem;
   padding: 0.5em 1em;
-  background: var(--gradient-to-bottom-left);
-  background-size: 200% 200%;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 1px 1px rgba(134, 134, 134, 0.8);
   transition: background-position 200ms ease-in, box-shadow 100ms ease-in;
+}
+
+.btn-green {
+  background: var(--gradient-to-bottom-left);
+  background-size: 200% 200%;
+}
+
+.btn-blue {
+  background: linear-gradient(to right, #24c6dc, #514a9d);
+  box-shadow: 1px 1px 1px 0px rgba(134, 134, 134, 0.8);
+  background-size: 200% 200%;
 }
 
 .btn:hover {

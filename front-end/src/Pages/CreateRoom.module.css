@@ -1,0 +1,57 @@
+.root {
+  background: var(--background-gradient);
+  gap: 1em;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 0.5fr;
+  grid-template-areas:
+    'title title'
+    'info create';
+  color: var(--text-color);
+}
+
+.root h1 {
+  background: var(--gradient-to-right);
+  background-clip: text;
+  color: transparent;
+  font-size: clamp(60px, 6vw, 130px);
+  text-align: center;
+}
+
+.root input {
+  width: 200px;
+  text-align: center;
+}
+
+.create {
+  grid-area: create;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: flex-start;
+  padding-top: 1em;
+}
+
+.create button {
+  width: 200px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  grid-area: info;
+  align-items: center;
+  gap: 1em;
+  font-size: clamp(20px, 1.5vw, 30px);
+}
+
+.info ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+.title {
+  grid-area: title;
+  justify-self: center;
+  align-self: center;
+}
