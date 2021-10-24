@@ -70,3 +70,27 @@
     align-items: center;
   }
 }
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  transform: translateY(-25px);
+  transition: transform 250ms ease-in;
+}
+.bottom.show {
+  transform: translateX(0);
+}
+
+.error-message {
+  text-align: center;
+  background: var(--danger-gradient);
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+  font-weight: bold;
+}
+.error-message.show {
+  opacity: 1;
+}

@@ -5,12 +5,12 @@ import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import notificationContext from '../../utils/Contexts/notificationContext'
-
+import BottomFormPopup from '../UI/ButtonFormPopup'
 function SignUpForm(props: any) {
   const usernameRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
   const confirmPasswordRef = useRef<HTMLInputElement>(null)
-  const [errorShow, setErrorShow] = useState<Boolean>(false)
+  const [errorShow, setErrorShow] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState('')
   const notifContext = useContext(notificationContext)
   const signUpHandler = (e: any) => {
@@ -83,15 +83,7 @@ function SignUpForm(props: any) {
           required
         />
       </div>
-      <div className={`${styles['bottom']} ${errorShow ? styles['show'] : ''}`}>
-        <div
-          className={`${styles['error-message']} ${
-            errorShow ? styles['show'] : ''
-          }`}
-        >
-          {errorMessage}
-        </div>
-
+      <BottomFormPopup show={errorShow} message={errorMessage}>
         <Button text='Create account' onClick={signUpHandler} />
         <div className={styles['register-text']}>
           <p>Already have an account?</p>
@@ -99,7 +91,7 @@ function SignUpForm(props: any) {
             Login by clicking <Link to='/login'> here</Link>
           </p>
         </div>
-      </div>
+      </BottomFormPopup>
     </form>
   )
 }

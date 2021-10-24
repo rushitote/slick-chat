@@ -9,6 +9,7 @@ import notificationContext from '../utils/Contexts/notificationContext'
 import { withRouter } from 'react-router'
 import generateRandomRoom from '../utils/isNewRoom'
 import { useState } from 'react'
+import BottomFormPopup from '../components/UI/ButtonFormPopup'
 export interface ICreateRoomProps {
   history: any
 }
@@ -18,6 +19,8 @@ function CreateRoom(props: ICreateRoomProps) {
   const roomNameRef = useRef<HTMLInputElement>(null)
   const notifCtx = useContext(notificationContext)
   const [roomId, setRoomId] = useState('')
+  const [errorShow, setErrorShow] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
     const getRoomId = async () => {
@@ -47,6 +50,8 @@ function CreateRoom(props: ICreateRoomProps) {
         )
       }
     } else {
+      setErrorMessage("Name can't be empty")
+      setErrorShow(true)
       console.log("name can't be empty")
     }
   }
@@ -76,9 +81,10 @@ function CreateRoom(props: ICreateRoomProps) {
             value={roomId}
             disabled
           />
-
-          <Button text='Randomize' onClick={randomizeHandler} color='blue' />
-          <Button text='Create' onClick={createRoom} color='green' />
+          <BottomFormPopup show={errorShow} message={errorMessage}>
+            <Button text='Randomize' onClick={randomizeHandler} color='blue' />
+            <Button text='Create' onClick={createRoom} color='green' />
+          </BottomFormPopup>
         </div>
         <div className={styles['info']}>
           <p>Keep the following things in mind when creating a room</p>

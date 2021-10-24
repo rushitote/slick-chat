@@ -16,81 +16,74 @@ export interface Group {
 }
 export interface IAppProps {}
 
-const getUsersInRoom = (id: string) => {
-  let users: User[] = []
-  const asyncWrapper = async () => {
-    axios
-      .get('http://localhost:3000/rooms/get', {
-        params: {
-          roomId: id,
-        },
-        withCredentials: true,
-      })
-      .then((response) => {
-        // probably should use an interface here
-        users = (response.data as any).users
-      })
-      .catch((e) => {
-        console.log(e)
-      })
-  }
-  asyncWrapper()
-  return users
-}
-
 export default function Groups(props: IAppProps) {
   const [socket, setSocket] = useState<Socket>()
   const params = useParams<Group>()
   const [messages, setMessages] = useState<Message[]>([])
-  const [usersList, setUsersList] = useState<User[]>([])
+  const [usersList, setUsersList] = useState<User[] | undefined>(undefined)
   const { isLoggedIn: isAuthenticated } = useContext(loggedInContext)
+
+  const getUsersInRoom = (id: string) => {
+    let users: User[] = []
+  }
+
   const sendMessage = (message: Message) => {
     setMessages((prevState: any) => {
       return prevState.concat(message)
     })
   }
   useEffect(() => {
-    let users = getUsersInRoom(params.id)
-    setUsersList(users)
-    if (!isAuthenticated) {
-      return
-    } else if (users.length === 0) {
-      console.log('Room not found')
-    } else {
-      const newSocket = io('http://localhost:3000', {
-        transports: ['websocket'],
+    const asyncWrapper = async (id: string) => {
+      const response = await axios.get('http://localhost:3000/rooms/get', {
+        params: {
+          roomId: id,
+        },
+        withCredentials: true,
       })
-      setSocket(newSocket)
-      newSocket?.connect()
-      newSocket?.emit(
-        'joinRoom',
-        JSON.stringify({
-          roomId: params.id,
+      const users = (response.data as any).users
+      console.log(users)
+      setUsersList(users)
+      if (!isAuthenticated) {
+        return
+      } else if (users.length === 0) {
+        console.log('Room not found')
+      } else {
+        const newSocket = io('http://localhost:3000', {
+          transports: ['websocket'],
         })
-      )
-      newSocket.on('newMessage', (data: Message) => {
-        setMessages(
-          messages.concat({
-            image: avatar,
-            username: data.username,
-            content: data.content,
+        setSocket(newSocket)
+        newSocket?.connect()
+        newSocket?.emit(
+          'joinRoom',
+          JSON.stringify({
+            roomId: params.id,
           })
         )
-      })
+        newSocket.on('newMessage', (data: Message) => {
+          setMessages(
+            messages.concat({
+              image: avatar,
+              username: data.username,
+              content: data.content,
+            })
+          )
+        })
 
-      return () => {
-        newSocket.close()
+        return () => {
+          newSocket.close()
+        }
       }
     }
+    asyncWrapper(params.id)
   }, [params.id, messages, isAuthenticated])
   if (isAuthenticated !== undefined) {
-    if (isAuthenticated) {
+    if (isAuthenticated && usersList !== undefined && usersList.length !== 0) {
       return (
         <globalContext.Provider
           value={{
             messages,
             sendMessage,
-            users: usersList,
+            users: usersList!,
           }}
         >
           <socketContext.Provider value={{ socket, roomId: params.id }}>
@@ -101,23 +94,36 @@ export default function Groups(props: IAppProps) {
           </socketContext.Provider>
         </globalContext.Provider>
       )
+    } else if (!isAuthenticated) {
+      return (
+        <ErrorPage
+          title='Not logged in'
+          message='You need to login to join rooms'
+          recommend='You can login by going'
+          link='/login'
+        />
+      )
+    } else if (usersList === undefined) {
+      return null
     } else {
       return (
         <ErrorPage
-          title="Not logged in"
-          message="You need to login to join rooms"
-          recommend="You can login by going"
-          link="/login"
+          title='Room not found'
+          message="The room you are trying to access doesn't exist"
+          recommend='You can go back to the homepage'
+          link='/'
         />
       )
     }
+  } else if (usersList === undefined) {
+    return null
   } else if (usersList.length === 0) {
     return (
       <ErrorPage
-        title="Room not found"
+        title='Room not found'
         message="The room you are trying to access doesn't exist"
-        recommend="You can go back to the homepage"
-        link="/"
+        recommend='You can go back to the homepage'
+        link='/'
       />
     )
   } else {
