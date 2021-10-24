@@ -1,56 +1,84 @@
 import styles from './CreateRoom.module.css'
 import Container from '../components/UI/Container'
 import loggedInContext from '../utils/Contexts/loggedInContext'
-import { useContext, useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import ErrorPage from '../components/UI/Error'
 import Button from '../components/UI/Button'
-import isValidRoom from '../utils/isValidRoom'
-export interface ICreateRoomProps {}
+import axios from 'axios'
+import notificationContext from '../utils/Contexts/notificationContext'
+import { withRouter } from 'react-router'
+import generateRandomRoom from '../utils/isNewRoom'
+import { useState } from 'react'
+export interface ICreateRoomProps {
+  history: any
+}
 
-export default function CreateRoom(props: ICreateRoomProps) {
+function CreateRoom(props: ICreateRoomProps) {
   const { isLoggedIn } = useContext(loggedInContext)
-  const roomIdRef = useRef<HTMLInputElement>(null)
+  const roomNameRef = useRef<HTMLInputElement>(null)
+  const notifCtx = useContext(notificationContext)
+  const [roomId, setRoomId] = useState('')
 
-  const generateRandomRoom = (e: any) => {
-    const roomId = Math.random().toString().slice(2, 12) // 0.1453144xx. Index 2 starts at 0.1
-    if (roomIdRef.current) {
-      roomIdRef.current.value = roomId
-      roomIdRef.current.classList.replace(styles['invalid'], styles['valid'])
+  useEffect(() => {
+    const getRoomId = async () => {
+      const id = await generateRandomRoom()
+      setRoomId(id)
+    }
+    getRoomId()
+  }, [])
+
+  const createRoom = async (e: any) => {
+    if (roomNameRef.current && roomNameRef.current.value.length !== 0) {
+      const result = await axios.post(
+        'http://localhost:3000/rooms/add',
+        {
+          roomId,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      if (result.status === 200) {
+        console.log('Added user successfully')
+        props.history.push(`/group/${roomId}`)
+      } else {
+        notifCtx.showNotification(
+          'Something went wrong. Please try again later'
+        )
+      }
+    } else {
+      console.log("name can't be empty")
     }
   }
-
-  const createRoom = (e: any) => {
-    if (roomIdRef.current) {
-      if (isValidRoom(roomIdRef.current.value)) {
-      }
-    }
+  const randomizeHandler = async (e: any) => {
+    const roomId = await generateRandomRoom()
+    setRoomId(roomId)
   }
   if (isLoggedIn === undefined) {
     return null
   } else if (isLoggedIn) {
     return (
-      <Container className={styles['root']} type="grid">
+      <Container className={styles['root']} type='grid'>
         <h1 className={styles['title']}>Create Room</h1>
         <div className={styles['create']}>
           <input
-            type="text"
-            name="roomName"
-            id="roomName"
-            placeholder="Room Name"
-            maxLength={20}
+            type='text'
+            name='roomName'
+            id='roomName'
+            placeholder='Room Name'
+            ref={roomNameRef}
           />
           <input
-            type="text"
-            name="roomId"
-            id="roomId"
+            type='text'
+            name='roomId'
+            id='roomId'
             maxLength={10}
-            ref={roomIdRef}
-            value={Math.random().toString().slice(2, 12)}
+            value={roomId}
             disabled
           />
 
-          <Button text="Randomize" onClick={generateRandomRoom} color="blue" />
-          <Button text="Create" onClick={createRoom} color="green" />
+          <Button text='Randomize' onClick={randomizeHandler} color='blue' />
+          <Button text='Create' onClick={createRoom} color='green' />
         </div>
         <div className={styles['info']}>
           <p>Keep the following things in mind when creating a room</p>
@@ -66,11 +94,13 @@ export default function CreateRoom(props: ICreateRoomProps) {
   } else {
     return (
       <ErrorPage
-        title="Not logged in"
-        message="You need to login to create rooms"
-        recommend="You can login by going"
-        link="/login"
+        title='Not logged in'
+        message='You need to login to create rooms'
+        recommend='You can login by going'
+        link='/login'
       />
     )
   }
 }
+
+export default withRouter(CreateRoom)

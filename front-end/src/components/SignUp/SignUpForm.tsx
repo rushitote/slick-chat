@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import notificationContext from '../../utils/Contexts/notificationContext'
 
-function App(props: any) {
+function SignUpForm(props: any) {
   const usernameRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
   const confirmPasswordRef = useRef<HTMLInputElement>(null)
@@ -54,31 +54,31 @@ function App(props: any) {
   return (
     <form className={styles['form']}>
       <div className={styles['pair']}>
-        <label htmlFor="username">Username</label>
+        <label htmlFor='username'>Username</label>
         <input
-          type="text"
-          name="username"
-          id="username"
+          type='text'
+          name='username'
+          id='username'
           ref={usernameRef}
           required
         />
       </div>
       <div className={styles['pair']}>
-        <label htmlFor="password">Password</label>
+        <label htmlFor='password'>Password</label>
         <input
-          type="password"
-          name="password"
-          id="password"
+          type='password'
+          name='password'
+          id='password'
           ref={passwordRef}
           required
         />
       </div>
       <div className={styles['pair']}>
-        <label htmlFor="confirmPassword">Confirm Password</label>
+        <label htmlFor='confirmPassword'>Confirm Password</label>
         <input
-          type="password"
-          name="confirmPassword"
-          id="confirmPassword"
+          type='password'
+          name='confirmPassword'
+          id='confirmPassword'
           ref={confirmPasswordRef}
           required
         />
@@ -92,11 +92,11 @@ function App(props: any) {
           {errorMessage}
         </div>
 
-        <Button text="Create account" onClick={signUpHandler} />
+        <Button text='Create account' onClick={signUpHandler} />
         <div className={styles['register-text']}>
           <p>Already have an account?</p>
           <p>
-            Login by clicking <Link to="/login"> here</Link>
+            Login by clicking <Link to='/login'> here</Link>
           </p>
         </div>
       </div>
@@ -104,4 +104,4 @@ function App(props: any) {
   )
 }
 
-export default withRouter(App)
+export default withRouter(SignUpForm)
