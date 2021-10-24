@@ -11,9 +11,6 @@
   gap: 1em;
 }
 
-.user-list-heading {
-}
-
 .user-list-users {
   display: flex;
   flex-direction: column;
