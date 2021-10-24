@@ -15,16 +15,16 @@ export default function Router(props: IRouterProps) {
     <notificationContext.Provider
       value={{ hideNotification, showNotification }}
     >
-      <Route path="/group/:id">
+      <Route path='/group/:id'>
         <Groups />
       </Route>
-      <Route path="/login">
+      <Route path='/login'>
         <Login />
       </Route>
-      <Route path="/signUp">
+      <Route path='/signUp'>
         <SignUp />
       </Route>
-      <Route path="/create">
+      <Route path='/create'>
         <CreateRoom />
       </Route>
     </notificationContext.Provider>

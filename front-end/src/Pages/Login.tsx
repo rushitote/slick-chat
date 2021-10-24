@@ -7,7 +7,7 @@ export default function Login(props: ILoginProps) {
   return (
     <>
       <div className={styles['root']}>
-        <About title="Login" />
+        <About title='Login' />
         <LoginForm />
       </div>
     </>

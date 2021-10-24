@@ -36,23 +36,23 @@ export default function App(props: IAppProps) {
   return (
     <form className={styles['form']}>
       <div className={styles['pair']}>
-        <label htmlFor="username">Username</label>
-        <input type="text" name="username" id="username" ref={usernameRef} />
+        <label htmlFor='username'>Username</label>
+        <input type='text' name='username' id='username' ref={usernameRef} />
       </div>
       <div className={styles['pair']}>
-        <label htmlFor="password">Password</label>
+        <label htmlFor='password'>Password</label>
         <input
-          type="password"
-          name="password"
-          id="password"
+          type='password'
+          name='password'
+          id='password'
           ref={passwordRef}
         />
       </div>
-      <Button text="Login" onClick={loginHandler} />
+      <Button text='Login' onClick={loginHandler} />
       <div className={styles['register-text']}>
         <p> Not registered? </p>
         <p>
-          You can create an account for free <Link to="/signUp"> here</Link>
+          You can create an account for free <Link to='/signUp'> here</Link>
         </p>
       </div>
     </form>

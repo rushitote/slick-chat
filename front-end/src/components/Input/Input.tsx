@@ -38,14 +38,14 @@ export default function Input(props: IInputProps) {
   return (
     <div className={styles['input']}>
       <input
-        type="text"
+        type='text'
         className={styles['input-box']}
         ref={messageBoxRef}
         onKeyDown={keyUpHandler}
-        placeholder="Type your message here"
+        placeholder='Type your message here'
       />
       <div className={`${styles['input-send-message']}`}>
-        <img src={image} alt="" onClick={sendMessage} />
+        <img src={image} alt='' onClick={sendMessage} />
       </div>
     </div>
   )

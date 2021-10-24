@@ -15,7 +15,7 @@ export default function UsersList(props: IUsersListProps) {
       <div className={styles['user-list-users']}>
         {ctx.users.map((user) => (
           <li key={Math.random()}>
-            <img src={props.image} alt="" className={styles['user-image']} />
+            <img src={props.image} alt='' className={styles['user-image']} />
             {user.username}
           </li>
         ))}

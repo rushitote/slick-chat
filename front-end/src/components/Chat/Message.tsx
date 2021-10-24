@@ -11,7 +11,7 @@ export default function Message(props: IMessageProps) {
     <div className={styles['message']}>
       <img
         className={styles['message-user-image']}
-        alt="User profile"
+        alt='User profile'
         src={props.image}
       />
       <div className={styles['message-body']}>

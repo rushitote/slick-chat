@@ -9,7 +9,7 @@ export interface IButtonProps {
 export default function Button(props: IButtonProps) {
   return (
     <button
-      type="submit"
+      type='submit'
       onClick={props.onClick}
       className={`${styles['btn']} ${
         styles['btn-' + (props.color ? props.color : 'green')]
