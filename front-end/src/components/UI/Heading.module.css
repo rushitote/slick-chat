@@ -1,0 +1,7 @@
+.heading {
+  background: var(--gradient-to-right);
+  background-clip: text;
+  color: transparent;
+  font-size: clamp(70px, 6vw, 130px);
+  text-align: center;
+}

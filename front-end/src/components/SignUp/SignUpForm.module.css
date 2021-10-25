@@ -17,17 +17,6 @@
   width: 100%;
 }
 
-input {
-  font-size: clamp(12px, 2vw, 30px);
-  padding: 10px;
-  color: var(--text-color);
-  background-color: var(--secondary-color);
-  border: none;
-  border-radius: 5px;
-  outline: none;
-  width: 100%;
-}
-
 .error-message {
   text-align: center;
   background: var(--danger-gradient);
@@ -39,9 +28,6 @@ input {
 }
 .error-message.show {
   opacity: 1;
-}
-input:focus {
-  box-shadow: 0 0 5px 1px var(--primary-color);
 }
 
 label {

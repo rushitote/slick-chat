@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import notificationContext from '../../utils/Contexts/notificationContext'
 import BottomFormPopup from '../UI/ButtonFormPopup'
+import InputField from '../UI/InputField'
 function SignUpForm(props: any) {
   const usernameRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
@@ -55,32 +56,29 @@ function SignUpForm(props: any) {
     <form className={styles['form']}>
       <div className={styles['pair']}>
         <label htmlFor='username'>Username</label>
-        <input
+        <InputField
           type='text'
           name='username'
           id='username'
           ref={usernameRef}
-          required
         />
       </div>
       <div className={styles['pair']}>
         <label htmlFor='password'>Password</label>
-        <input
+        <InputField
           type='password'
           name='password'
           id='password'
           ref={passwordRef}
-          required
         />
       </div>
       <div className={styles['pair']}>
         <label htmlFor='confirmPassword'>Confirm Password</label>
-        <input
+        <InputField
           type='password'
           name='confirmPassword'
           id='confirmPassword'
           ref={confirmPasswordRef}
-          required
         />
       </div>
       <BottomFormPopup show={errorShow} message={errorMessage}>

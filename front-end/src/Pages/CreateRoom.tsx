@@ -10,6 +10,7 @@ import { withRouter } from 'react-router'
 import generateRandomRoom from '../utils/isNewRoom'
 import { useState } from 'react'
 import BottomFormPopup from '../components/UI/ButtonFormPopup'
+import Heading from '../components/UI/Heading'
 export interface ICreateRoomProps {
   history: any
 }
@@ -27,8 +28,8 @@ function CreateRoom(props: ICreateRoomProps) {
       const id = await generateRandomRoom()
       setRoomId(id)
     }
-    getRoomId()
-  }, [])
+    if (isLoggedIn) getRoomId()
+  }, [isLoggedIn])
 
   const createRoom = async (e: any) => {
     if (roomNameRef.current && roomNameRef.current.value.length !== 0) {
@@ -64,7 +65,7 @@ function CreateRoom(props: ICreateRoomProps) {
   } else if (isLoggedIn) {
     return (
       <Container className={styles['root']} type='grid'>
-        <h1 className={styles['title']}>Create Room</h1>
+        <Heading text='Create Room' className={styles['title']} />
         <div className={styles['create']}>
           <input
             type='text'

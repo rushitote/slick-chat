@@ -3,6 +3,7 @@ import { useContext, useRef } from 'react'
 import loggedInContext from '../../utils/Contexts/loggedInContext'
 import Button from '../UI/Button'
 import { Link } from 'react-router-dom'
+import InputField from '../UI/InputField'
 export interface IAppProps {}
 
 export default function App(props: IAppProps) {
@@ -37,11 +38,16 @@ export default function App(props: IAppProps) {
     <form className={styles['form']}>
       <div className={styles['pair']}>
         <label htmlFor='username'>Username</label>
-        <input type='text' name='username' id='username' ref={usernameRef} />
+        <InputField
+          type='text'
+          name='username'
+          id='username'
+          ref={usernameRef}
+        />
       </div>
       <div className={styles['pair']}>
         <label htmlFor='password'>Password</label>
-        <input
+        <InputField
           type='password'
           name='password'
           id='password'

@@ -9,14 +9,6 @@
   color: var(--text-color);
 }
 
-.root h1 {
-  background: var(--gradient-to-right);
-  background-clip: text;
-  color: transparent;
-  font-size: clamp(70px, 6vw, 130px);
-  text-align: center;
-}
-
 .root input {
   width: 400px;
   text-align: center;

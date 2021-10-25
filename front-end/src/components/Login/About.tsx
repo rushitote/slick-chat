@@ -1,14 +1,15 @@
 import * as React from 'react'
 import styles from './About.module.css'
+import Heading from '../UI/Heading'
 
 export interface IAppProps {
-  title: String
+  title: string
 }
 
 export default function App(props: IAppProps) {
   return (
     <div className={styles['about']}>
-      <h1>{props.title}</h1>
+      <Heading text={props.title} />
     </div>
   )
 }
