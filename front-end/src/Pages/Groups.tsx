@@ -11,6 +11,7 @@ import loggedInContext from '../utils/Contexts/loggedInContext'
 import axios from 'axios'
 import User from '../Interfaces/UserResponse'
 import ErrorPage from '../components/UI/Error'
+import Authenticated from '../components/Other/Authenticated'
 export interface Group {
   id: string
 }
@@ -21,11 +22,7 @@ export default function Groups(props: IAppProps) {
   const params = useParams<Group>()
   const [messages, setMessages] = useState<Message[]>([])
   const [usersList, setUsersList] = useState<User[] | undefined>(undefined)
-  const { isLoggedIn: isAuthenticated } = useContext(loggedInContext)
-
-  const getUsersInRoom = (id: string) => {
-    let users: User[] = []
-  }
+  const { isLoggedIn } = useContext(loggedInContext)
 
   const sendMessage = (message: Message) => {
     setMessages((prevState: any) => {
@@ -40,14 +37,11 @@ export default function Groups(props: IAppProps) {
         },
         withCredentials: true,
       })
-      const users = (response.data as any).users
+      const users: User[] = (response.data as any).users
       console.log(users)
       setUsersList(users)
-      if (!isAuthenticated) {
-        return
-      } else if (users.length === 0) {
-        console.log('Room not found')
-      } else {
+
+      if (users.length !== 0) {
         const newSocket = io('http://localhost:3000', {
           transports: ['websocket'],
         })
@@ -74,11 +68,11 @@ export default function Groups(props: IAppProps) {
         }
       }
     }
-    asyncWrapper(params.id)
-  }, [params.id, messages, isAuthenticated])
-  if (isAuthenticated !== undefined) {
-    if (isAuthenticated && usersList !== undefined && usersList.length !== 0) {
-      return (
+    if (isLoggedIn) asyncWrapper(params.id)
+  }, [params.id, messages, isLoggedIn])
+  return (
+    <Authenticated>
+      {usersList?.length !== 0 ? (
         <globalContext.Provider
           value={{
             messages,
@@ -93,42 +87,14 @@ export default function Groups(props: IAppProps) {
             </div>
           </socketContext.Provider>
         </globalContext.Provider>
-      )
-    } else if (!isAuthenticated) {
-      return (
-        <ErrorPage
-          title='Not logged in'
-          message='You need to login to join rooms'
-          recommend='You can login by going'
-          link='/login'
-        />
-      )
-    } else if (usersList === undefined) {
-      return null
-    } else {
-      return (
+      ) : (
         <ErrorPage
           title='Room not found'
           message="The room you are trying to access doesn't exist"
           recommend='You can go back to the homepage'
           link='/'
         />
-      )
-    }
-  } else if (usersList === undefined) {
-    return null
-  } else if (usersList.length === 0) {
-    return (
-      <ErrorPage
-        title='Room not found'
-        message="The room you are trying to access doesn't exist"
-        recommend='You can go back to the homepage'
-        link='/'
-      />
-    )
-  } else {
-    // this means authentication is in process
-    // do nothing
-    return null
-  }
+      )}
+    </Authenticated>
+  )
 }

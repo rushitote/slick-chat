@@ -1,4 +1,4 @@
-import * as React from 'react'
+import Container from './Container'
 import styles from './Error.module.css'
 import { Link } from 'react-router-dom'
 export interface IAppProps {
@@ -10,13 +10,13 @@ export interface IAppProps {
 
 export default function ErrorPage(props: IAppProps) {
   return (
-    <div className={styles['root']}>
+    <Container className={styles['root']} type='flex'>
       <h1>{props.title}</h1>
       <p>{props.message}</p>
 
       <p>
         {props.recommend} <Link to={props.link}>here</Link>
       </p>
-    </div>
+    </Container>
   )
 }

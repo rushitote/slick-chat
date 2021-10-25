@@ -2,7 +2,6 @@ import styles from './CreateRoom.module.css'
 import Container from '../components/UI/Container'
 import loggedInContext from '../utils/Contexts/loggedInContext'
 import { useContext, useEffect, useRef } from 'react'
-import ErrorPage from '../components/UI/Error'
 import Button from '../components/UI/Button'
 import axios from 'axios'
 import notificationContext from '../utils/Contexts/notificationContext'
@@ -12,6 +11,7 @@ import { useState } from 'react'
 import BottomFormPopup from '../components/UI/ButtonFormPopup'
 import Heading from '../components/UI/Heading'
 import InputField from '../components/UI/InputField'
+import Authenticated from '../components/Other/Authenticated'
 export interface ICreateRoomProps {
   history: any
 }
@@ -61,10 +61,8 @@ function CreateRoom(props: ICreateRoomProps) {
     const roomId = await generateRandomRoom()
     setRoomId(roomId)
   }
-  if (isLoggedIn === undefined) {
-    return null
-  } else if (isLoggedIn) {
-    return (
+  return (
+    <Authenticated>
       <Container className={styles['root']} type='grid'>
         <Heading text='Create Room' className={styles['title']} />
         <div className={styles['create']}>
@@ -97,17 +95,8 @@ function CreateRoom(props: ICreateRoomProps) {
           </ul>
         </div>
       </Container>
-    )
-  } else {
-    return (
-      <ErrorPage
-        title='Not logged in'
-        message='You need to login to create rooms'
-        recommend='You can login by going'
-        link='/login'
-      />
-    )
-  }
+    </Authenticated>
+  )
 }
 
 export default withRouter(CreateRoom)
