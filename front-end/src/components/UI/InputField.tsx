@@ -8,6 +8,8 @@ export interface IInputFieldProps {
   placeholder?: string
   type?: string
   className?: string
+  value?: string
+  disabled?: boolean
 }
 
 const InputField = forwardRef(
@@ -20,6 +22,8 @@ const InputField = forwardRef(
         id={props.id}
         placeholder={props.placeholder || ''}
         ref={ref}
+        value={props.value || ''}
+        disabled={props.disabled || false}
       />
     )
   }

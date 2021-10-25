@@ -11,6 +11,7 @@ import generateRandomRoom from '../utils/isNewRoom'
 import { useState } from 'react'
 import BottomFormPopup from '../components/UI/ButtonFormPopup'
 import Heading from '../components/UI/Heading'
+import InputField from '../components/UI/InputField'
 export interface ICreateRoomProps {
   history: any
 }
@@ -67,20 +68,19 @@ function CreateRoom(props: ICreateRoomProps) {
       <Container className={styles['root']} type='grid'>
         <Heading text='Create Room' className={styles['title']} />
         <div className={styles['create']}>
-          <input
+          <InputField
             type='text'
             name='roomName'
             id='roomName'
             placeholder='Room Name'
             ref={roomNameRef}
           />
-          <input
+          <InputField
             type='text'
             name='roomId'
             id='roomId'
-            maxLength={10}
             value={roomId}
-            disabled
+            disabled={true}
           />
           <BottomFormPopup show={errorShow} message={errorMessage}>
             <Button text='Randomize' onClick={randomizeHandler} color='blue' />
