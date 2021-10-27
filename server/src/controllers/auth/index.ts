@@ -94,11 +94,21 @@ export function logout(req, res) {
   req.session.destroy()
   res.status(200).send({ msg: 'Logged out successfully' })
 }
-
+/**
+ * @param  {Request} req
+ * @param  {Response} res
+ * @returns {boolean} response.authenticated
+ * @returns {string} response.user.username
+ * @returns {string} response.user.userId
+ */
 export function getIsAuthenticated(req: Request, res: Response) {
   if (req.isAuthenticated()) {
     res.status(200).send({
       authenticated: true,
+      user: {
+        userId: (req.user as any).userId,
+        username: (req.user as any).username,
+      },
     })
   } else {
     res.status(400).send({
