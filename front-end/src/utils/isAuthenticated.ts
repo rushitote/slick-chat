@@ -1,5 +1,3 @@
-import { AuthenticatedResponse } from '../ResponseInterfaces/Interfaces'
-
 const isAuthenticated = async () => {
   const response = await fetch('http://localhost:3000/authenticated', {
     method: 'GET',
@@ -9,12 +7,9 @@ const isAuthenticated = async () => {
     },
     mode: 'cors',
   })
-  const data: AuthenticatedResponse = await response.json()
-
-  console.log('User is', data.user)
+  const { authenticated } = await response.json()
   // response is of format { authenticated: true|false}
-  // is the user is authenticated, the user object is returned
-  return data.authenticated
+  return authenticated
 }
 
 export default isAuthenticated
