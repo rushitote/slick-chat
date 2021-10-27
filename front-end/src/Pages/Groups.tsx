@@ -9,7 +9,7 @@ import { io, Socket } from 'socket.io-client'
 import socketContext from '../utils/Contexts/socketContext'
 import loggedInContext from '../utils/Contexts/loggedInContext'
 import axios from 'axios'
-import User from '../Interfaces/UserResponse'
+import { User } from '../ResponseInterfaces/Interfaces'
 import ErrorPage from '../components/UI/Error'
 import Authenticated from '../components/Other/Authenticated'
 export interface Group {

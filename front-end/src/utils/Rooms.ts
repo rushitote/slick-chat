@@ -1,5 +1,5 @@
 import axios from 'axios'
-import User from '../Interfaces/UserResponse'
+import { User } from '../ResponseInterfaces/Interfaces'
 
 const isValidRoom = (roomId: string): boolean => {
   const validRoomRegex = /^\d{10}$/

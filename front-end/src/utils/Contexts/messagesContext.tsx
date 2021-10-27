@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import User from '../../Interfaces/UserResponse'
+import { User } from '../../ResponseInterfaces/Interfaces'
 export interface Message {
   content: string
   username: string
