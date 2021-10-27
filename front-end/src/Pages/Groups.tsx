@@ -30,6 +30,7 @@ export default function Groups(props: IAppProps) {
     })
   }
   useEffect(() => {
+    console.log('called')
     const asyncWrapper = async (id: string) => {
       const response = await axios.get('http://localhost:3000/rooms/get', {
         params: {
@@ -72,7 +73,7 @@ export default function Groups(props: IAppProps) {
   }, [params.id, messages, isLoggedIn])
   return (
     <Authenticated>
-      {usersList?.length !== 0 ? (
+      {usersList !== undefined && usersList.length !== 0 ? (
         <globalContext.Provider
           value={{
             messages,
@@ -87,14 +88,14 @@ export default function Groups(props: IAppProps) {
             </div>
           </socketContext.Provider>
         </globalContext.Provider>
-      ) : (
+      ) : usersList !== undefined ? (
         <ErrorPage
           title='Room not found'
           message="The room you are trying to access doesn't exist"
           recommend='You can go back to the homepage'
           link='/'
         />
-      )}
+      ) : null}
     </Authenticated>
   )
 }

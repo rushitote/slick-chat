@@ -62,6 +62,7 @@
     align-items: center;
   }
 }
+
 .error-message {
   text-align: center;
   background: var(--danger-gradient);
@@ -75,7 +76,7 @@
   opacity: 1;
 }
 
-.create p {
+.root p {
   width: 400px;
   text-align: center;
 }

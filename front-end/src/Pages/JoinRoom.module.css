@@ -10,8 +10,13 @@
 
 .roomId {
   text-align: center;
-  width: 500px;
+  width: 600px;
   font-size: 40px;
+  transition: outline 100ms ease;
+}
+
+.roomId.invalid {
+  outline: 2px solid red;
 }
 
 .title {
@@ -28,10 +33,12 @@
 }
 
 .pair p {
-  width: 500px;
+  width: 600px;
   text-align: center;
+  align-items: center;
 }
 
 .root button {
-  width: 500px;
+  width: 300px;
+  align-self: center;
 }
