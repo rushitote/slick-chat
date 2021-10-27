@@ -12,6 +12,7 @@ import BottomFormPopup from '../components/UI/ButtonFormPopup'
 import Heading from '../components/UI/Heading'
 import InputField from '../components/UI/InputField'
 import Authenticated from '../components/Other/Authenticated'
+import { Link } from 'react-router-dom'
 export interface ICreateRoomProps {
   history: any
 }
@@ -84,6 +85,10 @@ function CreateRoom(props: ICreateRoomProps) {
             <Button text='Randomize' onClick={randomizeHandler} color='blue' />
             <Button text='Create' onClick={createRoom} color='green' />
           </BottomFormPopup>
+          <p>
+            Already have a Room ID? You can join the Room by going{' '}
+            <Link to='/join'>here</Link>
+          </p>
         </div>
         <div className={styles['info']}>
           <p>Keep the following things in mind when creating a room</p>

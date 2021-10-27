@@ -15,11 +15,11 @@ const InputField = forwardRef(
   (props: IInputFieldProps, ref: Ref<HTMLInputElement>) => {
     return (
       <input
+        {...props}
         className={`${props.className || ''} ${styles['input']}`}
         type={props.type || 'text'}
         placeholder={props.placeholder || ''}
         ref={ref}
-        {...props}
       />
     )
   }

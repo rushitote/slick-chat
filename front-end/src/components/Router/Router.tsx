@@ -4,6 +4,7 @@ import Login from '../../Pages/Login'
 import SignUp from '../../Pages/SignUp'
 import notificationContext from '../../utils/Contexts/notificationContext'
 import CreateRoom from '../../Pages/CreateRoom'
+import JoinRoom from '../../Pages/JoinRoom'
 export interface IRouterProps {
   hideNotification: Function
   showNotification: Function
@@ -26,6 +27,9 @@ export default function Router(props: IRouterProps) {
       </Route>
       <Route path='/create'>
         <CreateRoom />
+      </Route>
+      <Route path='/join'>
+        <JoinRoom />
       </Route>
     </notificationContext.Provider>
   )

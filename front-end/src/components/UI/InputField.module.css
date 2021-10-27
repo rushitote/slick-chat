@@ -1,5 +1,5 @@
 .input {
-  font-size: clamp(12px, 2vw, 30px);
+  font-size: clamp(12px, 2vw, 40px);
   padding: 10px;
   color: var(--text-color);
   background-color: var(--secondary-color);
