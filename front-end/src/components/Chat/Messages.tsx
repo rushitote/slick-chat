@@ -16,7 +16,7 @@ export default function Messages(props: IMessagesProps) {
   return (
     <div className={styles['chat-messages-container']} ref={scrollRef}>
       <div className={styles['chat-messages']}>
-        {ctx.received.map((message) => {
+        {ctx.messages.map((message) => {
           return (
             <Message
               content={message.content}
