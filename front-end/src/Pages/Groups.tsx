@@ -26,6 +26,8 @@ export default function Groups(props: IAppProps) {
 
   const sendMessage = (message: Message) => {
     setMessages((prevState: any) => {
+      console.log('previous state is', prevState)
+      console.log('new state is', message)
       return prevState.concat(message)
     })
   }
@@ -55,8 +57,8 @@ export default function Groups(props: IAppProps) {
           })
         )
         newSocket.on('newMessage', (data: Message) => {
-          setMessages(
-            messages.concat({
+          setMessages((m) =>
+            m.concat({
               image: avatar,
               username: data.username,
               content: data.content,
@@ -70,7 +72,7 @@ export default function Groups(props: IAppProps) {
       }
     }
     if (isLoggedIn) asyncWrapper(params.id)
-  }, [params.id, messages, isLoggedIn])
+  }, [params.id, isLoggedIn])
   return (
     <Authenticated>
       {usersList !== undefined && usersList.length !== 0 ? (

@@ -9,12 +9,13 @@ import { createPortal } from 'react-dom'
 export interface IAppProps {}
 
 export default function App(props: IAppProps) {
-  const { isLoggedIn, setIsLoggedIn } = useContext(loggedInContext)
+  const { setIsLoggedIn } = useContext(loggedInContext)
   const notifRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const asyncWrapper = async () => {
       console.log('running')
-      setIsLoggedIn(await isAuthenticated())
+      let isLoggedIn = await isAuthenticated()
+      setIsLoggedIn(isLoggedIn)
     }
     asyncWrapper()
   }, [setIsLoggedIn])

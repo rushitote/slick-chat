@@ -2,7 +2,7 @@ import axios from 'axios'
 import { User } from '../Interfaces/Responses'
 
 const isValidRoom = (roomId: string): boolean => {
-  const validRoomRegex = /^\d{10}$/
+  const validRoomRegex = /^[A-Za-z0-9]{7}$/
   return validRoomRegex.test(roomId)
 }
 
@@ -35,4 +35,17 @@ const generateRandomRoom = async () => {
   }
 }
 
-export { generateRandomRoom, isValidRoom, roomExists }
+const addToRoom = async (roomId: string) => {
+  try {
+    await axios.post(
+      'http://localhost:3000/rooms/add',
+      { roomId },
+      {
+        withCredentials: true,
+      }
+    )
+  } catch (e: any) {
+    throw new Error(e.response.msg)
+  }
+}
+export { generateRandomRoom, isValidRoom, roomExists, addToRoom }

@@ -16,7 +16,7 @@ export default function Input(props: IInputProps) {
       if (messageBoxRef.current.value.trim().length !== 0) {
         const message: Message = {
           content: messageBoxRef.current.value,
-          username: 'Me',
+          username: localStorage.getItem('username')!,
         }
         ctx.sendMessage(message)
         messageBoxRef.current.value = ''

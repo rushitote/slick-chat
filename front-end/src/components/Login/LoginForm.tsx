@@ -2,7 +2,7 @@ import styles from './LoginForm.module.css'
 import { useContext, useRef } from 'react'
 import loggedInContext from '../../utils/Contexts/loggedInContext'
 import Button from '../UI/Button'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import InputField from '../UI/InputField'
 export interface IAppProps {}
 
@@ -26,12 +26,18 @@ export default function App(props: IAppProps) {
         }),
       })
       const validCredentials = response.ok
+
       if (validCredentials) {
+        localStorage.setItem('username', usernameRef.current!.value)
         console.log('Logged in successfully')
       }
       setIsLoggedIn(validCredentials)
     }
     login()
+  }
+
+  if (isLoggedIn) {
+    return <Redirect to='/create' />
   }
 
   return (

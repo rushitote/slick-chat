@@ -6,30 +6,38 @@ import InputField from '../components/UI/InputField'
 import Button from '../components/UI/Button'
 import { Link } from 'react-router-dom'
 import { useContext, useRef, useState } from 'react'
-import { isValidRoom, roomExists } from '../utils/Rooms'
+import { isValidRoom, roomExists, addToRoom } from '../utils/Rooms'
 import BottomFormPopup from '../components/UI/ButtonFormPopup'
 import notificationContext from '../utils/Contexts/notificationContext'
-export interface IJoinRoomProps {}
+import { withRouter } from 'react-router'
+export interface IJoinRoomProps {
+  history: any
+}
 
-export default function JoinRoom(props: IJoinRoomProps) {
+function JoinRoom(props: IJoinRoomProps) {
   const roomIdRef = useRef<HTMLInputElement>(null)
   const [errorShow, setErrorShow] = useState(false)
   const [errorMessage, setErrorMessage] = useState('initialState')
   const notifContext = useContext(notificationContext)
   const roomJoinHandler = async (e: any) => {
     if (roomIdRef.current) {
-      if (!isValidRoom(roomIdRef.current.value)) {
+      const roomId = roomIdRef.current.value
+      if (!isValidRoom(roomId)) {
         roomIdRef.current.classList.add(styles['invalid'])
-        setErrorMessage(
-          'Room ID must consist of only numbers and be of length 10'
-        )
+        setErrorMessage('Invalid Room ID')
         setErrorShow(true)
       } else {
         roomIdRef.current.classList.remove(styles['invalid'])
         setErrorShow(false)
-        if (!(await roomExists(roomIdRef.current.value))) {
+        if (!(await roomExists(roomId))) {
           notifContext.showNotification('This room does not exist')
         } else {
+          try {
+            addToRoom(roomId)
+            props.history.push(`/group/${roomId}`)
+          } catch (e: any) {
+            notifContext.showNotification(e.message)
+          }
         }
       }
     }
@@ -40,7 +48,7 @@ export default function JoinRoom(props: IJoinRoomProps) {
         <Heading text='Join Room' className={styles['title']} />
         <div className={styles['pair']}>
           <InputField
-            maxLength={10}
+            maxLength={7}
             className={styles['roomId']}
             placeholder='Room ID'
             ref={roomIdRef}
@@ -57,3 +65,5 @@ export default function JoinRoom(props: IJoinRoomProps) {
     </Authenticated>
   )
 }
+
+export default withRouter(JoinRoom)
