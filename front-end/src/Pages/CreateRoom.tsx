@@ -1,44 +1,40 @@
 import styles from './CreateRoom.module.css'
 import Container from '../components/UI/Container'
-import loggedInContext from '../utils/Contexts/loggedInContext'
-import { useContext, useEffect, useRef } from 'react'
+import { useContext, useRef } from 'react'
 import Button from '../components/UI/Button'
 import axios from 'axios'
 import notificationContext from '../utils/Contexts/notificationContext'
 import { withRouter } from 'react-router'
-import { generateRandomRoom } from '../utils/Rooms'
 import { useState } from 'react'
 import BottomFormPopup from '../components/UI/ButtonFormPopup'
 import Heading from '../components/UI/Heading'
 import InputField from '../components/UI/InputField'
 import Authenticated from '../components/Other/Authenticated'
 import { Link } from 'react-router-dom'
+import { RoomCreateResponse } from '../Interfaces/Responses'
+import { generateSlug } from 'random-word-slugs'
 export interface ICreateRoomProps {
   history: any
 }
 
 function CreateRoom(props: ICreateRoomProps) {
-  const { isLoggedIn } = useContext(loggedInContext)
   const roomNameRef = useRef<HTMLInputElement>(null)
   const notifCtx = useContext(notificationContext)
-  const [roomId, setRoomId] = useState('')
   const [errorShow, setErrorShow] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState('')
 
-  useEffect(() => {
-    const getRoomId = async () => {
-      const id = await generateRandomRoom()
-      setRoomId(id)
+  const generateRandomRoomName = (e: any) => {
+    if (roomNameRef.current) {
+      roomNameRef.current.value = generateSlug(3)
     }
-    if (isLoggedIn) getRoomId()
-  }, [isLoggedIn])
+  }
 
   const createRoom = async (e: any) => {
     if (roomNameRef.current && roomNameRef.current.value.length !== 0) {
-      const result = await axios.post(
-        'http://localhost:3000/rooms/add',
+      const result = await axios.post<any, RoomCreateResponse>(
+        'http://localhost:3000/rooms/create',
         {
-          roomId,
+          roomName: roomNameRef.current.value,
         },
         {
           withCredentials: true,
@@ -46,7 +42,7 @@ function CreateRoom(props: ICreateRoomProps) {
       )
       if (result.status === 200) {
         console.log('Added user successfully')
-        props.history.push(`/group/${roomId}`)
+        props.history.push(`/group/${result.data.roomId}`)
       } else {
         notifCtx.showNotification(
           'Something went wrong. Please try again later'
@@ -57,10 +53,6 @@ function CreateRoom(props: ICreateRoomProps) {
       setErrorShow(true)
       console.log("name can't be empty")
     }
-  }
-  const randomizeHandler = async (e: any) => {
-    const roomId = await generateRandomRoom()
-    setRoomId(roomId)
   }
   return (
     <Authenticated>
@@ -74,15 +66,12 @@ function CreateRoom(props: ICreateRoomProps) {
             placeholder='Room Name'
             ref={roomNameRef}
           />
-          <InputField
-            type='text'
-            name='roomId'
-            id='roomId'
-            value={roomId}
-            disabled={true}
-          />
           <BottomFormPopup show={errorShow} message={errorMessage}>
-            <Button text='Randomize' onClick={randomizeHandler} color='blue' />
+            <Button
+              text='Running out of ideas? Let us help you out!'
+              onClick={generateRandomRoomName}
+              color='blue'
+            />
             <Button text='Create' onClick={createRoom} color='green' />
           </BottomFormPopup>
           <p>
@@ -91,11 +80,10 @@ function CreateRoom(props: ICreateRoomProps) {
           </p>
         </div>
         <div className={styles['info']}>
-          <p>Keep the following things in mind when creating a room</p>
+          <p>Here are some things you might want to know</p>
           <ul>
             <li>Room IDs are generated randomly</li>
             <li>Anyone with your Room ID can join your room</li>
-            <li>Keep your room name memorable</li>
             <li>Changing your Room name later is not possible</li>
           </ul>
         </div>
