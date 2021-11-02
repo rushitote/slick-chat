@@ -1,0 +1,43 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 1.1rem;
+  --primary-color: #414345;
+  --secondary-color: #232526;
+  --text-color: #edf6f9;
+  --username-color: #4cc9f0;
+  --gradient-to-right: linear-gradient(to right, #29ffc6, #20e3b2, #0cebeb);
+  --gradient-to-bottom-left: linear-gradient(
+    to bottom right,
+    #29ffc6,
+    #20e3b2,
+    #0cebeb
+  );
+  --gradient-danger: linear-gradient(to right, #da4453, #89216b);
+  --danger-gradient: linear-gradient(to left, #ee0979, #ff6a00);
+  --background-gradient: linear-gradient(
+    to bottom right,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
+}
+
+body,
+html {
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a:visited,
+a {
+  color: var(--username-color);
+}

@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-
+import { User } from '../../Interfaces/Responses'
 export interface Message {
   content: string
   username: string
@@ -9,7 +9,7 @@ export interface Message {
 interface globalContext {
   messages: Message[]
   sendMessage: Function
-  users: string[]
+  users: User[]
 }
 
 const messageContext = createContext<globalContext>({

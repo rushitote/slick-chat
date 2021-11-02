@@ -1,0 +1,22 @@
+.root {
+  background-image: var(--background-gradient);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 1em;
+}
+
+.root h1 {
+  background: var(--gradient-danger);
+  background-size: 200%;
+  background-clip: text;
+  color: transparent;
+
+  font-size: max(60px, 8vw);
+}
+
+.root p {
+  color: var(--text-color);
+  font-size: max(20px, 1.5vw);
+}

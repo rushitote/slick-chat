@@ -1,0 +1,28 @@
+.prompt {
+  position: absolute;
+  top: 30px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.prompt .prompt-box {
+  background: var(--secondary-color);
+  color: var(--text-color);
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.8);
+  padding: 1em;
+  border-radius: 10px;
+  display: flex;
+  gap: 1em;
+  opacity: 0;
+  transform: translateY(-100px);
+  position: relative;
+  transition: opacity 250ms ease-in, transform 250ms ease-in;
+}
+
+.prompt .prompt-close {
+  background: var(--gradient-to-right);
+  background-clip: text;
+  color: transparent;
+  cursor: pointer;
+}

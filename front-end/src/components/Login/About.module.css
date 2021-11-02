@@ -1,0 +1,4 @@
+.about {
+  grid-area: about;
+  justify-self: flex-end;
+}

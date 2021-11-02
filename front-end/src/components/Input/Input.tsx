@@ -2,8 +2,8 @@ import styles from './Input.module.css'
 import image from '../../images/send.png'
 import { KeyboardEvent, useRef } from 'react'
 import { useContext } from 'react'
-import messageContext, { Message } from '../../utils/messagesContext'
-import socketContext from '../../utils/socketContext'
+import messageContext, { Message } from '../../utils/Contexts/messagesContext'
+import socketContext from '../../utils/Contexts/socketContext'
 export interface IInputProps {}
 
 export default function Input(props: IInputProps) {
@@ -38,14 +38,14 @@ export default function Input(props: IInputProps) {
   return (
     <div className={styles['input']}>
       <input
-        type="text"
+        type='text'
         className={styles['input-box']}
         ref={messageBoxRef}
         onKeyDown={keyUpHandler}
-        placeholder="Type your message here"
+        placeholder='Type your message here'
       />
       <div className={`${styles['input-send-message']}`}>
-        <img src={image} alt="" onClick={sendMessage} />
+        <img src={image} alt='' onClick={sendMessage} />
       </div>
     </div>
   )

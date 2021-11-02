@@ -1,0 +1,55 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 1em;
+  grid-area: form;
+  padding-top: 4em;
+  max-width: 600px;
+  position: relative;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 10px;
+  font-size: clamp(15px, 3vw, 30px);
+  width: 100%;
+}
+
+.error-message {
+  text-align: center;
+  background: var(--danger-gradient);
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+  font-weight: bold;
+}
+.error-message.show {
+  opacity: 1;
+}
+
+label {
+  color: var(--text-color);
+  text-align: left;
+}
+
+.register-text {
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  transform: translateY(-25px);
+  transition: transform 250ms ease-in;
+}
+
+.bottom.show {
+  transform: translateX(0);
+}

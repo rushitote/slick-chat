@@ -56,7 +56,7 @@ export function create(req: Request, res: Response) {
       if (!result.status) {
         res.status(400).send({ msg: result.err })
       } else {
-        res.status(200).send({ msg: 'Successfully created user.' })
+        res.status(200).send({ msg: 'Successfully created user' })
       }
     })
     .catch(err => {
@@ -95,12 +95,14 @@ export function logout(req, res) {
   res.status(200).send({ msg: 'Logged out successfully' })
 }
 
-export function getTestAuth(req: Request, res: Response) {
-  isAuthenticated(req, res, () => {
-    res
-      .status(200)
-      .send(
-        'Currently logged in.\n' + 'Username: ' + (req.user as any).username
-      )
-  })
+export function getIsAuthenticated(req: Request, res: Response) {
+  if (req.isAuthenticated()) {
+    res.status(200).send({
+      authenticated: true,
+    })
+  } else {
+    res.status(400).send({
+      authenticated: false,
+    })
+  }
 }

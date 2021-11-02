@@ -1,21 +1,47 @@
-import { Route } from 'react-router-dom'
-import Groups from './Pages/Groups'
-import Login from './Pages/Login'
-import Status from './Pages/Status'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import Router from './components/Router/Router'
+import loggedInContext from './utils/Contexts/loggedInContext'
+import isAuthenticated from './utils/isAuthenticated'
+import Notification from './components/UI/Notification'
+import { useRef } from 'react'
+import './App.css'
+import { createPortal } from 'react-dom'
 export interface IAppProps {}
 
 export default function App(props: IAppProps) {
+  const { isLoggedIn, setIsLoggedIn } = useContext(loggedInContext)
+  const notifRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const asyncWrapper = async () => {
+      console.log('running')
+      setIsLoggedIn(await isAuthenticated())
+    }
+    asyncWrapper()
+  }, [setIsLoggedIn])
+
+  const showNotification = useCallback((message: string) => {
+    if (notifRef.current !== null) {
+      notifRef.current.querySelector('div')!.innerText = message
+      notifRef.current.classList.add('show')
+    }
+  }, [])
+  const hideNotification = useCallback(() => {
+    console.log('remove')
+    if (notifRef.current !== null) {
+      notifRef.current.classList.remove('show')
+    }
+  }, [])
+
   return (
     <>
-      <Route path="/group/:id">
-        <Groups />
-      </Route>
-      <Route path="/login">
-        <Login />
-      </Route>
-      <Route path="/testAuth">
-        <Status />
-      </Route>
+      <Router
+        showNotification={showNotification}
+        hideNotification={hideNotification}
+      />
+      {createPortal(
+        <Notification ref={notifRef} hideNotification={hideNotification} />,
+        document.getElementById('notification')!
+      )}
     </>
   )
 }

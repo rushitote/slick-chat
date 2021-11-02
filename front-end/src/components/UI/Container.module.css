@@ -1,0 +1,12 @@
+.flex-container {
+  display: flex;
+}
+
+.grid-container {
+  display: grid;
+}
+
+.container {
+  min-height: 100vh;
+  width: 100vw;
+}

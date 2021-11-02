@@ -1,0 +1,25 @@
+.root {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 0.6fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    '. .'
+    'about form'
+    '. .';
+  align-items: center;
+  background-image: linear-gradient(
+    to bottom right,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
+  justify-items: center;
+}
+
+@media screen and (max-width: 1250px) {
+  .root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}

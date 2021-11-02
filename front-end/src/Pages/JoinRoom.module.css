@@ -1,0 +1,44 @@
+.root {
+  background: var(--background-gradient);
+  color: var(--text-color);
+  padding-top: 1em;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+
+  padding: 10px;
+}
+
+.roomId {
+  text-align: center;
+  width: 600px;
+  font-size: 40px;
+  transition: outline 100ms ease;
+}
+
+.roomId.invalid {
+  outline: 2px solid red;
+}
+
+.title {
+  font-size: clamp(100px, 6vw, 130px);
+}
+
+.pair {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  align-self: flex-start;
+}
+
+.pair p {
+  width: 600px;
+  text-align: center;
+  align-items: center;
+}
+
+.root button {
+  width: 300px;
+  align-self: center;
+}

@@ -1,0 +1,29 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 1em;
+  grid-area: form;
+  padding-top: 4em;
+  max-width: 600px;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 10px;
+  font-size: clamp(15px, 3vw, 30px);
+  width: 100%;
+}
+
+label {
+  color: var(--text-color);
+  text-align: left;
+}
+
+.register-text {
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
