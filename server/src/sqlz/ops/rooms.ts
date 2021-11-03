@@ -18,3 +18,9 @@ export async function createRoom(username: string, roomName: string) {
 
   return roomId
 }
+
+export async function checkIfRoomExists(roomId: string) {
+  const room: any = await Rooms.findOne({ where: { roomId: roomId } })
+
+  return room ? true : false
+}

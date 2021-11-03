@@ -1,4 +1,4 @@
-import { STRING, TEXT } from 'sequelize'
+import { STRING, TEXT, BIGINT } from 'sequelize'
 import sequelize from './index'
 
 const Messages = sequelize.define(
@@ -16,6 +16,9 @@ const Messages = sequelize.define(
     },
     roomId: {
       type: STRING,
+    },
+    unixTime: {
+      type: BIGINT,
     },
   },
   {
