@@ -1,4 +1,5 @@
 import * as mappingOps from '../../sqlz/ops/mappingUserToRoom'
+import * as roomOps from '../../sqlz/ops/rooms'
 import { Request, Response } from 'express'
 
 export function addUserRoomMapping(req: Request, res: Response) {
@@ -10,8 +11,14 @@ export function addUserRoomMapping(req: Request, res: Response) {
   }
 
   try {
-    mappingOps.addUserRoomMapping(username, roomId).then(() => {
-      res.status(200).send({ msg: 'Mapping added successfully.' })
+    roomOps.checkIfRoomExists(roomId).then(roomExists => {
+      if (roomExists) {
+        mappingOps.addUserRoomMapping(username, roomId).then(() => {
+          res.status(200).send({ msg: 'Mapping added successfully.' })
+        })
+      } else {
+        res.status(400).send({ msg: 'Room does not exist.' })
+      }
     })
   } catch (err) {
     res.status(500).send({

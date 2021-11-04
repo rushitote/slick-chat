@@ -11,10 +11,18 @@ export function postMessage(req: Request, res: Response) {
   }
 
   try {
-    messageOps.postMessage(username, content, roomId).then(messageId => {
-      res.status(200).send({
-        messageId: messageId,
-      })
+    mappingOps.checkUserInRoom(username, roomId).then(isInRoom => {
+      if (isInRoom) {
+        messageOps.postMessage(username, content, roomId).then(messageId => {
+          res.status(200).send({
+            messageId: messageId,
+          })
+        })
+      } else {
+        res.status(403).send({
+          msg: 'User is not in room',
+        })
+      }
     })
   } catch (err) {
     res.status(500).send({
@@ -26,15 +34,23 @@ export function postMessage(req: Request, res: Response) {
 export function getMessages(req: Request, res: Response) {
   const username = (req.user as any).username
   const roomId = req.query.roomId?.toString()
+  const messageId = req.query.messageId?.toString()
 
   if (roomId === undefined) {
     return res.status(422).send({})
   }
 
   try {
-    mappingOps.addUserRoomMapping(username, roomId)
-    messageOps.getMessages(roomId).then(messages => {
-      res.status(200).send({ messages })
+    mappingOps.checkUserInRoom(username, roomId).then(isInRoom => {
+      if (!isInRoom) {
+        return res.status(403).send({
+          msg: 'User is not in room',
+        })
+      } else {
+        messageOps.getMessages(roomId, messageId).then(messages => {
+          res.status(200).send({ messages })
+        })
+      }
     })
   } catch (err) {
     res.status(500).send({

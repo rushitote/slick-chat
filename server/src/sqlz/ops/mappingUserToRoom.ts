@@ -3,8 +3,22 @@ import Users from '../models/users'
 import Rooms from '../models/rooms'
 import mappingUserToRoom from '../models/mappingUserToRoom'
 
+export async function checkUserInRoom(username, roomId) {
+  const user: any = await Users.findOne({ where: { username: username } })
+  if (!user) {
+    return false
+  }
+
+  const userId = user.userId
+
+  const found = await mappingUserToRoom.findOne({ where: { roomId, userId } })
+  return found ? true : false
+}
+
 export async function addUserRoomMapping(username: string, roomId: string) {
   const user: any = await Users.findOne({ where: { username: username } })
+  if (!user) return
+
   const userId = user.userId
 
   const found = await mappingUserToRoom.findOne({ where: { roomId, userId } })
@@ -15,6 +29,10 @@ export async function addUserRoomMapping(username: string, roomId: string) {
 
 export async function getRoomsOfUser(username: string) {
   const user: any = await Users.findOne({ where: { username: username } })
+  if (!user) {
+    return []
+  }
+
   const userId = user.userId
 
   const mappingsOfUser = await mappingUserToRoom.findAll({ where: { userId } })
