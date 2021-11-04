@@ -81,6 +81,7 @@ export default function Groups(props: IAppProps) {
             messages,
             sendMessage,
             users: usersList!,
+            loading: true,
           }}
         >
           <socketContext.Provider value={{ socket, roomId: params.id }}>

@@ -10,12 +10,14 @@ interface globalContext {
   messages: Message[]
   sendMessage: Function
   users: User[]
+  loading?: boolean
 }
 
 const messageContext = createContext<globalContext>({
   messages: [],
   sendMessage: (message: Message) => {},
   users: [],
+  loading: false,
 })
 
 export default messageContext

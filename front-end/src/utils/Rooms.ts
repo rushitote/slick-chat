@@ -48,4 +48,5 @@ const addToRoom = async (roomId: string) => {
     throw new Error(e.response.msg)
   }
 }
+
 export { generateRandomRoom, isValidRoom, roomExists, addToRoom }
