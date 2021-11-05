@@ -3,6 +3,7 @@ import { Server, Socket } from 'socket.io'
 import passport from 'passport'
 import { sessionMiddleware } from '../server/index'
 import postMessage from './postMessage'
+import { socketRequest } from './types'
 
 export class SocketIO {
   public io: Server
@@ -52,12 +53,20 @@ export class SocketIO {
     socket.on('newMessage', msg => {
       const { roomId, content } = JSON.parse(msg)
       console.log('Socket:', socket.id, 'sent', content, 'in', roomId)
-      const messageId = postMessage(socket.request, content, roomId)
-      socket.broadcast.to(roomId).emit('newMessage', {
-        username: (socket.request as any).user.dataValues.username,
-        messageId,
-        roomId,
+      postMessage(
+        socket.request as socketRequest,
+        (socket.request as socketRequest).user.dataValues.username,
         content,
+        roomId
+      ).then(messageId => {
+        if (messageId) {
+          socket.broadcast.to(roomId).emit('newMessage', {
+            username: (socket.request as socketRequest).user.dataValues.username,
+            messageId,
+            roomId,
+            content,
+          })
+        }
       })
     })
   }

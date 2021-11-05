@@ -37,6 +37,7 @@ export async function postMessage(username, content, roomId) {
 
 export async function postMessageByUserId(userId, content, roomId) {
   const messageId = nanoid()
-  await Messages.create({ messageId, content, userId, roomId })
+  const unixTime = Date.now()
+  await Messages.create({ messageId, content, userId, roomId, unixTime })
   return messageId
 }
