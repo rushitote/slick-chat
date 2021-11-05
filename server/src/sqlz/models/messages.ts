@@ -1,7 +1,22 @@
-import { STRING, TEXT, BIGINT } from 'sequelize'
+import { STRING, TEXT, BIGINT, Optional, Model } from 'sequelize'
 import sequelize from './index'
 
-const Messages = sequelize.define(
+interface MessageAttributes {
+  messageId: string
+  content: string
+  userId: string
+  roomId: string
+  unixTime: number
+}
+
+interface MessageCreationAttributes
+  extends Optional<MessageAttributes, 'messageId'> {}
+
+interface MessageInstance
+  extends Model<MessageAttributes, MessageCreationAttributes>,
+    MessageAttributes {}
+
+const Messages = sequelize.define<MessageInstance>(
   'Messages',
   {
     messageId: {

@@ -1,7 +1,19 @@
-import { STRING } from 'sequelize'
+import { STRING, Optional, Model } from 'sequelize'
 import sequelize from './index'
 
-const Users = sequelize.define(
+interface UserAttributes {
+  userId: string
+  username: string
+  password: string
+}
+
+interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> {}
+
+interface UserInstance
+  extends Model<UserAttributes, UserCreationAttributes>,
+    UserAttributes {}
+
+const Users = sequelize.define<UserInstance>(
   'Users',
   {
     userId: {
