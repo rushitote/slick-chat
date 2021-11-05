@@ -1,9 +1,10 @@
 import * as messageOps from '../../sqlz/ops/messages'
 import * as mappingOps from '../../sqlz/ops/mappingUserToRoom'
+import {RequestWithUser} from '../types'
 import { Request, Response } from 'express'
 
-export function postMessage(req: Request, res: Response) {
-  const username = (req.user as any).username
+export function postMessage(req: RequestWithUser, res: Response) {
+  const username = req.user.username
   const { roomId, content } = req.body
 
   if (roomId === undefined || content === undefined) {
@@ -31,8 +32,8 @@ export function postMessage(req: Request, res: Response) {
   }
 }
 
-export function getMessages(req: Request, res: Response) {
-  const username = (req.user as any).username
+export function getMessages(req: RequestWithUser, res: Response) {
+  const username = req.user.username
   const roomId = req.query.roomId?.toString()
   const messageId = req.query.messageId?.toString()
 

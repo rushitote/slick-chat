@@ -1,9 +1,10 @@
 import * as mappingOps from '../../sqlz/ops/mappingUserToRoom'
 import * as roomOps from '../../sqlz/ops/rooms'
+import { RequestWithUser } from '../types'
 import { Request, Response } from 'express'
 
-export function addUserRoomMapping(req: Request, res: Response) {
-  const username = (req.user as any).username
+export function addUserRoomMapping(req: RequestWithUser, res: Response) {
+  const username = req.user.username
   const { roomId } = req.body
 
   if (roomId === undefined) {
@@ -27,8 +28,8 @@ export function addUserRoomMapping(req: Request, res: Response) {
   }
 }
 
-export function getRoomsOfUser(req: Request, res: Response) {
-  const username = (req.user as any).username
+export function getRoomsOfUser(req: RequestWithUser, res: Response) {
+  const username = req.user.username
 
   try {
     mappingOps.getRoomsOfUser(username).then(rooms => {
@@ -61,8 +62,8 @@ export function getUsersOfRoom(req: Request, res: Response) {
   }
 }
 
-export function removeUserRoomMapping(req: Request, res: Response) {
-  const username = (req.user as any).username
+export function removeUserRoomMapping(req: RequestWithUser, res: Response) {
+  const username = req.user.username
   const { roomId } = req.body
 
   if (roomId === undefined) {

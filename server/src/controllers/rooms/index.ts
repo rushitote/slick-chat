@@ -1,9 +1,10 @@
 import * as roomOps from '../../sqlz/ops/rooms'
 import * as mappingOps from '../../sqlz/ops/mappingUserToRoom'
+import { RequestWithUser } from '../types'
 import { Request, Response } from 'express'
 
-export function createRoom(req: Request, res: Response) {
-  const username = (req.user as any).username
+export function createRoom(req: RequestWithUser, res: Response) {
+  const username = req.user.username
   const { roomName } = req.body
 
   if (roomName === undefined) {

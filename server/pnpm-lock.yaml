@@ -17,6 +17,7 @@ specifiers:
   chai: ^4.3.4
   concurrently: ^3.5.0
   cookie-parser: ~1.3.5
+  cors: ^2.8.5
   cross-env: ^5.2.1
   debug: ^4.3.1
   dotenv: ^10.0.0
@@ -56,6 +57,7 @@ dependencies:
   argon2: 0.28.2
   body-parser: 1.19.0
   cookie-parser: 1.3.5
+  cors: 2.8.5
   cross-env: 5.2.1
   debug: 4.3.2
   dotenv: 10.0.0

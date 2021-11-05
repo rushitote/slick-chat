@@ -25,7 +25,7 @@ export async function getMessages(roomId, messageId) {
 }
 
 export async function postMessage(username, content, roomId) {
-  const user: any = await Users.findOne({ where: { username: username } })
+  const user = await Users.findOne({ where: { username: username } })
   const userId = user.userId
   const messageId = nanoid()
   const unixTime = Date.now()
@@ -37,6 +37,7 @@ export async function postMessage(username, content, roomId) {
 
 export async function postMessageByUserId(userId, content, roomId) {
   const messageId = nanoid()
-  await Messages.create({ messageId, content, userId, roomId })
+  const unixTime = Date.now()
+  await Messages.create({ messageId, content, userId, roomId, unixTime })
   return messageId
 }

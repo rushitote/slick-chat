@@ -1,7 +1,19 @@
-import { STRING } from 'sequelize'
+import { STRING, Optional, Model } from 'sequelize'
 import sequelize from './index'
 
-const Rooms = sequelize.define(
+interface RoomAttributes {
+  roomId: string
+  roomName: string
+  createdByUserId: string
+}
+
+interface RoomCreationAttributes extends Optional<RoomAttributes, 'roomId'> {}
+
+interface RoomInstance
+  extends Model<RoomAttributes, RoomCreationAttributes>,
+    RoomAttributes {}
+
+const Rooms = sequelize.define<RoomInstance>(
   'Rooms',
   {
     roomId: {
@@ -13,8 +25,8 @@ const Rooms = sequelize.define(
     },
     createdByUserId: {
       type: STRING,
-      allowNull: false
-    }
+      allowNull: false,
+    },
   },
   {
     tableName: 'Rooms',

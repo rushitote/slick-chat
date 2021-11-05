@@ -1,6 +1,6 @@
 require('dotenv').config()
 import * as http from 'http'
-import { DB, PORT } from './var/config'
+import { PORT } from './var/config'
 import { SocketIO as Socket } from './socket/index'
 import app from './server'
 
