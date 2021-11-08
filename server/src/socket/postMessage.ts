@@ -4,10 +4,9 @@ import { socketRequest } from './types'
 
 export default async function postMessage(request: socketRequest, username, content, roomId) {
   let messageId = null
-  mappingOps.checkUserInRoom(username, roomId).then(isInRoom => {
-    if(isInRoom){
-      messageId = messageOps.postMessageByUserId(request.session.passport.user, content, roomId)
-    }
-  })
+  const isInRoom = await mappingOps.checkUserInRoom(username, roomId)
+  if (isInRoom) {
+    messageId = await messageOps.postMessageByUserId(request.session.passport.user, content, roomId)
+  }
   return messageId
 }
