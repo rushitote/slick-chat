@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { User } from '../Interfaces/Responses'
-
+import { Message } from './Contexts/messagesContext'
 const isValidRoom = (roomId: string): boolean => {
   const validRoomRegex = /^[A-Za-z0-9]{7}$/
   return validRoomRegex.test(roomId)
@@ -51,16 +51,13 @@ const addToRoom = async (roomId: string) => {
 
 const getMessages = async (roomId: string) => {
   try {
-    const response = await axios.get<any, any>(
-      'http://localhost:3000/messages/get',
-      {
-        params: {
-          roomId,
-        },
-        withCredentials: true,
-      }
-    )
-    console.log(response.data)
+    const response = await axios.get<any, any>('http://localhost:3000/messages/get', {
+      params: {
+        roomId,
+      },
+      withCredentials: true,
+    })
+    return response.data.messages as Message[]
   } catch (e: any) {
     throw new Error(e.response.msg)
   }

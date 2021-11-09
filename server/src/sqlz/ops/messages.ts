@@ -7,7 +7,7 @@ import { MessageAttributes } from '../models/messages'
 export async function getMessages(roomId, messageId) {
   if (messageId === undefined) {
     const messages = await sequelize.query(
-      'select * from "Messages" m where "roomId" = ? order by "unixTime" desc limit 25',
+      'select * from "Messages" m, "Users" u where ("roomId" = ? and m."userId" = u."userId") order by "unixTime" limit 25',
       { replacements: [roomId], type: QueryTypes.SELECT }
     )
 

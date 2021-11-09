@@ -23,6 +23,7 @@ export default function Groups(props: IAppProps) {
   const params = useParams<Group>()
   const [messages, setMessages] = useState<Message[]>([])
   const [usersList, setUsersList] = useState<User[] | undefined>(undefined)
+  const [isLoading, setIsLoading] = useState(true)
   const { isLoggedIn } = useContext(loggedInContext)
 
   const sendMessage = (message: Message) => {
@@ -62,13 +63,13 @@ export default function Groups(props: IAppProps) {
           setMessages((m) =>
             m.concat({
               image: avatar,
-              username: data.username,
-              content: data.content,
+              ...data,
             })
           )
         })
 
-        await getMessages(params.id)
+        setMessages(await getMessages(params.id))
+        setIsLoading(false)
         return () => {
           newSocket.close()
         }
@@ -85,7 +86,7 @@ export default function Groups(props: IAppProps) {
             messages,
             sendMessage,
             users: usersList!,
-            loading: false,
+            loading: isLoading,
           }}
         >
           <socketContext.Provider value={{ socket, roomId: params.id }}>

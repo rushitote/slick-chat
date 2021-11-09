@@ -1,7 +1,11 @@
 import { createContext } from 'react'
 import { User } from '../../Interfaces/Responses'
 export interface Message {
+  messageId: string
   content: string
+  userId: string
+  roomId: string
+  unixTime: number
   username: string
   image?: string
 }
