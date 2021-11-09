@@ -1,6 +1,6 @@
 import * as messageOps from '../../sqlz/ops/messages'
 import * as mappingOps from '../../sqlz/ops/mappingUserToRoom'
-import {RequestWithUser} from '../types'
+import { RequestWithUser } from '../types'
 import { Request, Response } from 'express'
 
 export function postMessage(req: RequestWithUser, res: Response) {
@@ -14,9 +14,9 @@ export function postMessage(req: RequestWithUser, res: Response) {
   try {
     mappingOps.checkUserInRoom(username, roomId).then(isInRoom => {
       if (isInRoom) {
-        messageOps.postMessage(username, content, roomId).then(messageId => {
+        messageOps.postMessage(username, content, roomId).then(message => {
           res.status(200).send({
-            messageId: messageId,
+            messageId: message.messageId,
           })
         })
       } else {

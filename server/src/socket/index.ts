@@ -10,8 +10,7 @@ export class SocketIO {
 
   constructor(server: http.Server) {
     this.io = new Server(server)
-    const wrap = middleware => (socket, next) =>
-      middleware(socket.request, {}, next)
+    const wrap = middleware => (socket, next) => middleware(socket.request, {}, next)
 
     this.io.use(wrap(sessionMiddleware))
     this.io.use(wrap(passport.initialize()))
@@ -58,13 +57,14 @@ export class SocketIO {
         (socket.request as socketRequest).user.dataValues.username,
         content,
         roomId
-      ).then(messageId => {
-        if (messageId) {
-          socket.broadcast.to(roomId).emit('newMessage', {
+      ).then(message => {
+        if (message) {
+          this.io.to(roomId).emit('newMessage', {
             username: (socket.request as socketRequest).user.dataValues.username,
-            messageId,
+            messageId: message.messageId,
             roomId,
             content,
+            ...message,
           })
         }
       })

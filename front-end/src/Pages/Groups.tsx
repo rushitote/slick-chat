@@ -12,6 +12,7 @@ import axios from 'axios'
 import { User } from '../Interfaces/Responses'
 import ErrorPage from '../components/UI/Error'
 import Authenticated from '../components/Other/Authenticated'
+import { getMessages } from '../utils/Rooms'
 export interface Group {
   id: string
 }
@@ -25,11 +26,11 @@ export default function Groups(props: IAppProps) {
   const { isLoggedIn } = useContext(loggedInContext)
 
   const sendMessage = (message: Message) => {
-    setMessages((prevState: any) => {
-      console.log('previous state is', prevState)
-      console.log('new state is', message)
-      return prevState.concat(message)
-    })
+    // setMessages((prevState: any) => {
+    //   console.log('previous state is', prevState)
+    //   console.log('new state is', message)
+    //   return prevState.concat(message)
+    // })
   }
   useEffect(() => {
     console.log('called')
@@ -57,6 +58,7 @@ export default function Groups(props: IAppProps) {
           })
         )
         newSocket.on('newMessage', (data: Message) => {
+          console.log('hello messaging')
           setMessages((m) =>
             m.concat({
               image: avatar,
@@ -66,6 +68,7 @@ export default function Groups(props: IAppProps) {
           )
         })
 
+        await getMessages(params.id)
         return () => {
           newSocket.close()
         }
@@ -73,6 +76,7 @@ export default function Groups(props: IAppProps) {
     }
     if (isLoggedIn) asyncWrapper(params.id)
   }, [params.id, isLoggedIn])
+
   return (
     <Authenticated>
       {usersList !== undefined && usersList.length !== 0 ? (
@@ -81,7 +85,7 @@ export default function Groups(props: IAppProps) {
             messages,
             sendMessage,
             users: usersList!,
-            loading: true,
+            loading: false,
           }}
         >
           <socketContext.Provider value={{ socket, roomId: params.id }}>

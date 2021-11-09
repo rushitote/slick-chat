@@ -3,7 +3,7 @@ import Messages from '../models/messages'
 import { nanoid } from 'nanoid'
 import { QueryTypes } from 'sequelize'
 import sequelize from '../../sqlz/models'
-
+import { MessageAttributes } from '../models/messages'
 export async function getMessages(roomId, messageId) {
   if (messageId === undefined) {
     const messages = await sequelize.query(
@@ -24,7 +24,7 @@ export async function getMessages(roomId, messageId) {
   }
 }
 
-export async function postMessage(username, content, roomId) {
+export async function postMessage(username, content, roomId): Promise<MessageAttributes> {
   const user = await Users.findOne({ where: { username: username } })
   const userId = user.userId
   const messageId = nanoid()
@@ -32,12 +32,12 @@ export async function postMessage(username, content, roomId) {
 
   await Messages.create({ messageId, content, userId, roomId, unixTime })
 
-  return messageId
+  return { messageId, content, userId, roomId, unixTime }
 }
 
-export async function postMessageByUserId(userId, content, roomId) {
+export async function postMessageByUserId(userId, content, roomId): Promise<MessageAttributes> {
   const messageId = nanoid()
   const unixTime = Date.now()
   await Messages.create({ messageId, content, userId, roomId, unixTime })
-  return messageId
+  return { messageId, content, userId, roomId, unixTime }
 }

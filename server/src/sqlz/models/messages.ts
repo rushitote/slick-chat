@@ -1,7 +1,7 @@
 import { STRING, TEXT, BIGINT, Optional, Model } from 'sequelize'
 import sequelize from './index'
 
-interface MessageAttributes {
+export interface MessageAttributes {
   messageId: string
   content: string
   userId: string
@@ -9,12 +9,9 @@ interface MessageAttributes {
   unixTime: number
 }
 
-interface MessageCreationAttributes
-  extends Optional<MessageAttributes, 'messageId'> {}
+interface MessageCreationAttributes extends Optional<MessageAttributes, 'messageId'> {}
 
-interface MessageInstance
-  extends Model<MessageAttributes, MessageCreationAttributes>,
-    MessageAttributes {}
+interface MessageInstance extends Model<MessageAttributes, MessageCreationAttributes>, MessageAttributes {}
 
 const Messages = sequelize.define<MessageInstance>(
   'Messages',

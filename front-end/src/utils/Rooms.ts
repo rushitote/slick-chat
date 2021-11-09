@@ -49,4 +49,20 @@ const addToRoom = async (roomId: string) => {
   }
 }
 
-export { generateRandomRoom, isValidRoom, roomExists, addToRoom }
+const getMessages = async (roomId: string) => {
+  try {
+    const response = await axios.get<any, any>(
+      'http://localhost:3000/messages/get',
+      {
+        params: {
+          roomId,
+        },
+        withCredentials: true,
+      }
+    )
+    console.log(response.data)
+  } catch (e: any) {
+    throw new Error(e.response.msg)
+  }
+}
+export { generateRandomRoom, isValidRoom, roomExists, addToRoom, getMessages }
