@@ -3,7 +3,6 @@ import messageContext from '../../utils/Contexts/messagesContext'
 import { useContext, useRef, useEffect } from 'react'
 import Message from './Message'
 import avatar from '../../images/avatar.png'
-import Container from '../UI/Container'
 import Loading from '../UI/Loading'
 export interface IMessagesProps {}
 
@@ -13,8 +12,7 @@ export default function Messages(props: IMessagesProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (scrollRef.current !== null)
-      scrollRef.current.scrollTop = scrollRef.current?.scrollHeight
+    if (scrollRef.current !== null) scrollRef.current.scrollTop = scrollRef.current?.scrollHeight
   }, [ctx])
   if (!ctx.loading) {
     return (
@@ -26,7 +24,7 @@ export default function Messages(props: IMessagesProps) {
                 content={message.content}
                 image={message.image || avatar}
                 username={message.username}
-                key={Math.random()}
+                key={message.messageId}
               />
             )
           })}

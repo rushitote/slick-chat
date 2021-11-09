@@ -67,8 +67,8 @@ export default function Groups(props: IAppProps) {
             })
           )
         })
-
-        setMessages(await getMessages(params.id))
+        const msg = await getMessages(params.id)
+        setMessages(msg.reverse())
         setIsLoading(false)
         return () => {
           newSocket.close()
