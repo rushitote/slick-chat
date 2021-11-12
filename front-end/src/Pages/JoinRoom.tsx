@@ -9,15 +9,14 @@ import { useContext, useRef, useState } from 'react'
 import { isValidRoom, roomExists, addToRoom } from '../utils/Rooms'
 import BottomFormPopup from '../components/UI/ButtonFormPopup'
 import notificationContext from '../utils/Contexts/notificationContext'
-import { withRouter } from 'react-router'
-export interface IJoinRoomProps {
-  history: any
-}
+import { useHistory } from 'react-router'
+export interface IJoinRoomProps {}
 
-function JoinRoom(props: IJoinRoomProps) {
+export default function JoinRoom(props: IJoinRoomProps) {
   const roomIdRef = useRef<HTMLInputElement>(null)
   const [errorShow, setErrorShow] = useState(false)
   const [errorMessage, setErrorMessage] = useState('initialState')
+  const history = useHistory()
   const notifContext = useContext(notificationContext)
   const roomJoinHandler = async (e: any) => {
     if (roomIdRef.current) {
@@ -34,7 +33,7 @@ function JoinRoom(props: IJoinRoomProps) {
         } else {
           try {
             addToRoom(roomId)
-            props.history.push(`/group/${roomId}`)
+            history.push(`/group/${roomId}`)
           } catch (e: any) {
             notifContext.showNotification(e.message)
           }
@@ -47,17 +46,11 @@ function JoinRoom(props: IJoinRoomProps) {
       <Container type='grid' className={styles['root']}>
         <Heading text='Join Room' className={styles['title']} />
         <div className={styles['pair']}>
-          <InputField
-            maxLength={7}
-            className={styles['roomId']}
-            placeholder='Room ID'
-            ref={roomIdRef}
-          />
+          <InputField maxLength={7} className={styles['roomId']} placeholder='Room ID' ref={roomIdRef} />
           <BottomFormPopup show={errorShow} message={errorMessage}>
             <Button text='Join' onClick={roomJoinHandler} />
             <p>
-              Don't have a Room ID? You can create one for yourself{' '}
-              <Link to='/create'> here</Link>
+              Don't have a Room ID? You can create one for yourself <Link to='/create'> here</Link>
             </p>
           </BottomFormPopup>
         </div>
@@ -65,5 +58,3 @@ function JoinRoom(props: IJoinRoomProps) {
     </Authenticated>
   )
 }
-
-export default withRouter(JoinRoom)
