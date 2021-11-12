@@ -12,7 +12,8 @@
   background-size: 200%;
   background-clip: text;
   color: transparent;
-
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-size: max(60px, 8vw);
 }
 

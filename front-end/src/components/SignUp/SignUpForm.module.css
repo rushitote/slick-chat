@@ -25,6 +25,8 @@
   opacity: 0;
   transition: opacity 250ms ease-in-out;
   font-weight: bold;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .error-message.show {
   opacity: 1;

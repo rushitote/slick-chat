@@ -2,6 +2,8 @@
   background: var(--gradient-to-right);
   background-clip: text;
   color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-size: clamp(70px, 6vw, 130px);
   text-align: center;
 }
