@@ -35,8 +35,10 @@ export default function App(props: IAppProps) {
     }
     login()
   }
-
-  if (isLoggedIn) {
+  const path = sessionStorage.getItem('lastPage')
+  if (isLoggedIn && path !== null) {
+    return <Redirect to={path} />
+  } else if (isLoggedIn) {
     return <Redirect to='/create' />
   }
 
@@ -44,21 +46,11 @@ export default function App(props: IAppProps) {
     <form className={styles['form']}>
       <div className={styles['pair']}>
         <label htmlFor='username'>Username</label>
-        <InputField
-          type='text'
-          name='username'
-          id='username'
-          ref={usernameRef}
-        />
+        <InputField type='text' name='username' id='username' ref={usernameRef} />
       </div>
       <div className={styles['pair']}>
         <label htmlFor='password'>Password</label>
-        <InputField
-          type='password'
-          name='password'
-          id='password'
-          ref={passwordRef}
-        />
+        <InputField type='password' name='password' id='password' ref={passwordRef} />
       </div>
       <Button text='Login' onClick={loginHandler} />
       <div className={styles['register-text']}>
