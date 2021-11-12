@@ -4,12 +4,18 @@ import loggedInContext from '../../utils/Contexts/loggedInContext'
 import Button from '../UI/Button'
 import { Link, Redirect } from 'react-router-dom'
 import InputField from '../UI/InputField'
+import { useState, useEffect } from 'react'
 export interface IAppProps {}
 
 export default function App(props: IAppProps) {
   const { isLoggedIn, setIsLoggedIn } = useContext(loggedInContext)
   const usernameRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
+  const [redirectPath, setRedirectPath] = useState<string | null>(null)
+
+  useEffect(() => {
+    setRedirectPath(sessionStorage.getItem('lastPage'))
+  }, [])
 
   const loginHandler = (e: any) => {
     e.preventDefault()
@@ -35,9 +41,9 @@ export default function App(props: IAppProps) {
     }
     login()
   }
-  const path = sessionStorage.getItem('lastPage')
-  if (isLoggedIn && path !== null) {
-    return <Redirect to={path} />
+  if (isLoggedIn && redirectPath !== null) {
+    sessionStorage.removeItem('lastPage')
+    return <Redirect to={redirectPath} />
   } else if (isLoggedIn) {
     return <Redirect to='/create' />
   }
