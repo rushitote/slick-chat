@@ -3,7 +3,7 @@ import ChatWindow from '../components/Chat/ChatWindow'
 import globalContext, { Message } from '../utils/Contexts/messagesContext'
 import UsersList from '../components/LeftPane/Users/UsersList'
 import { useParams } from 'react-router-dom'
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useCallback } from 'react'
 import avatar from '../images/avatar.png'
 import { io, Socket } from 'socket.io-client'
 import socketContext from '../utils/Contexts/socketContext'
@@ -25,16 +25,23 @@ export default function Groups(props: IAppProps) {
   const [usersList, setUsersList] = useState<User[] | undefined>(undefined)
   const [isLoading, setIsLoading] = useState(true)
   const { isLoggedIn } = useContext(loggedInContext)
-
   const sendMessage = (message: Message) => {
     // setMessages((prevState: any) => {
-    //   console.log('previous state is', prevState)
-    //   console.log('new state is', message)
     //   return prevState.concat(message)
     // })
   }
+  const refreshMessages = useCallback(
+    async (lastMessage?: Message) => {
+      const newMessages2 = (await getMessages(params.id, lastMessage)).reverse()
+      if (newMessages2.length !== 0 && newMessages2[0].messageId !== lastMessage?.messageId) {
+        setMessages((m) => newMessages2.concat(m))
+        setIsLoading(false)
+      }
+    },
+    [params.id]
+  )
+
   useEffect(() => {
-    console.log('called')
     const asyncWrapper = async (id: string) => {
       const response = await axios.get('http://localhost:3000/rooms/get', {
         params: {
@@ -43,7 +50,6 @@ export default function Groups(props: IAppProps) {
         withCredentials: true,
       })
       const users: User[] = (response.data as any).users
-      console.log(users)
       setUsersList(users)
 
       if (users.length !== 0) {
@@ -59,7 +65,6 @@ export default function Groups(props: IAppProps) {
           })
         )
         newSocket.on('newMessage', (data: Message) => {
-          console.log('hello messaging')
           setMessages((m) =>
             m.concat({
               image: avatar,
@@ -67,8 +72,7 @@ export default function Groups(props: IAppProps) {
             })
           )
         })
-        const msg = await getMessages(params.id)
-        setMessages(msg.reverse())
+        await refreshMessages()
         setIsLoading(false)
         return () => {
           newSocket.close()
@@ -76,7 +80,7 @@ export default function Groups(props: IAppProps) {
       }
     }
     if (isLoggedIn) asyncWrapper(params.id)
-  }, [params.id, isLoggedIn])
+  }, [params.id, isLoggedIn, refreshMessages])
 
   return (
     <Authenticated>
@@ -87,6 +91,7 @@ export default function Groups(props: IAppProps) {
             sendMessage,
             users: usersList!,
             loading: isLoading,
+            refreshMessages,
           }}
         >
           <socketContext.Provider value={{ socket, roomId: params.id }}>

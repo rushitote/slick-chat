@@ -49,11 +49,12 @@ const addToRoom = async (roomId: string) => {
   }
 }
 
-const getMessages = async (roomId: string) => {
+const getMessages = async (roomId: string, lastMessage?: Message) => {
   try {
     const response = await axios.get<any, any>('http://localhost:3000/messages/get', {
       params: {
         roomId,
+        messageId: lastMessage?.messageId,
       },
       withCredentials: true,
     })
