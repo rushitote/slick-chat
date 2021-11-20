@@ -13,6 +13,8 @@
   flex-direction: column-reverse;
   scrollbar-color: var(--username-color) var(--secondary-color);
   scrollbar-width: auto;
+  position: relative;
+  z-index: 2;
 }
 
 .chat-messages-container::-webkit-scrollbar {
