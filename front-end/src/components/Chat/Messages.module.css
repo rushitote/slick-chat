@@ -30,5 +30,7 @@
 
 .fetch_div {
   display: flex;
+  height: 1px; /*for chrome*/
+
   justify-content: center;
 }

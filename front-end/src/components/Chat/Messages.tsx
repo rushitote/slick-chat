@@ -10,13 +10,17 @@ export interface IMessagesProps {}
 
 export default function Messages(props: IMessagesProps) {
   const { messages, refreshMessages, loading, isRefreshing } = useContext(messageContext)
-  const scrollRef = useRef<any>(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
   const [ref, inView] = useInView({
     threshold: 0,
   })
+
   useEffect(() => {
+    console.log('refreshed')
     const asyncWrapper = async () => {
+      // const lastMessage = document.getElementById(messages[0].messageId)
       await refreshMessages(messages[0])
+      // lastMessage?.scrollIntoView()
     }
     if (inView) {
       asyncWrapper()
@@ -26,18 +30,29 @@ export default function Messages(props: IMessagesProps) {
     return (
       <div className={styles['chat-messages-container']} ref={scrollRef}>
         <div className={styles['chat-messages']}>
-          <div ref={ref} className={styles['fetch_div']}>
-            {isRefreshing && <SpinningCircle />}
-          </div>
-          {messages.map((message) => {
-            return (
-              <Message
-                content={message.content}
-                image={message.image || avatar}
-                username={message.username}
-                key={message.messageId}
-              />
-            )
+          {messages.map((message, i) => {
+            if (Math.floor(messages.length / 2) === i) {
+              return (
+                <Message
+                  content={message.content}
+                  image={message.image || avatar}
+                  username={message.username}
+                  key={message.messageId}
+                  id={message.messageId}
+                  ref={ref}
+                />
+              )
+            } else {
+              return (
+                <Message
+                  content={message.content}
+                  image={message.image || avatar}
+                  username={message.username}
+                  key={message.messageId}
+                  id={message.messageId}
+                />
+              )
+            }
           })}
         </div>
       </div>
