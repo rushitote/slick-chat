@@ -5,7 +5,7 @@
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 1px 1px rgba(134, 134, 134, 0.8);
-  transition: background-position 200ms ease-in, box-shadow 100ms ease-in;
+  transition: background-position 200ms ease-in, box-shadow 100ms ease-in, transform 100ms ease-in;
 }
 
 .btn-green {
@@ -19,10 +19,21 @@
   background-size: 200% 200%;
 }
 
+.btn-red {
+  background: var(--gradient-danger);
+  background-size: 200% 200%;
+  box-shadow: 1px 1px 1px 0px rgba(255, 0, 0, 0.8);
+}
+
 .btn:hover {
   background-position: 50% 50%;
 }
 
 .btn:active {
   box-shadow: none;
+  transform: scale(0.99);
+}
+
+.btn:focus-visible {
+  box-shadow: 0 0 5px 1px rgba(0, 132, 255, 0.7);
 }

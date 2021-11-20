@@ -1,7 +1,7 @@
 import styles from './Group.module.css'
 import ChatWindow from '../components/Chat/ChatWindow'
 import globalContext, { Message } from '../utils/Contexts/messagesContext'
-import UsersList from '../components/LeftPane/Users/UsersList'
+import LeftPane from '../components/LeftPane/Users/LeftPane'
 import { useParams } from 'react-router-dom'
 import { useState, useEffect, useContext, useCallback } from 'react'
 import avatar from '../images/avatar.png'
@@ -109,7 +109,7 @@ export default function Groups(props: IAppProps) {
         >
           <socketContext.Provider value={{ socket, roomId: params.id }}>
             <div id={styles['root']}>
-              <UsersList image={avatar} />
+              <LeftPane image={avatar} />
               <ChatWindow />
             </div>
           </socketContext.Provider>

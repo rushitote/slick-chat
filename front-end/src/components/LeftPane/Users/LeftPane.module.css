@@ -1,9 +1,8 @@
-.user-list {
+.left-pane {
   background-color: #232526;
   display: flex;
   align-items: center;
   flex-direction: column;
-  list-style: none;
   padding: 1em;
   color: var(--text-color);
   height: 100vh;
@@ -32,4 +31,9 @@
 .user-image {
   height: 50px;
   width: 50px;
+}
+
+.exit-group {
+  width: 100%;
+  margin-top: auto;
 }

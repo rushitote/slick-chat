@@ -1,16 +1,18 @@
 import { useContext } from 'react'
 import messageContext from '../../../utils/Contexts/messagesContext'
-import styles from './UsersList.module.css'
-import { Socket } from 'socket.io-client'
-import { useEffect } from 'react'
-export interface IUsersListProps {
+import Button from '../../UI/Button'
+import styles from './LeftPane.module.css'
+export interface ILeftPaneProps {
   image: string
 }
 
-export default function UsersList(props: IUsersListProps) {
+export default function LeftPane(props: ILeftPaneProps) {
   const ctx = useContext(messageContext)
+  const leaveRoom = () => {
+    console.log('leaving')
+  }
   return (
-    <ul className={styles['user-list']}>
+    <div className={styles['left-pane']}>
       <h1 className={styles['user-list-heading']}>Users</h1>
       <div className={styles['user-list-users']}>
         {ctx.users.map((user) => (
@@ -20,6 +22,9 @@ export default function UsersList(props: IUsersListProps) {
           </li>
         ))}
       </div>
-    </ul>
+      <div className={styles['exit-group']}>
+        <Button text='Leave Room' onClick={leaveRoom} color='red' />
+      </div>
+    </div>
   )
 }
