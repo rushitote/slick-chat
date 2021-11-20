@@ -5,28 +5,31 @@ import Message from './Message'
 import avatar from '../../images/avatar.png'
 import Loading from '../UI/Loading'
 import { useInView } from 'react-intersection-observer'
+import SpinningCircle from '../UI/SpinningCircle'
 export interface IMessagesProps {}
 
 export default function Messages(props: IMessagesProps) {
-  const ctx = useContext(messageContext)
+  const { messages, refreshMessages, loading, isRefreshing } = useContext(messageContext)
   const scrollRef = useRef<any>(null)
   const [ref, inView] = useInView({
     threshold: 0,
   })
   useEffect(() => {
     const asyncWrapper = async () => {
-      await ctx.refreshMessages(ctx.messages[0])
+      await refreshMessages(messages[0])
     }
     if (inView) {
       asyncWrapper()
     }
-  }, [inView, ctx])
-  if (!ctx.loading) {
+  }, [inView, messages, refreshMessages])
+  if (!loading) {
     return (
       <div className={styles['chat-messages-container']} ref={scrollRef}>
         <div className={styles['chat-messages']}>
-          <div ref={ref}></div>
-          {ctx.messages.map((message) => {
+          <div ref={ref} className={styles['fetch_div']}>
+            {isRefreshing && <SpinningCircle />}
+          </div>
+          {messages.map((message) => {
             return (
               <Message
                 content={message.content}

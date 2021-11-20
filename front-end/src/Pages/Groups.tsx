@@ -25,6 +25,11 @@ export default function Groups(props: IAppProps) {
   const [usersList, setUsersList] = useState<User[] | undefined>(undefined)
   const [isLoading, setIsLoading] = useState(true)
   const [moreMessages, setMoreMessages] = useState(true)
+  const [isRefreshing, setIsRefreshing] = useState(false)
+
+  // isLoading is for the initial page load
+  // isRefreshing is for when the user scrolls up and requests past messages
+
   const { isLoggedIn } = useContext(loggedInContext)
   const sendMessage = (message: Message) => {
     // setMessages((prevState: any) => {
@@ -34,14 +39,15 @@ export default function Groups(props: IAppProps) {
   const refreshMessages = useCallback(
     async (lastMessage?: Message) => {
       if (moreMessages) {
+        setIsRefreshing(true)
         const newMessages = (await getMessages(params.id, lastMessage)).reverse()
         if (newMessages.length < 25) {
           setMoreMessages(false)
         }
         if (newMessages.length !== 0 && newMessages[0].messageId !== lastMessage?.messageId) {
           setMessages((m) => newMessages.concat(m))
-          setIsLoading(false)
         }
+        setIsRefreshing(false)
       }
     },
     [params.id, moreMessages]
@@ -98,6 +104,7 @@ export default function Groups(props: IAppProps) {
             users: usersList!,
             loading: isLoading,
             refreshMessages,
+            isRefreshing,
           }}
         >
           <socketContext.Provider value={{ socket, roomId: params.id }}>

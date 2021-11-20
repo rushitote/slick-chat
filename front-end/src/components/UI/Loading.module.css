@@ -5,22 +5,3 @@ div.loading-container {
   justify-content: center;
   align-items: center;
 }
-
-.spinning-circle {
-  width: 50px;
-  height: 50px;
-  border-bottom: 2px solid var(--green-color);
-  border-radius: 50%;
-  animation: spinning 1000ms ease-in-out;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-}
-
-@keyframes spinning {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

@@ -27,3 +27,8 @@
   -webkit-border-radius: 10px;
   border-radius: 10px;
 }
+
+.fetch_div {
+  display: flex;
+  justify-content: center;
+}

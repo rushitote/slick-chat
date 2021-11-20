@@ -16,6 +16,7 @@ interface globalContext {
   users: User[]
   loading?: boolean
   refreshMessages: Function
+  isRefreshing: boolean
 }
 
 const messageContext = createContext<globalContext>({
@@ -24,6 +25,7 @@ const messageContext = createContext<globalContext>({
   users: [],
   loading: false,
   refreshMessages: async (roomId: string, lastMessage: Message) => {},
+  isRefreshing: true,
 })
 
 export default messageContext
