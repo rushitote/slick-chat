@@ -5,7 +5,6 @@ import Message from './Message'
 import avatar from '../../images/avatar.png'
 import Loading from '../UI/Loading'
 import { useInView } from 'react-intersection-observer'
-import SpinningCircle from '../UI/SpinningCircle'
 export interface IMessagesProps {}
 
 export default function Messages(props: IMessagesProps) {
@@ -16,11 +15,8 @@ export default function Messages(props: IMessagesProps) {
   })
 
   useEffect(() => {
-    console.log('refreshed')
     const asyncWrapper = async () => {
-      // const lastMessage = document.getElementById(messages[0].messageId)
       await refreshMessages(messages[0])
-      // lastMessage?.scrollIntoView()
     }
     if (inView) {
       asyncWrapper()
@@ -31,7 +27,7 @@ export default function Messages(props: IMessagesProps) {
       <div className={styles['chat-messages-container']} ref={scrollRef}>
         <div className={styles['chat-messages']}>
           {messages.map((message, i) => {
-            if (Math.floor(messages.length / 2) === i) {
+            if (i === 5) {
               return (
                 <Message
                   content={message.content}

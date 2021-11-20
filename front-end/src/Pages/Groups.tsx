@@ -41,16 +41,21 @@ export default function Groups(props: IAppProps) {
       if (moreMessages) {
         setIsRefreshing(true)
         const newMessages = (await getMessages(params.id, lastMessage)).reverse()
+
         if (newMessages.length < 25) {
           setMoreMessages(false)
         }
-        if (newMessages.length !== 0 && newMessages[0].messageId !== lastMessage?.messageId) {
+        if (newMessages?.length !== 0 && newMessages[0].messageId !== lastMessage?.messageId) {
+          if (document.getElementById(newMessages[0].messageId) === null) {
+            setMessages((m) => newMessages.concat(m))
+          }
+        } else if (messages === undefined) {
           setMessages((m) => newMessages.concat(m))
         }
         setIsRefreshing(false)
       }
     },
-    [params.id, moreMessages]
+    [params.id, moreMessages, messages]
   )
 
   useEffect(() => {
