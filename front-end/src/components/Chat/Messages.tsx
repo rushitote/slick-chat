@@ -18,7 +18,6 @@ export default function Messages(props: IMessagesProps) {
       await ctx.refreshMessages(ctx.messages[0])
     }
     if (inView) {
-      console.log('calling fetch')
       asyncWrapper()
     }
   }, [inView, ctx])

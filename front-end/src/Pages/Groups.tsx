@@ -24,6 +24,7 @@ export default function Groups(props: IAppProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [usersList, setUsersList] = useState<User[] | undefined>(undefined)
   const [isLoading, setIsLoading] = useState(true)
+  const [moreMessages, setMoreMessages] = useState(true)
   const { isLoggedIn } = useContext(loggedInContext)
   const sendMessage = (message: Message) => {
     // setMessages((prevState: any) => {
@@ -32,13 +33,18 @@ export default function Groups(props: IAppProps) {
   }
   const refreshMessages = useCallback(
     async (lastMessage?: Message) => {
-      const newMessages2 = (await getMessages(params.id, lastMessage)).reverse()
-      if (newMessages2.length !== 0 && newMessages2[0].messageId !== lastMessage?.messageId) {
-        setMessages((m) => newMessages2.concat(m))
-        setIsLoading(false)
+      if (moreMessages) {
+        const newMessages = (await getMessages(params.id, lastMessage)).reverse()
+        if (newMessages.length < 25) {
+          setMoreMessages(false)
+        }
+        if (newMessages.length !== 0 && newMessages[0].messageId !== lastMessage?.messageId) {
+          setMessages((m) => newMessages.concat(m))
+          setIsLoading(false)
+        }
       }
     },
-    [params.id]
+    [params.id, moreMessages]
   )
 
   useEffect(() => {
