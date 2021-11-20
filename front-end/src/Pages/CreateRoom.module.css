@@ -68,6 +68,8 @@
   background: var(--danger-gradient);
   background-clip: text;
   color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   opacity: 0;
   transition: opacity 250ms ease-in-out;
   font-weight: bold;

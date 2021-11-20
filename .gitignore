@@ -105,3 +105,6 @@ dist
 server/package-lock.json
 server/src/sqlz/config/config.json
 build
+
+# VS code files
+.vscode

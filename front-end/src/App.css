@@ -7,19 +7,11 @@ body {
   --text-color: #edf6f9;
   --username-color: #4cc9f0;
   --gradient-to-right: linear-gradient(to right, #29ffc6, #20e3b2, #0cebeb);
-  --gradient-to-bottom-left: linear-gradient(
-    to bottom right,
-    #29ffc6,
-    #20e3b2,
-    #0cebeb
-  );
+  --gradient-to-bottom-left: linear-gradient(to bottom right, #29ffc6, #20e3b2, #0cebeb);
+  --green-color: #29ffc6;
   --gradient-danger: linear-gradient(to right, #da4453, #89216b);
   --danger-gradient: linear-gradient(to left, #ee0979, #ff6a00);
-  --background-gradient: linear-gradient(
-    to bottom right,
-    var(--primary-color) 0%,
-    var(--secondary-color) 100%
-  );
+  --background-gradient: linear-gradient(to bottom right, var(--primary-color) 0%, var(--secondary-color) 100%);
 }
 
 body,

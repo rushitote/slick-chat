@@ -24,5 +24,7 @@
   background: var(--gradient-to-right);
   background-clip: text;
   color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   cursor: pointer;
 }

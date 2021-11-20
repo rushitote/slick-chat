@@ -2,6 +2,8 @@
   text-align: center;
   background: var(--danger-gradient);
   background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
   opacity: 0;
   transition: opacity 250ms ease-in-out;

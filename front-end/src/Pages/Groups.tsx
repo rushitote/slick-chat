@@ -1,9 +1,9 @@
 import styles from './Group.module.css'
 import ChatWindow from '../components/Chat/ChatWindow'
 import globalContext, { Message } from '../utils/Contexts/messagesContext'
-import UsersList from '../components/LeftPane/Users/UsersList'
+import LeftPane from '../components/LeftPane/Users/LeftPane'
 import { useParams } from 'react-router-dom'
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useCallback } from 'react'
 import avatar from '../images/avatar.png'
 import { io, Socket } from 'socket.io-client'
 import socketContext from '../utils/Contexts/socketContext'
@@ -12,6 +12,7 @@ import axios from 'axios'
 import { User } from '../Interfaces/Responses'
 import ErrorPage from '../components/UI/Error'
 import Authenticated from '../components/Other/Authenticated'
+import { getMessages } from '../utils/Rooms'
 export interface Group {
   id: string
 }
@@ -22,15 +23,42 @@ export default function Groups(props: IAppProps) {
   const params = useParams<Group>()
   const [messages, setMessages] = useState<Message[]>([])
   const [usersList, setUsersList] = useState<User[] | undefined>(undefined)
-  const { isLoggedIn } = useContext(loggedInContext)
+  const [isLoading, setIsLoading] = useState(true)
+  const [moreMessages, setMoreMessages] = useState(true)
+  const [isRefreshing, setIsRefreshing] = useState(false)
 
+  // isLoading is for the initial page load
+  // isRefreshing is for when the user scrolls up and requests past messages
+
+  const { isLoggedIn } = useContext(loggedInContext)
   const sendMessage = (message: Message) => {
-    setMessages((prevState: any) => {
-      return prevState.concat(message)
-    })
+    // setMessages((prevState: any) => {
+    //   return prevState.concat(message)
+    // })
   }
+  const refreshMessages = useCallback(
+    async (lastMessage?: Message) => {
+      if (moreMessages) {
+        setIsRefreshing(true)
+        const newMessages = (await getMessages(params.id, lastMessage)).reverse()
+
+        if (newMessages.length < 25) {
+          setMoreMessages(false)
+        }
+        if (newMessages?.length !== 0 && newMessages[0].messageId !== lastMessage?.messageId) {
+          if (document.getElementById(newMessages[0].messageId) === null) {
+            setMessages((m) => newMessages.concat(m))
+          }
+        } else if (messages === undefined) {
+          setMessages((m) => newMessages.concat(m))
+        }
+        setIsRefreshing(false)
+      }
+    },
+    [params.id, moreMessages, messages]
+  )
+
   useEffect(() => {
-    console.log('called')
     const asyncWrapper = async (id: string) => {
       const response = await axios.get('http://localhost:3000/rooms/get', {
         params: {
@@ -39,7 +67,6 @@ export default function Groups(props: IAppProps) {
         withCredentials: true,
       })
       const users: User[] = (response.data as any).users
-      console.log(users)
       setUsersList(users)
 
       if (users.length !== 0) {
@@ -55,22 +82,23 @@ export default function Groups(props: IAppProps) {
           })
         )
         newSocket.on('newMessage', (data: Message) => {
-          setMessages(
-            messages.concat({
+          setMessages((m) =>
+            m.concat({
               image: avatar,
-              username: data.username,
-              content: data.content,
+              ...data,
             })
           )
         })
-
+        await refreshMessages()
+        setIsLoading(false)
         return () => {
           newSocket.close()
         }
       }
     }
     if (isLoggedIn) asyncWrapper(params.id)
-  }, [params.id, messages, isLoggedIn])
+  }, [params.id, isLoggedIn, refreshMessages])
+
   return (
     <Authenticated>
       {usersList !== undefined && usersList.length !== 0 ? (
@@ -79,11 +107,14 @@ export default function Groups(props: IAppProps) {
             messages,
             sendMessage,
             users: usersList!,
+            loading: isLoading,
+            refreshMessages,
+            isRefreshing,
           }}
         >
           <socketContext.Provider value={{ socket, roomId: params.id }}>
             <div id={styles['root']}>
-              <UsersList image={avatar} />
+              <LeftPane image={avatar} />
               <ChatWindow />
             </div>
           </socketContext.Provider>

@@ -4,7 +4,7 @@ import { useContext, useRef } from 'react'
 import Button from '../components/UI/Button'
 import axios from 'axios'
 import notificationContext from '../utils/Contexts/notificationContext'
-import { withRouter } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import { useState } from 'react'
 import BottomFormPopup from '../components/UI/ButtonFormPopup'
 import Heading from '../components/UI/Heading'
@@ -13,16 +13,14 @@ import Authenticated from '../components/Other/Authenticated'
 import { Link } from 'react-router-dom'
 import { RoomCreateResponse } from '../Interfaces/Responses'
 import { generateSlug } from 'random-word-slugs'
-export interface ICreateRoomProps {
-  history: any
-}
+export interface ICreateRoomProps {}
 
-function CreateRoom(props: ICreateRoomProps) {
+export default function CreateRoom(props: ICreateRoomProps) {
   const roomNameRef = useRef<HTMLInputElement>(null)
   const notifCtx = useContext(notificationContext)
   const [errorShow, setErrorShow] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState('')
-
+  const history = useHistory()
   const generateRandomRoomName = (e: any) => {
     if (roomNameRef.current) {
       roomNameRef.current.value = generateSlug(3)
@@ -42,11 +40,9 @@ function CreateRoom(props: ICreateRoomProps) {
       )
       if (result.status === 200) {
         console.log('Added user successfully')
-        props.history.push(`/group/${result.data.roomId}`)
+        history.push(`/group/${result.data.roomId}`)
       } else {
-        notifCtx.showNotification(
-          'Something went wrong. Please try again later'
-        )
+        notifCtx.showNotification('Something went wrong. Please try again later')
       }
     } else {
       setErrorMessage("Name can't be empty")
@@ -59,24 +55,13 @@ function CreateRoom(props: ICreateRoomProps) {
       <Container className={styles['root']} type='grid'>
         <Heading text='Create Room' className={styles['title']} />
         <div className={styles['create']}>
-          <InputField
-            type='text'
-            name='roomName'
-            id='roomName'
-            placeholder='Room Name'
-            ref={roomNameRef}
-          />
+          <InputField type='text' name='roomName' id='roomName' placeholder='Room Name' ref={roomNameRef} />
           <BottomFormPopup show={errorShow} message={errorMessage}>
-            <Button
-              text='Running out of ideas? Let us help you out!'
-              onClick={generateRandomRoomName}
-              color='blue'
-            />
+            <Button text='Running out of ideas? Let us help you out!' onClick={generateRandomRoomName} color='blue' />
             <Button text='Create' onClick={createRoom} color='green' />
           </BottomFormPopup>
           <p>
-            Already have a Room ID? You can join the Room by going{' '}
-            <Link to='/join'>here</Link>
+            Already have a Room ID? You can join the Room by going <Link to='/join'>here</Link>
           </p>
         </div>
         <div className={styles['info']}>
@@ -91,5 +76,3 @@ function CreateRoom(props: ICreateRoomProps) {
     </Authenticated>
   )
 }
-
-export default withRouter(CreateRoom)

@@ -2,14 +2,20 @@ import styles from './LoginForm.module.css'
 import { useContext, useRef } from 'react'
 import loggedInContext from '../../utils/Contexts/loggedInContext'
 import Button from '../UI/Button'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import InputField from '../UI/InputField'
+import { useState, useEffect } from 'react'
 export interface IAppProps {}
 
 export default function App(props: IAppProps) {
   const { isLoggedIn, setIsLoggedIn } = useContext(loggedInContext)
   const usernameRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
+  const [redirectPath, setRedirectPath] = useState<string | null>(null)
+
+  useEffect(() => {
+    setRedirectPath(sessionStorage.getItem('lastPage'))
+  }, [])
 
   const loginHandler = (e: any) => {
     e.preventDefault()
@@ -26,33 +32,31 @@ export default function App(props: IAppProps) {
         }),
       })
       const validCredentials = response.ok
+
       if (validCredentials) {
+        localStorage.setItem('username', usernameRef.current!.value)
         console.log('Logged in successfully')
       }
       setIsLoggedIn(validCredentials)
     }
     login()
   }
+  if (isLoggedIn && redirectPath !== null) {
+    sessionStorage.removeItem('lastPage')
+    return <Redirect to={redirectPath} />
+  } else if (isLoggedIn) {
+    return <Redirect to='/create' />
+  }
 
   return (
     <form className={styles['form']}>
       <div className={styles['pair']}>
         <label htmlFor='username'>Username</label>
-        <InputField
-          type='text'
-          name='username'
-          id='username'
-          ref={usernameRef}
-        />
+        <InputField type='text' name='username' id='username' ref={usernameRef} />
       </div>
       <div className={styles['pair']}>
         <label htmlFor='password'>Password</label>
-        <InputField
-          type='password'
-          name='password'
-          id='password'
-          ref={passwordRef}
-        />
+        <InputField type='password' name='password' id='password' ref={passwordRef} />
       </div>
       <Button text='Login' onClick={loginHandler} />
       <div className={styles['register-text']}>

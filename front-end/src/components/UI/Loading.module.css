@@ -1,0 +1,7 @@
+div.loading-container {
+  min-height: auto;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}

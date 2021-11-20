@@ -10,7 +10,7 @@
 
 .roomId {
   text-align: center;
-  width: 600px;
+  width: 300px;
   font-size: 40px;
   transition: outline 100ms ease;
 }
@@ -33,7 +33,7 @@
 }
 
 .pair p {
-  width: 600px;
+  width: 300px;
   text-align: center;
   align-items: center;
 }
