@@ -37,7 +37,7 @@ export default function Groups(props: IAppProps) {
     // })
   }
   const refreshMessages = useCallback(
-    async (lastMessage?: Message) => {
+    async (lastMessage: Message) => {
       if (moreMessages) {
         setIsRefreshing(true)
         const newMessages = (await getMessages(params.id, lastMessage)).reverse()
@@ -49,16 +49,22 @@ export default function Groups(props: IAppProps) {
           if (document.getElementById(newMessages[0].messageId) === null) {
             setMessages((m) => newMessages.concat(m))
           }
-        } else if (messages === undefined) {
-          setMessages((m) => newMessages.concat(m))
         }
         setIsRefreshing(false)
       }
     },
-    [params.id, moreMessages, messages]
+    [params.id, moreMessages]
   )
 
+  const loadInitialMessages = useCallback(async () => {
+    setIsLoading(true)
+    setMessages((await getMessages(params.id)).reverse())
+    setIsLoading(false)
+  }, [params.id])
+
   useEffect(() => {
+    let newSocket: Socket
+
     const asyncWrapper = async (id: string) => {
       const response = await axios.get('http://localhost:3000/rooms/get', {
         params: {
@@ -70,9 +76,10 @@ export default function Groups(props: IAppProps) {
       setUsersList(users)
 
       if (users.length !== 0) {
-        const newSocket = io('http://localhost:3000', {
+        newSocket = io('http://localhost:3000', {
           transports: ['websocket'],
         })
+        console.log('new socket connection')
         setSocket(newSocket)
         newSocket?.connect()
         newSocket?.emit(
@@ -89,15 +96,16 @@ export default function Groups(props: IAppProps) {
             })
           )
         })
-        await refreshMessages()
+        await loadInitialMessages()
         setIsLoading(false)
-        return () => {
-          newSocket.close()
-        }
       }
     }
     if (isLoggedIn) asyncWrapper(params.id)
-  }, [params.id, isLoggedIn, refreshMessages])
+    return () => {
+      // closes socket before a new connection is established
+      newSocket?.close()
+    }
+  }, [params.id, isLoggedIn, loadInitialMessages])
 
   return (
     <Authenticated>
