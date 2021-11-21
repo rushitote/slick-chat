@@ -2,7 +2,7 @@ import * as http from 'http'
 import { Server, Socket } from 'socket.io'
 import passport from 'passport'
 import { sessionMiddleware } from '../server/index'
-import postMessage from './postMessage'
+import { postMessage, joinRoom, leaveRoom } from './socketOps'
 import { socketRequest } from './types'
 
 export class SocketIO {
@@ -68,6 +68,30 @@ export class SocketIO {
           })
         }
       })
+    })
+
+    socket.on('userJoinRoom', body => {
+      const { roomId } = JSON.parse(body)
+      const username = (socket.request as socketRequest).user.dataValues.username
+      if (roomId) {
+        joinRoom(username, roomId).then(status => {
+          if (status) {
+            socket.emit('userJoinRoom', JSON.stringify({ username }))
+          }
+        })
+      }
+    })
+
+    socket.on('userLeaveRoom', body => {
+      const { roomId } = JSON.parse(body)
+      const username = (socket.request as socketRequest).user.dataValues.username
+      if (roomId) {
+        leaveRoom(username, roomId).then(status => {
+          if (status) {
+            socket.emit('userLeaveRoom', JSON.stringify({ username }))
+          }
+        })
+      }
     })
   }
 }
