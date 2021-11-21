@@ -1,12 +1,12 @@
 # chat-app
 
-A simple real time chatting application built using [Web Sockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
+A simple real time chatting application built using [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API).
 
 Note: This application is currently under active development and may lack many features you consider essential.
 
 # About
 
-The entire application is written in Typescript. We use React for the front end and  Express for the backend. The database used is PostgresQL and Socket.IO is used for implementing Web sockets
+The entire application is written in Typescript. We use React for the front end and Express for the backend. The database used is PostgresQL and Socket.IO is used for implementing WebSockets.
 
 # Features
 
