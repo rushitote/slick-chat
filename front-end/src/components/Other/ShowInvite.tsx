@@ -17,7 +17,7 @@ export interface IShowInviteProps {
 export default function ShowInvite(props: IShowInviteProps) {
   const { showNotification } = useContext(notificationContext)
   const history = useHistory()
-  const addToRoomButtonHandler = async () => {
+  const addTomRoomClickHandler = async () => {
     try {
       await addToRoom(props.roomId)
       await props.loadMessages()
@@ -27,6 +27,9 @@ export default function ShowInvite(props: IShowInviteProps) {
       history.push('/')
       showNotification('Something went wrong. Please try again later')
     }
+  }
+  const denyRoomJoinClickHandler = () => {
+    history.push('/')
   }
   return (
     <Container type='flex' className={styles['container']}>
@@ -43,8 +46,8 @@ export default function ShowInvite(props: IShowInviteProps) {
           <li>However, the room admin can block you from the room</li>
         </ul>
         <div className={styles['btn-pair']}>
-          <Button text='Yes, take me in!' onClick={addToRoomButtonHandler} />
-          <Button text='No, thanks' onClick={() => {}} color='red' />
+          <Button text='Yes, take me in!' onClick={addTomRoomClickHandler} />
+          <Button text='No, thanks' onClick={denyRoomJoinClickHandler} color='red' />
         </div>
       </Card>
     </Container>

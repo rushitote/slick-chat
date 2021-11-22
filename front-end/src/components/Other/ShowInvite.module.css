@@ -46,7 +46,7 @@
   display: flex;
   justify-content: space-evenly;
   border-top: 1px solid #281652;
-  padding-top: 10px;
+  padding-top: 20px;
 }
 
 .btn-pair button {
