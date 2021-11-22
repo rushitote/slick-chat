@@ -32,12 +32,15 @@ export default function ShowInvite(props: IShowInviteProps) {
     <Container type='flex' className={styles['container']}>
       <Card className={styles['card']}>
         <h1>Invite</h1>
+        <h3>TO</h3>
         <h2 className={styles['roomName']}>{props.roomName}</h2>
+        <h3 className={styles['text-consider']}>Things to consider</h3>
         <ul className={styles['list-about']}>
-          <li>Your messages will be visible to everyone in the room</li>
-          <li>You can leave the room as and when you wish</li>
-          <li>People who join the room in the future will be able to read your past messages</li>
-          <li>Your messages are not encrypted</li>
+          <li>Your messages aren't encrypted</li>
+          <li>Only the room admin can delete messages </li>
+          <li>Leaving the room doesn't delete your messages</li>
+          <li>You can leave and join the room any time you want</li>
+          <li>However, the room admin can block you from the room</li>
         </ul>
         <div className={styles['btn-pair']}>
           <Button text='Yes, take me in!' onClick={addToRoomButtonHandler} />
