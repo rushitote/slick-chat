@@ -11,6 +11,7 @@ export async function checkUserInRoom(userId, roomId): Promise<boolean> {
 
 export async function addUserRoomMapping(userId: string, roomId: string): Promise<boolean> {
   const user = await Users.findOne({ where: { userId } })
+
   if (!user) return
 
   const found = await mappingUserToRoom.findOne({ where: { roomId, userId } })
