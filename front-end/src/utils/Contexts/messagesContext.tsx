@@ -12,7 +12,6 @@ export interface Message {
 
 interface globalContext {
   messages: Message[]
-  sendMessage: Function
   users: User[]
   loading?: boolean
   refreshMessages: Function
@@ -21,7 +20,6 @@ interface globalContext {
 
 const messageContext = createContext<globalContext>({
   messages: [],
-  sendMessage: (message: Message) => {},
   users: [],
   loading: false,
   refreshMessages: async (roomId: string, lastMessage: Message) => {},

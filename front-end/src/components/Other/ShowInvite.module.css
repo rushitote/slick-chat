@@ -1,0 +1,44 @@
+.container {
+  color: #212529;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  background: linear-gradient(to right, #673ab7, #512da8);
+}
+
+.roomName {
+  color: #e0aaff;
+}
+
+.card h1 {
+  color: #80ffdb;
+  text-transform: uppercase;
+}
+
+.list-about {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  list-style: none;
+  text-align: justify;
+  color: #f8f9fa;
+}
+
+.btn-pair {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.btn-pair button {
+  width: 45%;
+}

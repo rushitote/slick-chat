@@ -7,6 +7,11 @@ const isValidRoom = (roomId: string): boolean => {
 }
 
 const roomExists = async (roomId: string) => {
+  const { users, userInRoom } = await getUsersOfRoom(roomId)
+  return { exists: users.length !== 0, users, userInRoom }
+}
+
+const getUsersOfRoom = async (roomId: string) => {
   try {
     const response = await axios.get('http://localhost:3000/rooms/get', {
       params: {
@@ -15,26 +20,12 @@ const roomExists = async (roomId: string) => {
       withCredentials: true,
     })
     const users: User[] = (response.data as any).users as User[]
-    return users.length !== 0
+    const userInRoom = (response.data as any).userInRoom as boolean
+    return { users, userInRoom }
   } catch (e) {
-    console.log(e)
-    throw new Error('Cannot check for room')
+    throw new Error('Cannot get users of room')
   }
 }
-
-// generates a random ID for the room
-// then checks if that room already exists
-const generateRandomRoom = async () => {
-  while (true) {
-    const roomId = Math.random().toString().slice(2, 12)
-    if (await roomExists(roomId)) {
-      continue
-    } else {
-      return roomId
-    }
-  }
-}
-
 const addToRoom = async (roomId: string) => {
   try {
     await axios.post(
@@ -51,8 +42,8 @@ const addToRoom = async (roomId: string) => {
 
 const removeFromRoom = async (roomId: string) => {
   try {
-    const response  = await axios.post('http://localhost:3000/rooms/remove', { roomId }, { withCredentials: true })
-    if(response.status === 200) {
+    const response = await axios.post('http://localhost:3000/rooms/remove', { roomId }, { withCredentials: true })
+    if (response.status === 200) {
       return true
     }
   } catch (e: any) {
@@ -75,4 +66,4 @@ const getMessages = async (roomId: string, lastMessage?: Message) => {
     throw new Error(e.response.msg)
   }
 }
-export { generateRandomRoom, isValidRoom, roomExists, addToRoom, removeFromRoom, getMessages }
+export { isValidRoom, roomExists, addToRoom, removeFromRoom, getMessages, getUsersOfRoom }
