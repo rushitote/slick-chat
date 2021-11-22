@@ -2,7 +2,7 @@ import * as http from 'http'
 import { Server, Socket } from 'socket.io'
 import passport from 'passport'
 import { sessionMiddleware } from '../server/index'
-import { postMessage, joinRoom, leaveRoom } from './socketOps'
+import { postMessage } from './socketOps'
 import { socketRequest } from './types'
 
 export class SocketIO {

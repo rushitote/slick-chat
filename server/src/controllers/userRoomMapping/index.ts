@@ -4,7 +4,7 @@ import { RequestWithUser } from '../types'
 import { Request, Response } from 'express'
 
 export function addUserRoomMapping(req: RequestWithUser, res: Response) {
-  const username = req.user.username
+  const userId = req.user.userId
   const { roomId } = req.body
 
   if (roomId === undefined) {
@@ -14,7 +14,7 @@ export function addUserRoomMapping(req: RequestWithUser, res: Response) {
   try {
     roomOps.checkIfRoomExists(roomId).then(roomExists => {
       if (roomExists) {
-        mappingOps.addUserRoomMapping(username, roomId).then(() => {
+        mappingOps.addUserRoomMapping(userId, roomId).then(() => {
           res.status(200).send({ msg: 'Mapping added successfully.' })
         })
       } else {
@@ -29,10 +29,10 @@ export function addUserRoomMapping(req: RequestWithUser, res: Response) {
 }
 
 export function getRoomsOfUser(req: RequestWithUser, res: Response) {
-  const username = req.user.username
+  const userId = req.user.userId
 
   try {
-    mappingOps.getRoomsOfUser(username).then(rooms => {
+    mappingOps.getRoomsOfUser(userId).then(rooms => {
       res.status(200).send({
         rooms,
       })
@@ -63,7 +63,7 @@ export function getUsersOfRoom(req: Request, res: Response) {
 }
 
 export function removeUserRoomMapping(req: RequestWithUser, res: Response) {
-  const username = req.user.username
+  const userId = req.user.userId
   const { roomId } = req.body
 
   if (roomId === undefined) {
@@ -71,7 +71,7 @@ export function removeUserRoomMapping(req: RequestWithUser, res: Response) {
   }
 
   try {
-    mappingOps.removeUserRoomMapping(username, roomId).then(status => {
+    mappingOps.removeUserRoomMapping(userId, roomId).then(status => {
       if (status) res.status(200).send({ msg: 'Successfully removed mapping.' })
       else res.status(400).send({})
     })

@@ -4,7 +4,7 @@ import { RequestWithUser } from '../types'
 import { Request, Response } from 'express'
 
 export function postMessage(req: RequestWithUser, res: Response) {
-  const username = req.user.username
+  const userId = req.user.userId
   const { roomId, content } = req.body
 
   if (roomId === undefined || content === undefined) {
@@ -12,9 +12,9 @@ export function postMessage(req: RequestWithUser, res: Response) {
   }
 
   try {
-    mappingOps.checkUserInRoom(username, roomId).then(isInRoom => {
+    mappingOps.checkUserInRoom(userId, roomId).then(isInRoom => {
       if (isInRoom) {
-        messageOps.postMessage(username, content, roomId).then(message => {
+        messageOps.postMessage(userId, content, roomId).then(message => {
           res.status(200).send({
             messageId: message.messageId,
           })
@@ -33,7 +33,7 @@ export function postMessage(req: RequestWithUser, res: Response) {
 }
 
 export function getMessages(req: RequestWithUser, res: Response) {
-  const username = req.user.username
+  const userId = req.user.userId
   const roomId = req.query.roomId?.toString()
   const messageId = req.query.messageId?.toString()
 
@@ -42,7 +42,7 @@ export function getMessages(req: RequestWithUser, res: Response) {
   }
 
   try {
-    mappingOps.checkUserInRoom(username, roomId).then(isInRoom => {
+    mappingOps.checkUserInRoom(userId, roomId).then(isInRoom => {
       if (!isInRoom) {
         return res.status(403).send({
           msg: 'User is not in room',
