@@ -71,8 +71,9 @@ export function removeUserRoomMapping(req: RequestWithUser, res: Response) {
   }
 
   try {
-    mappingOps.removeUserRoomMapping(username, roomId).then(() => {
-      res.status(200).send({ msg: 'Successfully removed mapping.' })
+    mappingOps.removeUserRoomMapping(username, roomId).then(status => {
+      if (status) res.status(200).send({ msg: 'Successfully removed mapping.' })
+      else res.status(400).send({})
     })
   } catch (err) {
     res.status(500).send({

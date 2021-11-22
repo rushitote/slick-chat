@@ -1,15 +1,23 @@
 import { useContext } from 'react'
+import { removeFromRoom } from '../../../utils/Rooms'
+import { useHistory } from 'react-router'
 import messageContext from '../../../utils/Contexts/messagesContext'
 import Button from '../../UI/Button'
 import styles from './LeftPane.module.css'
 export interface ILeftPaneProps {
   image: string
+  roomId: string
 }
 
 export default function LeftPane(props: ILeftPaneProps) {
   const ctx = useContext(messageContext)
-  const leaveRoom = () => {
+  const history = useHistory()
+  const leaveRoom = async () => {
     console.log('leaving')
+    const userLeft = await removeFromRoom(props.roomId)
+    if (userLeft) {
+      history.push('/')
+    }
   }
   return (
     <div className={styles['left-pane']}>
