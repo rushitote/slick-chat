@@ -13,6 +13,10 @@ import { User } from '../Interfaces/Responses'
 import ErrorPage from '../components/UI/Error'
 import Authenticated from '../components/Other/Authenticated'
 import { getMessages } from '../utils/Rooms'
+import { ToastContainer } from 'react-toastify'
+import toast from '../components/UI/Toast'
+import 'react-toastify/dist/ReactToastify.css'
+
 export interface Group {
   id: string
 }
@@ -62,6 +66,20 @@ export default function Groups(props: IAppProps) {
     setIsLoading(false)
   }, [params.id])
 
+  const addUserToUsersList = useCallback(async (user: User) => {
+    setUsersList((prevState: any) => {
+      return [...prevState, user]
+    })
+    toast(`🦄 ${user.username} joined the room!`)
+  }, [])
+
+  const removeUserFromUsersList = useCallback(async (user: User) => {
+    setUsersList((prevState: any) => {
+      return prevState.filter((u: User) => u.userId !== user.userId)
+    })
+    toast(`👋 ${user.username} left the room`)
+  }, [])
+
   useEffect(() => {
     let newSocket: Socket
 
@@ -96,6 +114,14 @@ export default function Groups(props: IAppProps) {
             })
           )
         })
+        newSocket.on('userJoinRoom', (user: User) => {
+          console.log('user joined room', user)
+          addUserToUsersList(user)
+        })
+        newSocket.on('userLeaveRoom', (user: User) => {
+          console.log('user left room', user)
+          removeUserFromUsersList(user)
+        })
         await loadInitialMessages()
         setIsLoading(false)
       }
@@ -105,7 +131,7 @@ export default function Groups(props: IAppProps) {
       // closes socket before a new connection is established
       newSocket?.close()
     }
-  }, [params.id, isLoggedIn, loadInitialMessages])
+  }, [params.id, isLoggedIn, loadInitialMessages, addUserToUsersList, removeUserFromUsersList])
 
   return (
     <Authenticated>
@@ -122,8 +148,9 @@ export default function Groups(props: IAppProps) {
         >
           <socketContext.Provider value={{ socket, roomId: params.id }}>
             <div id={styles['root']}>
-              <LeftPane image={avatar} />
+              <LeftPane image={avatar} roomId={params.id} />
               <ChatWindow />
+              <ToastContainer toastStyle={{ backgroundColor: 'black', color: 'white' }} />
             </div>
           </socketContext.Provider>
         </globalContext.Provider>

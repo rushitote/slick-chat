@@ -69,29 +69,5 @@ export class SocketIO {
         }
       })
     })
-
-    socket.on('userJoinRoom', body => {
-      const { roomId } = JSON.parse(body)
-      const username = (socket.request as socketRequest).user.dataValues.username
-      if (roomId) {
-        joinRoom(username, roomId).then(status => {
-          if (status) {
-            this.io.to(roomId).emit('userJoinRoom', { username })
-          }
-        })
-      }
-    })
-
-    socket.on('userLeaveRoom', body => {
-      const { roomId } = JSON.parse(body)
-      const username = (socket.request as socketRequest).user.dataValues.username
-      if (roomId) {
-        leaveRoom(username, roomId).then(status => {
-          if (status) {
-            this.io.to(roomId).emit('userLeaveRoom', { username })
-          }
-        })
-      }
-    })
   }
 }

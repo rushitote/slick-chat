@@ -33,6 +33,7 @@ export default function JoinRoom(props: IJoinRoomProps) {
         } else {
           try {
             addToRoom(roomId)
+            history.push(`/redirecting`)
             history.push(`/group/${roomId}`)
           } catch (e: any) {
             notifContext.showNotification(e.message)
