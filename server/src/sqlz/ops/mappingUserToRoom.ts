@@ -4,40 +4,30 @@ import Rooms from '../models/rooms'
 import mappingUserToRoom from '../models/mappingUserToRoom'
 import { socket } from '../../index'
 
-export async function checkUserInRoom(username, roomId): Promise<boolean> {
-  const user = await Users.findOne({ where: { username: username } })
-  if (!user) {
-    return false
-  }
-
-  const userId = user.userId
-
+export async function checkUserInRoom(userId, roomId): Promise<boolean> {
   const found = await mappingUserToRoom.findOne({ where: { roomId, userId } })
   return found ? true : false
 }
 
-export async function addUserRoomMapping(username: string, roomId: string): Promise<boolean> {
-  const user = await Users.findOne({ where: { username: username } })
-  if (!user) return
+export async function addUserRoomMapping(userId: string, roomId: string): Promise<boolean> {
+  const user = await Users.findOne({ where: { userId } })
 
-  const userId = user.userId
+  if (!user) return
 
   const found = await mappingUserToRoom.findOne({ where: { roomId, userId } })
   if (!found) {
-    socket.io.to(roomId).emit('userJoinRoom', { username, userId })
+    socket.io.to(roomId).emit('userJoinRoom', { username: user.username, userId })
     await mappingUserToRoom.create({ roomId, userId })
     return true
   }
   return false
 }
 
-export async function getRoomsOfUser(username: string) {
-  const user = await Users.findOne({ where: { username: username } })
+export async function getRoomsOfUser(userId: string) {
+  const user = await Users.findOne({ where: { userId } })
   if (!user) {
     return []
   }
-
-  const userId = user.userId
 
   const mappingsOfUser = await mappingUserToRoom.findAll({ where: { userId } })
   const roomIdsOfUser = []
@@ -73,15 +63,15 @@ export async function getUsersOfRoom(roomId: string) {
   }
 }
 
-export async function removeUserRoomMapping(username: string, roomId: string): Promise<boolean> {
-  const user = await Users.findOne({ where: { username: username } })
-  const userId = user.userId
+export async function removeUserRoomMapping(userId: string, roomId: string): Promise<boolean> {
+  const user = await Users.findOne({ where: { userId } })
+  if (!user) return false
 
   const found = await mappingUserToRoom.findOne({ where: { roomId, userId } })
   const isRoomCreator = await Rooms.findOne({ where: { roomId, createdByUserId: userId } })
 
   if (found && !isRoomCreator) {
-    socket.io.to(roomId).emit('userLeaveRoom', { username, userId })
+    socket.io.to(roomId).emit('userLeaveRoom', { username: user.username, userId })
     await mappingUserToRoom.destroy({ where: { roomId, userId } })
     return true
   }

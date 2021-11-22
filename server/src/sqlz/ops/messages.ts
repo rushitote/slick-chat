@@ -24,9 +24,7 @@ export async function getMessages(roomId, messageId) {
   }
 }
 
-export async function postMessage(username, content, roomId): Promise<MessageAttributes> {
-  const user = await Users.findOne({ where: { username: username } })
-  const userId = user.userId
+export async function postMessage(userId, content, roomId): Promise<MessageAttributes> {
   const messageId = nanoid()
   const unixTime = Date.now()
 

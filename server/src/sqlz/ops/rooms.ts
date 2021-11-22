@@ -2,8 +2,9 @@ import Rooms from '../models/rooms'
 import Users from '../models/users'
 import { customAlphabet } from 'nanoid'
 
-export async function createRoom(username: string, roomName: string) {
-  const user = await Users.findOne({ where: { username: username } })
+export async function createRoom(userId: string, roomName: string) {
+  const user = await Users.findOne({ where: { userId } })
+  if(!user) return
 
   const alphabet =
     '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
@@ -13,7 +14,7 @@ export async function createRoom(username: string, roomName: string) {
   await Rooms.create({
     roomName: roomName,
     roomId: roomId,
-    createdByUserId: user.userId,
+    createdByUserId: userId,
   })
 
   return roomId
