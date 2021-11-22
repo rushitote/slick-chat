@@ -76,7 +76,7 @@ export class SocketIO {
       if (roomId) {
         joinRoom(username, roomId).then(status => {
           if (status) {
-            socket.emit('userJoinRoom', JSON.stringify({ username }))
+            this.io.to(roomId).emit('userJoinRoom', { username })
           }
         })
       }
@@ -88,7 +88,7 @@ export class SocketIO {
       if (roomId) {
         leaveRoom(username, roomId).then(status => {
           if (status) {
-            socket.emit('userLeaveRoom', JSON.stringify({ username }))
+            this.io.to(roomId).emit('userLeaveRoom', { username })
           }
         })
       }

@@ -4,12 +4,7 @@ import * as roomOps from '../sqlz/ops/rooms'
 import { socketRequest } from './types'
 import { MessageAttributes } from '../sqlz/models/messages'
 
-export async function postMessage(
-  request: socketRequest,
-  username,
-  content,
-  roomId
-): Promise<MessageAttributes> {
+export async function postMessage(request: socketRequest, username, content, roomId): Promise<MessageAttributes> {
   let message: MessageAttributes = null
   const isInRoom = await mappingOps.checkUserInRoom(username, roomId)
   if (isInRoom) {
@@ -18,34 +13,24 @@ export async function postMessage(
   return message
 }
 
-export async function joinRoom(
-  username,
-  roomId
-): Promise<boolean>{
+export async function joinRoom(username, roomId): Promise<boolean> {
   try {
-    return roomOps.checkIfRoomExists(roomId).then(roomExists => {
-      if (roomExists) {
-        return mappingOps.addUserRoomMapping(username, roomId).then(() => {
-          return true
-        })
-      }
-      return false
-    })
+    const roomExists = await roomOps.checkIfRoomExists(roomId)
+    if (!roomExists) {
+      const hasJoined = await mappingOps.addUserRoomMapping(username, roomId)
+      return hasJoined
+    }
+    return false
   } catch (err) {
     return false
   }
 }
 
-export async function leaveRoom(
-  username,
-  roomId
-): Promise<boolean>{
+export async function leaveRoom(username, roomId): Promise<boolean> {
   try {
-    return mappingOps.removeUserRoomMapping(username, roomId).then(() => {
-      return true
-    })
+    const hasRemoved = await mappingOps.removeUserRoomMapping(username, roomId)
+    return hasRemoved
   } catch (err) {
     return false
   }
 }
-
