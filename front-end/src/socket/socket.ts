@@ -24,7 +24,7 @@ const connectSocket = async (
   setUsersList: Function,
   loadInitialMessages: Function
 ) => {
-  const newSocket = io(`http://${process.env.REACT_APP_HOST}:3000`, {
+  const newSocket = io(`${process.env.REACT_APP_HOST}:3000`, {
     transports: ['websocket'],
   })
   newSocket?.connect()
