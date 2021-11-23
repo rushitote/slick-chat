@@ -31,7 +31,7 @@ export default function SignUpForm(props: ISignUpForm) {
       setErrorMessage('')
 
       const signUp = async () => {
-        const response = await fetch('http://localhost:3000/create', {
+        const response = await fetch(`http://${process.env.REACT_APP_HOST}:3000/create`, {
           method: 'POST',
           credentials: 'include',
           headers: {

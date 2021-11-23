@@ -30,7 +30,7 @@ export default function CreateRoom(props: ICreateRoomProps) {
   const createRoom = async (e: any) => {
     if (roomNameRef.current && roomNameRef.current.value.length !== 0) {
       const result = await axios.post<any, RoomCreateResponse>(
-        'http://localhost:3000/rooms/create',
+        `http://${process.env.REACT_APP_HOST}:3000/rooms/create`,
         {
           roomName: roomNameRef.current.value,
         },
