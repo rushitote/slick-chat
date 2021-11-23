@@ -13,7 +13,7 @@ const roomExists = async (roomId: string) => {
 
 const getUsersOfRoom = async (roomId: string) => {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_HOST}:3000/rooms/get`, {
+    const response = await axios.get(`${process.env.REACT_APP_HOST}/rooms/get`, {
       params: {
         roomId,
       },
@@ -29,7 +29,7 @@ const getUsersOfRoom = async (roomId: string) => {
 const addToRoom = async (roomId: string) => {
   try {
     await axios.post(
-      `${process.env.REACT_APP_HOST}:3000/rooms/add`,
+      `${process.env.REACT_APP_HOST}/rooms/add`,
       { roomId },
       {
         withCredentials: true,
@@ -43,7 +43,7 @@ const addToRoom = async (roomId: string) => {
 const removeFromRoom = async (roomId: string) => {
   try {
     const response = await axios.post(
-      `${process.env.REACT_APP_HOST}:3000/rooms/remove`,
+      `${process.env.REACT_APP_HOST}/rooms/remove`,
       { roomId },
       { withCredentials: true }
     )
@@ -58,7 +58,7 @@ const removeFromRoom = async (roomId: string) => {
 
 const getMessages = async (roomId: string, lastMessage?: Message) => {
   try {
-    const response = await axios.get<any, any>(`${process.env.REACT_APP_HOST}:3000/messages/get`, {
+    const response = await axios.get<any, any>(`${process.env.REACT_APP_HOST}/messages/get`, {
       params: {
         roomId,
         messageId: lastMessage?.messageId,

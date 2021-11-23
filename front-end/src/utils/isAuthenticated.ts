@@ -1,5 +1,5 @@
 const isAuthenticated = async () => {
-  const response = await fetch(`${process.env.REACT_APP_HOST}:3000/authenticated`, {
+  const response = await fetch(`${process.env.REACT_APP_HOST}/authenticated`, {
     method: 'GET',
     credentials: 'include', //includes the cookies
     headers: {

@@ -24,7 +24,8 @@ const sessionMiddleware = session({
   resave: true,
   secret: 'no_secret', //leaving this like this for now
   cookie: {
-    secure: true,
+    secure: false,
+    httpOnly: true,
     maxAge: 4 * 60 * 60 * 1000,
   },
 })
