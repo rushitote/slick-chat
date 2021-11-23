@@ -20,7 +20,7 @@ export default function App(props: IAppProps) {
   const loginHandler = (e: any) => {
     e.preventDefault()
     const login = async () => {
-      const response = await fetch(`http://${process.env.REACT_APP_HOST}:3000/login`, {
+      const response = await fetch(`${process.env.REACT_APP_HOST}:3000/login`, {
         method: 'POST',
         credentials: 'include',
         headers: {
