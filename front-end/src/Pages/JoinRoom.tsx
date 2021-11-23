@@ -28,7 +28,8 @@ export default function JoinRoom(props: IJoinRoomProps) {
       } else {
         roomIdRef.current.classList.remove(styles['invalid'])
         setErrorShow(false)
-        if (!(await roomExists(roomId))) {
+        const { exists } = await roomExists(roomId)
+        if (!exists) {
           notifContext.showNotification('This room does not exist')
         } else {
           try {

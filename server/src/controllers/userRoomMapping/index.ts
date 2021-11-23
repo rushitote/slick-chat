@@ -44,7 +44,7 @@ export function getRoomsOfUser(req: RequestWithUser, res: Response) {
   }
 }
 
-export function getUsersOfRoom(req: Request, res: Response) {
+export function getUsersOfRoom(req: RequestWithUser, res: Response) {
   const roomId = req.query.roomId?.toString()
 
   if (roomId === undefined) {
@@ -53,7 +53,11 @@ export function getUsersOfRoom(req: Request, res: Response) {
 
   try {
     mappingOps.getUsersOfRoom(roomId).then(users => {
-      res.status(200).send({ users })
+      const userInRoom = users.map(user => user.userId).includes(req.user.userId)
+      res.status(200).send({
+        users,
+        userInRoom,
+      })
     })
   } catch (err) {
     res.status(500).send({

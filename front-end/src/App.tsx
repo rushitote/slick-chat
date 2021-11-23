@@ -5,6 +5,7 @@ import isAuthenticated from './utils/isAuthenticated'
 import Notification from './components/UI/Notification'
 import { useRef } from 'react'
 import './App.css'
+import 'react-toastify/dist/ReactToastify.css'
 import { createPortal } from 'react-dom'
 export interface IAppProps {}
 
@@ -35,10 +36,7 @@ export default function App(props: IAppProps) {
 
   return (
     <>
-      <Router
-        showNotification={showNotification}
-        hideNotification={hideNotification}
-      />
+      <Router showNotification={showNotification} hideNotification={hideNotification} />
       {createPortal(
         <Notification ref={notifRef} hideNotification={hideNotification} />,
         document.getElementById('notification')!

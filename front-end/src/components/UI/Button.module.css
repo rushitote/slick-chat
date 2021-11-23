@@ -4,12 +4,13 @@
   padding: 0.5em 1em;
   border: none;
   border-radius: 5px;
-  box-shadow: 1px 1px 1px 1px rgba(134, 134, 134, 0.8);
+  box-shadow: 1px 1px 1px 2px rgba(70, 70, 70, 0.8);
   transition: background-position 200ms ease-in, box-shadow 100ms ease-in, transform 100ms ease-in;
 }
 
 .btn-green {
-  background: var(--gradient-to-bottom-left);
+  color: black;
+  background: linear-gradient(to right, #00c9ff, #92fe9d);
   background-size: 200% 200%;
 }
 
@@ -22,7 +23,8 @@
 .btn-red {
   background: var(--gradient-danger);
   background-size: 200% 200%;
-  box-shadow: 1px 1px 1px 0px rgba(255, 0, 0, 0.8);
+  color: white;
+  /* box-shadow: 1px 1px 1px 0px rgba(255, 0, 0, 0.8); */
 }
 
 .btn:hover {
