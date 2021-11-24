@@ -28,13 +28,15 @@ const getUsersOfRoom = async (roomId: string) => {
 }
 const addToRoom = async (roomId: string) => {
   try {
-    await axios.post(
+    const response = await axios.post(
       `${process.env.REACT_APP_HOST}/rooms/add`,
       { roomId },
       {
         withCredentials: true,
       }
     )
+    const { username, userId } = response.data as User
+    return { username, userId }
   } catch (e: any) {
     throw new Error(e.response.msg)
   }

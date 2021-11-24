@@ -6,7 +6,7 @@ export interface IAppProps {
   title: string
 }
 
-export default function App(props: IAppProps) {
+export default function About(props: IAppProps) {
   return (
     <div className={styles['about']}>
       <Heading text={props.title} />

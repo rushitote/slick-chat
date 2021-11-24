@@ -47,9 +47,15 @@ export default function Groups(props: IAppProps) {
     setIsLoading(false)
   }, [params.id])
 
-  const onRoomJoin = () => {
+  const onRoomJoin = async (username: string, userId: string) => {
     setInRoom(true)
+    const newSocket = await connectSocket(params.id, setMessages, setUsersList, loadInitialMessages)
+    setSocket(newSocket)
+    setUsersList((users) => {
+      return users?.concat({ username, userId })
+    })
   }
+
   useEffect(() => {
     let newSocket: Socket
     const asyncWrapper = async (id: string) => {
