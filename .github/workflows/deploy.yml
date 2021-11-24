@@ -16,7 +16,6 @@ jobs:
         script: |
           cd chat-app
           git pull
-          ${{ secrets.PASSPHRASE }}
           pm2 restart client
           pm2 restart server
     
