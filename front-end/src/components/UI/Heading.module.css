@@ -6,4 +6,5 @@
   -webkit-text-fill-color: transparent;
   font-size: clamp(70px, 6vw, 130px);
   text-align: center;
+  text-transform: uppercase;
 }

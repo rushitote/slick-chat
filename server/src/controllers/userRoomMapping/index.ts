@@ -15,7 +15,9 @@ export function addUserRoomMapping(req: RequestWithUser, res: Response) {
     roomOps.checkIfRoomExists(roomId).then(roomExists => {
       if (roomExists) {
         mappingOps.addUserRoomMapping(userId, roomId).then(() => {
-          res.status(200).send({ msg: 'Mapping added successfully.' })
+          res
+            .status(200)
+            .send({ msg: 'Mapping added successfully.', username: req.user.username, userId: req.user.userId })
         })
       } else {
         res.status(400).send({ msg: 'Room does not exist.' })

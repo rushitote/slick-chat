@@ -1,14 +1,17 @@
 .message {
   padding: 1em;
+  padding-bottom: 0.5em;
   display: flex;
   gap: 10px;
   border-radius: 10px;
   width: 95%;
+  grid-area: message;
 }
 
 .message-user-image {
   height: 50px;
   width: 50px;
+  /* grid-area: image; */
 }
 
 .message-body {
@@ -21,4 +24,12 @@
 .message-user-name {
   font-weight: 700;
   color: var(--username-color);
+}
+
+.message-body-text {
+  /* grid-area: message; */
+  color: var(--text-color);
+  padding-left: 79px;
+  height: min-content;
+  margin-bottom: 0.5em;
 }

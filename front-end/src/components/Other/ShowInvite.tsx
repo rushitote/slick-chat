@@ -1,7 +1,5 @@
-import * as React from 'react'
-import Container from '../UI/Container'
 import styles from './ShowInvite.module.css'
-import Card from '../UI/Card'
+import Heading from '../UI/Heading'
 import Button from '../UI/Button'
 import { addToRoom } from '../../utils/Rooms'
 import { useContext } from 'react'
@@ -19,9 +17,9 @@ export default function ShowInvite(props: IShowInviteProps) {
   const history = useHistory()
   const addTomRoomClickHandler = async () => {
     try {
-      await addToRoom(props.roomId)
+      const { username, userId } = await addToRoom(props.roomId)
       await props.loadMessages()
-      props.onJoin()
+      props.onJoin(username, userId)
     } catch (e) {
       console.log(e)
       history.push('/')
@@ -32,24 +30,22 @@ export default function ShowInvite(props: IShowInviteProps) {
     history.push('/')
   }
   return (
-    <Container type='flex' className={styles['container']}>
-      <Card className={styles['card']}>
-        <h1>Invite</h1>
-        <h3>TO</h3>
-        <h2 className={styles['roomName']}>{props.roomName}</h2>
-        <h3 className={styles['text-consider']}>Things to consider</h3>
-        <ul className={styles['list-about']}>
-          <li>Your messages aren't encrypted</li>
-          <li>Only the room admin can delete messages </li>
-          <li>Leaving the room doesn't delete your messages</li>
-          <li>You can leave and join the room any time you want</li>
-          <li>However, the room admin can block you from the room</li>
-        </ul>
-        <div className={styles['btn-pair']}>
-          <Button text='Yes, take me in!' onClick={addTomRoomClickHandler} />
-          <Button text='No, thanks' onClick={denyRoomJoinClickHandler} color='red' />
+    <div className={styles['root']}>
+      <div className={styles['container']}>
+        <div className={styles['about']}>
+          <Heading text='Invite to' className={styles['heading-text']} />
+          <div className={styles['room-name']}>{props.roomName}</div>
         </div>
-      </Card>
-    </Container>
+        <div className={styles['separator']}></div>
+
+        <div className={styles['right']}>
+          <h2 className={styles['lucky-text']}>Your friends are waiting!</h2>
+          <div className={styles['btn-pair']}>
+            <Button text='Yes, take me in!' onClick={addTomRoomClickHandler} />
+            <Button text='No, thanks' onClick={denyRoomJoinClickHandler} color='red' />
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
