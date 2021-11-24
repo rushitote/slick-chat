@@ -1,0 +1,25 @@
+name: Deploy
+  on:
+    push:
+      branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    - name: SSH setup
+      run: |
+        mkdir -p ~/.ssh/
+        echo "$SSH_PRIVATE_KEY" > ./deploy.key
+        sudo chmod 600 ./deploy.key
+        sudo ssh -i deploy.key ${{ secrets.SSH_HOST }}
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Pull changes and restart
+      run: |
+        cd chat-app
+        git pull
+        ${{ secrets.PASSPHRASE }}
+        pm2 restart client
+        pm2 restart server
