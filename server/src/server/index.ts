@@ -22,11 +22,13 @@ app.set('view engine', 'pug')
 const sessionMiddleware = session({
   saveUninitialized: true,
   resave: true,
+  proxy: true,
   secret: 'no_secret', //leaving this like this for now
   cookie: {
-    secure: false,
-    httpOnly: true,
+    secure: true,
+    httpOnly: false,
     maxAge: 4 * 60 * 60 * 1000,
+    sameSite: 'none'
   },
 })
 
@@ -58,7 +60,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '../../src/public')))
 
-app.use('/', router)
+app.use('/api/', router)
 
 for (const route of globFiles(ROUTES_DIR)) {
   require(path.resolve(route)).default(app)
