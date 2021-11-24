@@ -7,19 +7,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: SSH setup
-      run: |
-        mkdir -p ~/.ssh/
-        echo "$SSH_PRIVATE_KEY" > ./deploy.key
-        sudo chmod 600 ./deploy.key
-        sudo ssh -i deploy.key ${{ secrets.SSH_HOST }}
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
-    - name: Pull changes and restart
-      run: |
-        cd chat-app
-        git pull
-        ${{ secrets.PASSPHRASE }}
-        pm2 restart client
-        pm2 restart server
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd chat-app
+          git pull
+          ${{ secrets.PASSPHRASE }}
+          pm2 restart client
+          pm2 restart server
+    
