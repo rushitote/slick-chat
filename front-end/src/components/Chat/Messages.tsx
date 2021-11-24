@@ -28,26 +28,53 @@ export default function Messages(props: IMessagesProps) {
         <div className={styles['chat-messages']}>
           {messages.map((message, i) => {
             if (i === 5) {
-              return (
-                <Message
-                  content={message.content}
-                  image={message.image || avatar}
-                  username={message.username}
-                  key={message.messageId}
-                  id={message.messageId}
-                  ref={ref}
-                />
-              )
+              if (message.userId === messages[i - 1].userId) {
+                return (
+                  <Message
+                    content={message.content}
+                    image={message.image || avatar}
+                    username={message.username}
+                    key={message.messageId}
+                    id={message.messageId}
+                    ref={ref}
+                    oneLine={true}
+                  />
+                )
+              } else {
+                return (
+                  <Message
+                    content={message.content}
+                    image={message.image || avatar}
+                    username={message.username}
+                    key={message.messageId}
+                    id={message.messageId}
+                    ref={ref}
+                  />
+                )
+              }
             } else {
-              return (
-                <Message
-                  content={message.content}
-                  image={message.image || avatar}
-                  username={message.username}
-                  key={message.messageId}
-                  id={message.messageId}
-                />
-              )
+              if (i >= 1 && message.userId === messages[i - 1].userId) {
+                return (
+                  <Message
+                    content={message.content}
+                    image={message.image || avatar}
+                    username={message.username}
+                    key={message.messageId}
+                    id={message.messageId}
+                    oneLine={true}
+                  />
+                )
+              } else {
+                return (
+                  <Message
+                    content={message.content}
+                    image={message.image || avatar}
+                    username={message.username}
+                    key={message.messageId}
+                    id={message.messageId}
+                  />
+                )
+              }
             }
           })}
         </div>

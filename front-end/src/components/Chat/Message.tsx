@@ -6,18 +6,28 @@ export interface IMessageProps {
   image: string
   username: string
   id: string
+  oneLine?: boolean
 }
 
 const Message = forwardRef((props: IMessageProps, ref: any) => {
-  return (
-    <div className={styles['message']} ref={ref} id={props.id}>
-      <img className={styles['message-user-image']} alt='User profile' src={props.image} />
-      <div className={styles['message-body']}>
-        <div className={styles['message-user-name']}>{props.username}</div>
+  if (props.oneLine === undefined) {
+    return (
+      <div className={styles['message']} ref={ref} id={props.id}>
+        <img className={styles['message-user-image']} alt='User profile' src={props.image} />
+
+        <div className={styles['message-body']}>
+          <div className={styles['message-user-name']}>{props.username}</div>
+          <div>{props.content}</div>
+        </div>
+      </div>
+    )
+  } else {
+    return (
+      <div ref={ref} id={props.id}>
         <div className={styles['message-body-text']}>{props.content}</div>
       </div>
-    </div>
-  )
+    )
+  }
 })
 
 export default Message
