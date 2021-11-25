@@ -27,7 +27,7 @@ const sessionConfig: session.SessionOptions = {
   proxy: true,
   secret: process.env.SECRET || 'superdupersecret', //leaving this like this for now
   cookie: {
-    secure: ENVIRONMENT === 'PRODUCTION' ? true : false,
+    secure: ENVIRONMENT === 'PRODUCTION',
     httpOnly: false,
     maxAge: 4 * 60 * 60 * 1000,
 
