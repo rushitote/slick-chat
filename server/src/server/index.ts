@@ -7,11 +7,13 @@ import passport from 'passport'
 import * as path from 'path'
 import { MODELS_DIR, ROUTES_DIR } from '../var/config'
 import { globFiles } from '../helpers'
+import MongoStore from 'connect-mongo'
 import router from '../router'
 import cors from 'cors'
 
 const app: express.Express = express()
 
+const ENVIRONMENT = process.env.ENVIRONMENT
 for (const model of globFiles(MODELS_DIR)) {
   require(path.resolve(model))
 }
@@ -19,18 +21,32 @@ for (const model of globFiles(MODELS_DIR)) {
 app.set('views', path.join(__dirname, '../../src/views'))
 app.set('view engine', 'pug')
 
-const sessionMiddleware = session({
+const sessionConfig: session.SessionOptions = {
   saveUninitialized: true,
   resave: true,
   proxy: true,
-  secret: 'no_secret', //leaving this like this for now
+  secret: process.env.SECRET || 'superdupersecret', //leaving this like this for now
   cookie: {
-    secure: true,
+    secure: ENVIRONMENT === 'PRODUCTION' ? true : false,
     httpOnly: false,
     maxAge: 4 * 60 * 60 * 1000,
-    sameSite: 'none'
+
+    sameSite: ENVIRONMENT === 'PRODUCTION' ? 'none' : 'lax', //required for chrome
   },
-})
+}
+
+if (ENVIRONMENT === 'PRODUCTION') {
+  try {
+    sessionConfig.store = MongoStore.create({
+      mongoUrl: process.env.MONGO_URL,
+      touchAfter: 24 * 3600,
+    })
+  } catch (e) {
+    console.log('Please set the database environment variables. Defaulting to Memory Store')
+  }
+}
+
+const sessionMiddleware = session(sessionConfig)
 
 app.use(sessionMiddleware)
 app.use(passport.initialize())
@@ -45,10 +61,7 @@ app.use(
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', process.env.WEBSITE_URL)
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, X-AUTHENTICATION, X-IP, Content-Type, Accept'
-  )
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, X-AUTHENTICATION, X-IP, Content-Type, Accept')
   res.header('Access-Control-Allow-Credentials', 'true')
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
   next()
