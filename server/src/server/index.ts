@@ -25,7 +25,7 @@ const sessionConfig: session.SessionOptions = {
   saveUninitialized: true,
   resave: true,
   proxy: true,
-  secret: process.env.SECRET || 'superdupersecret', //leaving this like this for now
+  secret: process.env.SECRET || 'superdupersecret',
   cookie: {
     secure: ENVIRONMENT === 'PRODUCTION',
     httpOnly: false,
