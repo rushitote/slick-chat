@@ -8,6 +8,9 @@ Note: This application is currently under active development and may lack many f
 
 The entire application is written in Typescript. We use React for the front end and Express for the backend. The database used is PostgresQL and Socket.IO is used for implementing WebSockets.
 
+This is the currently hosted application's architecture:
+![App Arch](https://i.imgur.com/0TEktFs.png)
+
 # Features
 
 ## Implemented
