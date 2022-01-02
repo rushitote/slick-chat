@@ -1,0 +1,78 @@
+.root {
+  display: grid;
+  grid-template-rows: 60px 1fr;
+  height: 100vh;
+}
+.top {
+  display: grid;
+  max-height: 50%;
+  width: 100vw;
+  grid-template-columns: 2fr 1fr;
+  background: #151a1f;
+  grid-template-areas: 'app image';
+}
+#app-name {
+  font-size: clamp(40px, 4vw, 100px);
+  background: linear-gradient(to bottom right, #1fa2ff, #12d8fa 70%, #a6ffcb 100%);
+  background-clip: text;
+  color: transparent;
+}
+
+#get-started-btn {
+  text-decoration: none;
+  color: black;
+  width: max-content;
+  background: var(--green-color);
+  padding: 1em 2em;
+  border-radius: 5px;
+  box-shadow: rgb(112, 112, 112) 0px 1px 5px;
+}
+
+#get-started-btn:hover {
+  background-color: #29ffc6d0;
+}
+
+#get-started-btn:active {
+  transform: scale(0.95);
+}
+
+#navbar {
+  background: #151a1f;
+  position: relative;
+  z-index: 2;
+}
+
+#app-about {
+  color: var(--text-color);
+  text-align: justify;
+  font-size: clamp(20px, 1.5vw, 30px);
+  max-width: 50ch;
+}
+.app {
+  grid-area: app;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+  padding: 3em;
+}
+#react-spinning-image {
+  animation: spinning 2500ms linear;
+  animation-iteration-count: infinite;
+  grid-area: image;
+  justify-self: center;
+  align-self: center;
+  height: clamp(128px, 45vh, 500px);
+}
+
+@keyframes spinning {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+@media screen and (max-width: 920px) {
+}
