@@ -5,12 +5,13 @@
 }
 .top {
   display: grid;
-  max-height: 50%;
+  height: 50vh;
   width: 100vw;
   grid-template-columns: 2fr 1fr;
   background: #151a1f;
   grid-template-areas: 'app image';
 }
+
 #app-name {
   font-size: clamp(40px, 4vw, 100px);
   background: linear-gradient(to bottom right, #1fa2ff, #12d8fa 70%, #a6ffcb 100%);
@@ -55,6 +56,7 @@
   justify-content: center;
   gap: 1em;
   padding: 3em;
+  height: max-content;
 }
 #react-spinning-image {
   animation: spinning 2500ms linear;
@@ -62,7 +64,7 @@
   grid-area: image;
   justify-self: center;
   align-self: center;
-  height: clamp(128px, 45vh, 500px);
+  height: clamp(256px, min(45vh, 45vw), 500px);
 }
 
 @keyframes spinning {
@@ -74,5 +76,38 @@
   }
 }
 
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 778px) {
+  .top {
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content max-content;
+    grid-template-areas:
+      'image'
+      'app';
+    height: 100%;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+  }
+  .app {
+    padding-top: 0;
+    justify-content: start;
+  }
+  #get-started-btn {
+    width: 100%;
+  }
+  #navbar > a {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  a:first-child {
+    width: 100vw;
+    text-align: center;
+  }
+  #navbar {
+    gap: 0;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding: 0;
+  }
 }

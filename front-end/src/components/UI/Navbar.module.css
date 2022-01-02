@@ -3,8 +3,8 @@
   list-style: none;
   justify-content: flex-start;
   gap: 3em;
-  padding-left: 2em;
-  padding-right: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
   font-size: 1.5rem;
 
   color: var(--text-color);
