@@ -1,0 +1,39 @@
+.navbar {
+  display: flex;
+  list-style: none;
+  justify-content: flex-start;
+  gap: 3em;
+  padding-left: 1em;
+  padding-right: 1em;
+  font-size: 1.5rem;
+
+  color: var(--text-color);
+  align-items: center;
+}
+
+#account-sign-up {
+  margin-left: auto;
+}
+
+.navbar > a {
+  transition: color 250ms ease-in-out;
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.navbar > a:visited {
+  color: var(--text-color);
+}
+
+.navbar > a:hover {
+  cursor: pointer;
+  color: #06d6a0;
+}
+
+#app-name {
+  text-transform: uppercase;
+  font-weight: bold;
+  background: var(--gradient-to-right);
+  background-clip: text;
+  color: transparent;
+}

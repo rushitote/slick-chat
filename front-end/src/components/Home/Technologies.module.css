@@ -1,0 +1,14 @@
+.root {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1em;
+  height: 100%;
+}
+
+.heading {
+  width: 100%;
+  text-align: center;
+  font-size: clamp(40px, 2vw, 60px);
+}

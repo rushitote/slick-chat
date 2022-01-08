@@ -1,0 +1,149 @@
+.root {
+  display: grid;
+  grid-template-rows: 60px auto 1fr;
+  grid-template-areas:
+    'navbar'
+    'banner'
+    'technologies';
+  min-height: 100vh;
+}
+.top {
+  display: grid;
+  height: 50vh;
+  width: 100vw;
+  grid-template-columns: 2fr 1fr;
+  background: #151a1f;
+  grid-template-areas: 'app image';
+  grid-area: banner;
+}
+
+#app-name {
+  font-size: clamp(40px, 4vw, 100px);
+  background: linear-gradient(to bottom right, #1fa2ff, #12d8fa 70%, #a6ffcb 100%);
+  background-clip: text;
+  color: transparent;
+}
+
+.btn {
+  text-decoration: none;
+  color: black;
+  width: max-content;
+  padding: 1em 2em;
+  border-radius: 5px;
+  box-shadow: rgb(112, 112, 112) 0px 1px 5px;
+}
+#get-started-btn {
+  background: var(--green-color);
+}
+
+a.btn:visited {
+  color: black;
+}
+
+#github-btn,
+a[id='github-btn'] {
+  color: var(--text-color);
+}
+
+#get-started-btn:hover {
+  background-color: #29ffc6d0;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+#app-footer {
+  color: var(--text-color);
+}
+
+#navbar {
+  background: #151a1f;
+  position: relative;
+  z-index: 2;
+  grid-area: navbar;
+}
+
+#app-about {
+  color: var(--text-color);
+  font-size: clamp(20px, 1.5vw, 30px);
+  max-width: 50ch;
+}
+
+#technology {
+  grid-area: technologies;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+.app {
+  grid-area: app;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+  padding: 3em;
+  height: max-content;
+}
+#react-spinning-image {
+  animation: spinning 2500ms linear;
+  animation-iteration-count: infinite;
+  grid-area: image;
+  justify-self: center;
+  align-self: center;
+  height: clamp(256px, min(45vh, 45vw), 500px);
+}
+
+.btn-bar {
+  display: flex;
+  gap: 1em;
+}
+@keyframes spinning {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+@media screen and (max-width: 778px) {
+  .top {
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content max-content;
+    grid-template-areas:
+      'image'
+      'app';
+    height: max-content;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+  }
+  .app {
+    padding-top: 0;
+    justify-content: start;
+  }
+  .btn {
+    width: 100%;
+  }
+  #navbar > a {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* a:first-child {
+    width: 100vw;
+    text-align: center;
+  } */
+  #navbar {
+    gap: 0;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .btn-bar {
+    flex-direction: column;
+  }
+}
