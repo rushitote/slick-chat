@@ -11,10 +11,10 @@ export default function Home(props: IHomeProps) {
       <NavBar id={styles['navbar']} />
       <div className={styles['top']}>
         <div className={styles['app']}>
-          <h1 id={styles['app-name']}>A place to hang out with your friends</h1>
+          <h1 id={styles['app-name']}>A place to chat with your friends</h1>
           <p id={styles['app-about']}>
-            Modern chatting applications have gotten too complex. Embrace the simplicity of Free Chat to chat with your
-            friends securely and privately
+            Modern chatting applications have gotten too complex. Embrace the simplicity of Slick Chat to chat with your
+            friends securely and privately.
           </p>
           <div className={styles['btn-bar']}>
             <Link to='/login' id={styles['get-started-btn']} className={styles['btn']}>
