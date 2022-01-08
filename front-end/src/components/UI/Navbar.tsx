@@ -8,7 +8,7 @@ export default function NavBar(props: INavBarProps) {
   return (
     <ul className={styles['navbar']} id={props.id || ''}>
       <Link id={styles['app-name']} to='/'>
-        Free Chat
+        Slick Chat
       </Link>
       <Link to='/create'>Create</Link>
       <Link to='/join'>Join</Link>
