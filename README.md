@@ -26,4 +26,8 @@ This is the currently hosted application's architecture:
 - [x] A catchy name
 - [x] Notification support
 
+# Contributors
+
+- [Shashwat Khanna](https://github.com/TheTrio)
+- [Rushikesh Tote](https://github.com/rushitote)
 
