@@ -1,6 +1,7 @@
 # Slick Chat
 
 A simple real time chatting application built using [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API).
+Checkout some of the screenshots [here](./Screenshots.md)!
 
 # About
 
