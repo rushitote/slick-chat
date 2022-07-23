@@ -7,9 +7,10 @@ import passport from 'passport'
 import * as path from 'path'
 import { MODELS_DIR, ROUTES_DIR } from '../var/config'
 import { globFiles } from '../helpers'
-import MongoStore from 'connect-mongo'
 import router from '../router'
 import cors from 'cors'
+import Redis from 'ioredis'
+import connectRedis from 'connect-redis'
 
 const app: express.Express = express()
 
@@ -37,12 +38,12 @@ const sessionConfig: session.SessionOptions = {
 
 if (ENVIRONMENT === 'PRODUCTION') {
   try {
-    sessionConfig.store = MongoStore.create({
-      mongoUrl: process.env.MONGO_URL,
-      touchAfter: 24 * 3600,
-    })
+    const redisStore = connectRedis(session)
+    const redisClient = new Redis()
+    redisClient.on("error", console.error)
+    sessionConfig.store = new redisStore({ client: redisClient })
   } catch (e) {
-    console.log('Please set the database environment variables. Defaulting to Memory Store')
+    console.log(`Connect redis error: ${e}\nDefaulting to Memory Store`)
   }
 }
 
@@ -73,7 +74,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '../../src/public')))
 
-app.use('/api/', router)
+app.use('/', router)
 
 for (const route of globFiles(ROUTES_DIR)) {
   require(path.resolve(route)).default(app)
