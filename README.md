@@ -25,6 +25,25 @@ This is the currently hosted application's architecture:
 - [x] A catchy name
 - [x] Notification support
 
+# Setup
+
+- Install [PostgreSQL](https://www.postgresql.org/download/).
+- Install [Redis](https://redis.io/docs/getting-started/installation/).
+- Clone the repository on your system.
+- Replace the following files with the configuration as you want and save them without the '.example' suffix: [frontend env](./front-end/.env.example), [server env](./server/.env.example) and [database env](./server/src/sqlz/config/config.json.example)
+- Install deps and start the server by:
+```sh
+cd server
+npm install
+npm run dev
+```
+- Install deps and start the frontend dev server in another terminal tab by:
+```sh
+cd front-end
+npm install
+npm start
+```
+
 # Contributors
 
 - [Shashwat Khanna](https://github.com/TheTrio)
