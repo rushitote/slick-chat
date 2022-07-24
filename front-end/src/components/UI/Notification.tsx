@@ -1,4 +1,4 @@
-import { forwardRef, Ref, useContext } from 'react'
+import { forwardRef, Ref } from 'react'
 import styles from './Notification.module.css'
 import './Notification.css'
 export interface INotificationProps {
