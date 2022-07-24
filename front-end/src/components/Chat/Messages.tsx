@@ -5,7 +5,7 @@ import Message from './Message'
 import avatar from '../../images/avatar.png'
 import Loading from '../UI/Loading'
 import { useInView } from 'react-intersection-observer'
-export interface IMessagesProps { }
+export interface IMessagesProps {}
 
 export default function Messages(props: IMessagesProps) {
   const { messages, refreshMessages, loading } = useContext(messageContext)

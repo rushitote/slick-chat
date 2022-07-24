@@ -7,7 +7,7 @@ import { useRef } from 'react'
 import './App.css'
 import 'react-toastify/dist/ReactToastify.css'
 import { createPortal } from 'react-dom'
-export interface IAppProps { }
+export interface IAppProps {}
 
 export default function App(props: IAppProps) {
   const { setIsLoggedIn } = useContext(loggedInContext)
