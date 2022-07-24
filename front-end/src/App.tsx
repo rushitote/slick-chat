@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect } from 'react'
 import Router from './components/Router/Router'
 import loggedInContext from './utils/Contexts/loggedInContext'
 import isAuthenticated from './utils/isAuthenticated'
