@@ -2,9 +2,8 @@ import styles from './ShowInvite.module.css'
 import Heading from '../UI/Heading'
 import Button from '../UI/Button'
 import { addToRoom } from '../../utils/Rooms'
-import { useContext } from 'react'
 import { useHistory } from 'react-router'
-import notificationContext from '../../utils/Contexts/notificationContext'
+import toast from '../UI/Toast'
 export interface IShowInviteProps {
   roomName: string
   roomId: string
@@ -13,17 +12,18 @@ export interface IShowInviteProps {
 }
 
 export default function ShowInvite(props: IShowInviteProps) {
-  const { showNotification } = useContext(notificationContext)
   const history = useHistory()
   const addTomRoomClickHandler = async () => {
     try {
       const { username, userId } = await addToRoom(props.roomId)
       await props.loadMessages()
       props.onJoin(username, userId)
+      console.log(props)
+      toast(`You've joined ${props.roomName}`)
     } catch (e) {
       console.log(e)
       history.push('/')
-      showNotification('Something went wrong. Please try again later')
+      toast('Something went wrong. Please try again later')
     }
   }
   const denyRoomJoinClickHandler = () => {

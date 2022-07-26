@@ -4,9 +4,9 @@ import Button from '../UI/Button'
 import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router'
-import notificationContext from '../../utils/Contexts/notificationContext'
 import BottomFormPopup from '../UI/ButtonFormPopup'
 import InputField from '../UI/InputField'
+import toast from '../UI/Toast'
 
 export interface ISignUpForm {}
 
@@ -16,7 +16,6 @@ export default function SignUpForm(props: ISignUpForm) {
   const confirmPasswordRef = useRef<HTMLInputElement>(null)
   const [errorShow, setErrorShow] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState('')
-  const notifContext = useContext(notificationContext)
   const history = useHistory()
   const signUpHandler = (e: any) => {
     e.preventDefault()
@@ -47,7 +46,7 @@ export default function SignUpForm(props: ISignUpForm) {
           setErrorMessage(msg)
           setErrorShow(true)
         } else {
-          notifContext.showNotification('Account created successfully In')
+          toast('Account Successfully created')
           history.push('/login')
         }
       }
