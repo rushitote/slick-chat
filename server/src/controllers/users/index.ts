@@ -7,6 +7,8 @@ export async function getUserDetails(req: UserDetailsRequest, res: Response) {
   if (userDetails) {
     res.status(200).send(userDetails)
   } else {
-    res.status(400).send()
+    res.status(500).send({
+      msg: 'Internal server error',
+    })
   }
 }

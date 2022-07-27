@@ -30,7 +30,7 @@ export async function getRoomInfo(req: RoomInfoRequest, res: Response) {
   const roomID = req.query.roomID
 
   if (!roomID) {
-    return res.status(400).send('RoomID should not be empty')
+    return res.status(400).send({ msg: 'RoomID should not be empty' })
   }
 
   try {
@@ -38,7 +38,7 @@ export async function getRoomInfo(req: RoomInfoRequest, res: Response) {
     if (roomInfo) {
       res.status(200).send(roomInfo)
     } else {
-      res.status(400).send()
+      res.status(400).send({ msg: 'invalid RoomID' })
     }
   } catch (err) {
     res.status(500).send({
