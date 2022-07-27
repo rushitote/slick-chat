@@ -1,6 +1,7 @@
 import argon2 from 'argon2'
-import Users from '../models/users'
+import Users, { UserInstance } from '../models/users'
 import { nanoid } from 'nanoid'
+import { ModelCtor } from 'sequelize/types'
 
 export async function addUser(username, password) {
   try {
@@ -42,11 +43,29 @@ export async function checkUser(username, password, Users) {
   }
 }
 
-export async function findById(userId, Users) {
+export async function findById(userId, Users: ModelCtor<UserInstance>) {
   try {
     const user = await Users.findOne({ where: { userId: userId } })
     return { status: true, user: user }
   } catch (err) {
     return { status: false, err: err }
+  }
+}
+
+export async function getUserNameOfUser(userID: string) {
+  return (await findById(userID, Users)).user.get('username')
+}
+
+export async function getUser(userId: string) {
+  if (!userId) {
+    return
+  }
+  const findRes = await findById(userId, Users)
+  console.log(findRes)
+  if (findRes.status && findRes.user) {
+    return {
+      userId: findRes.user.get('userId'),
+      username: findRes.user.get('username'),
+    }
   }
 }

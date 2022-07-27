@@ -9,9 +9,7 @@ interface UserAttributes {
 
 interface UserCreationAttributes extends Optional<UserAttributes, 'userId'> {}
 
-interface UserInstance
-  extends Model<UserAttributes, UserCreationAttributes>,
-    UserAttributes {}
+export interface UserInstance extends Model<UserAttributes, UserCreationAttributes>, UserAttributes {}
 
 const Users = sequelize.define<UserInstance>(
   'Users',
