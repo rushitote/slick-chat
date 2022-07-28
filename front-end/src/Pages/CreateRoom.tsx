@@ -1,9 +1,8 @@
 import styles from './CreateRoom.module.css'
 import Container from '../components/UI/Container'
-import { useContext, useRef } from 'react'
+import { useRef } from 'react'
 import Button from '../components/UI/Button'
 import axios from 'axios'
-import notificationContext from '../utils/Contexts/notificationContext'
 import { useHistory } from 'react-router-dom'
 import { useState } from 'react'
 import BottomFormPopup from '../components/UI/ButtonFormPopup'
@@ -13,11 +12,11 @@ import Authenticated from '../components/Other/Authenticated'
 import { Link } from 'react-router-dom'
 import { RoomCreateResponse } from '../Interfaces/Responses'
 import { generateSlug } from 'random-word-slugs'
+import toast from '../components/UI/Toast'
 export interface ICreateRoomProps {}
 
 export default function CreateRoom(props: ICreateRoomProps) {
   const roomNameRef = useRef<HTMLInputElement>(null)
-  const notifCtx = useContext(notificationContext)
   const [errorShow, setErrorShow] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState('')
   const history = useHistory()
@@ -42,7 +41,7 @@ export default function CreateRoom(props: ICreateRoomProps) {
         console.log('Added user successfully')
         history.push(`/group/${result.data.roomId}`)
       } else {
-        notifCtx.showNotification('Something went wrong. Please try again later')
+        toast('Something went wrong. Please try again later')
       }
     } else {
       setErrorMessage("Name can't be empty")
