@@ -5,11 +5,11 @@ import Authenticated from '../components/Other/Authenticated'
 import InputField from '../components/UI/InputField'
 import Button from '../components/UI/Button'
 import { Link } from 'react-router-dom'
-import { useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { isValidRoom, roomExists, addToRoom } from '../utils/Rooms'
 import BottomFormPopup from '../components/UI/ButtonFormPopup'
-import notificationContext from '../utils/Contexts/notificationContext'
 import { useHistory } from 'react-router'
+import toast from '../components/UI/Toast'
 export interface IJoinRoomProps {}
 
 export default function JoinRoom(props: IJoinRoomProps) {
@@ -17,7 +17,6 @@ export default function JoinRoom(props: IJoinRoomProps) {
   const [errorShow, setErrorShow] = useState(false)
   const [errorMessage, setErrorMessage] = useState('initialState')
   const history = useHistory()
-  const notifContext = useContext(notificationContext)
   const roomJoinHandler = async (e: any) => {
     if (roomIdRef.current) {
       const roomId = roomIdRef.current.value
@@ -30,14 +29,14 @@ export default function JoinRoom(props: IJoinRoomProps) {
         setErrorShow(false)
         const { exists } = await roomExists(roomId)
         if (!exists) {
-          notifContext.showNotification('This room does not exist')
+          toast('This room does not exist')
         } else {
           try {
             addToRoom(roomId)
             history.push(`/redirecting`)
             history.push(`/group/${roomId}`)
           } catch (e: any) {
-            notifContext.showNotification(e.message)
+            toast(e.message)
           }
         }
       }
