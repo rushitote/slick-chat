@@ -5,7 +5,6 @@ import Button from '../UI/Button'
 import { Link, Redirect } from 'react-router-dom'
 import InputField from '../UI/InputField'
 import { useState, useEffect } from 'react'
-import toast from '../UI/Toast'
 import BottomFormPopup from '../UI/ButtonFormPopup'
 export interface IAppProps {}
 
@@ -20,10 +19,6 @@ export default function App(props: IAppProps) {
   useEffect(() => {
     setRedirectPath(sessionStorage.getItem('lastPage'))
   }, [])
-
-  const invalidUser = () => {
-    toast('Invalid Credentials')
-  }
 
   const loginHandler = (e: any) => {
     e.preventDefault()
@@ -43,9 +38,7 @@ export default function App(props: IAppProps) {
 
       if (validCredentials) {
         localStorage.setItem('username', usernameRef.current!.value)
-        console.log('Logged in successfully')
       } else {
-        console.log('Invalid user')
         setErrorMessage('Invalid Credentials')
         setErrorShow(true)
       }

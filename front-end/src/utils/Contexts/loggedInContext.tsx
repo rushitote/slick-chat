@@ -12,11 +12,7 @@ const loggedInContext = createContext<loggedInContextInterface>({
 
 const LoggedInProvider = (props: any) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(undefined)
-  return (
-    <loggedInContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-      {props.children}
-    </loggedInContext.Provider>
-  )
+  return <loggedInContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>{props.children}</loggedInContext.Provider>
 }
 
 export { LoggedInProvider }

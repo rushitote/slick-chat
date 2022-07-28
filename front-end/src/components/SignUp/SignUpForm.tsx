@@ -1,7 +1,7 @@
 import styles from './SignUpForm.module.css'
 import { useRef } from 'react'
 import Button from '../UI/Button'
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router'
 import BottomFormPopup from '../UI/ButtonFormPopup'
