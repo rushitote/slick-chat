@@ -7,6 +7,8 @@ import app from './server'
 const server: http.Server = http.createServer(app)
 const socket = new Socket(server)
 
+const onlineUsers: Map<string, Set<string>> = new Map()
+
 server.listen(PORT)
 
 server.on('error', (e: Error) => {
@@ -14,12 +16,7 @@ server.on('error', (e: Error) => {
 })
 
 server.on('listening', () => {
-  console.log(
-    `Server started on port ${PORT} on env ${process.env.NODE_ENV || 'dev'}`
-  )
+  console.log(`Server started on port ${PORT} on env ${process.env.NODE_ENV || 'dev'}`)
 })
 
-export {
-  server,
-  socket,
-}
+export { server, socket, onlineUsers }

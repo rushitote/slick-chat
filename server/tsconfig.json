@@ -9,7 +9,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "target": "es5",
+    "target": "ES2016",
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2016", "ESNext.BigInt", "dom"]
   },
