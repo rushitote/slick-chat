@@ -120,7 +120,7 @@ export default function Groups(props: IAppProps) {
         <socketContext.Provider value={{ socket, roomId: params.id }}>
           <div id={styles['root']}>
             <LeftPane image={avatar} roomId={params.id} />
-            <ChatWindow />
+            <ChatWindow roomId={params.id} />
             <ToastContainer toastStyle={{ backgroundColor: 'black', color: 'white' }} />
           </div>
         </socketContext.Provider>
