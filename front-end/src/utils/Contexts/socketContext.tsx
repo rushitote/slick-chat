@@ -3,12 +3,14 @@ import { Socket } from 'socket.io-client'
 
 interface socketContextInterface {
   socket: Socket | undefined
-  roomId: String
+  roomId: string
+  roomName: string
 }
 
 const socketContext = createContext<socketContextInterface>({
   socket: undefined,
-  roomId: 'undefined',
+  roomId: ' ',
+  roomName: ' ',
 })
 
 export default socketContext

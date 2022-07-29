@@ -34,11 +34,10 @@ const getRoomInfo=async(roomID:string)=>{
       },
       withCredentials:true,
     })
-    const users: User[]=(response.data as any).users as User[]
     const roomName:string=(response.data as any).roomName as string
     const roomOwnerId:string=(response.data as any).roomOwnerId as string
     const roomOwnerUsername:string=(response.data as any).roomOwnerUsername as string
-    return {users,roomName,roomOwnerId,roomOwnerUsername}
+    return {roomName,roomOwnerId,roomOwnerUsername}
   }
   catch(e){
     throw new Error("Cannot get room info")
@@ -47,7 +46,10 @@ const getRoomInfo=async(roomID:string)=>{
 const getUserDetails=async(userID:string)=>{
   try{
     let params={userID}
-    const response=await axios.get(`${process.env.REACT_APP_HOST}/users/info`,{params,withCredentials:true})
+    const response=await axios.get(`${process.env.REACT_APP_HOST}/users/info`,{
+      params,
+      withCredentials:true
+    })
     const username:string=(response.data as any).username as string
     return {username}
   }
