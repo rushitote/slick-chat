@@ -8,7 +8,7 @@ import avatar from '../images/avatar.png'
 import { Socket } from 'socket.io-client'
 import socketContext from '../utils/Contexts/socketContext'
 import { User } from '../Interfaces/Responses'
-import { getMessages, getRoomInfo, roomExists } from '../utils/Rooms'
+import { getMessages, roomExists } from '../utils/Rooms'
 import { ToastContainer } from 'react-toastify'
 import connectSocket from '../socket/socket'
 import ErrorPage from '../components/UI/Error'
@@ -30,6 +30,7 @@ export default function Groups(props: IAppProps) {
   const [roomFound, setRoomFound] = useState<boolean | undefined>(undefined)
   const [inRoom, setInRoom] = useState(false)
   const [currRoomName, setCurrRoomName] = useState<string>('')
+  const [roomOwner, setRoomOwner] = useState<User>()
 
   // if user is not in room, they're shown a page asking if they want to join
 
@@ -38,13 +39,7 @@ export default function Groups(props: IAppProps) {
 
   const refreshMessages = async (lastMessage: Message) => {
     setIsRefreshing(true)
-    await fetchMessages(
-      moreMessages,
-      params.id,
-      lastMessage,
-      setMoreMessages,
-      setMessages
-    )
+    await fetchMessages(moreMessages, params.id, lastMessage, setMoreMessages, setMessages)
     setIsRefreshing(false)
   }
 
@@ -56,40 +51,26 @@ export default function Groups(props: IAppProps) {
 
   const onRoomJoin = async (username: string, userId: string) => {
     setInRoom(true)
-    const newSocket = await connectSocket(
-      params.id,
-      setMessages,
-      setUsersList,
-      loadInitialMessages
-    )
+    const newSocket = await connectSocket(params.id, setMessages, setUsersList, loadInitialMessages)
     setSocket(newSocket)
     setUsersList((users) => {
       return users?.concat({ username, userId, online: true })
     })
   }
 
-  const getRoomDetails = async () => {
-    let { roomName } = await getRoomInfo(params.id)
-    setCurrRoomName(roomName)
-    console.log(currRoomName)
-  }
-
   useEffect(() => {
     let newSocket: Socket
     const asyncWrapper = async (id: string) => {
       try {
-        const { users, exists, userInRoom } = await roomExists(id)
+        const { users, exists, userInRoom, roomName, roomOwner } = await roomExists(id)
+        setCurrRoomName(roomName)
         setUsersList(users)
         setRoomFound(exists)
         setInRoom(userInRoom)
+        setRoomOwner(roomOwner)
         // if users length is 0 that means the room doesn't exist
         if (exists && userInRoom) {
-          newSocket = await connectSocket(
-            params.id,
-            setMessages,
-            setUsersList,
-            loadInitialMessages
-          )
+          newSocket = await connectSocket(params.id, setMessages, setUsersList, loadInitialMessages)
           setSocket(newSocket)
           setIsLoading(false)
         }
@@ -100,7 +81,6 @@ export default function Groups(props: IAppProps) {
         }
       }
     }
-    getRoomDetails()
     asyncWrapper(params.id)
     return () => {
       // closes socket before a new connection is established
@@ -123,7 +103,7 @@ export default function Groups(props: IAppProps) {
   } else if (!inRoom) {
     return (
       <socketContext.Provider
-        value={{ socket, roomId: params.id, roomName: currRoomName }}
+        value={{ socket, roomId: params.id, roomName: currRoomName, roomOwner }}
       >
         <ShowInvite onJoin={onRoomJoin} loadMessages={loadInitialMessages} />
       </socketContext.Provider>
@@ -140,14 +120,12 @@ export default function Groups(props: IAppProps) {
         }}
       >
         <socketContext.Provider
-          value={{ socket, roomId: params.id, roomName: currRoomName }}
+          value={{ socket, roomId: params.id, roomName: currRoomName, roomOwner }}
         >
           <div id={styles['root']}>
             <LeftPane image={avatar} roomId={params.id} />
             <ChatWindow roomId={params.id} />
-            <ToastContainer
-              toastStyle={{ backgroundColor: 'black', color: 'white' }}
-            />
+            <ToastContainer toastStyle={{ backgroundColor: 'black', color: 'white' }} />
           </div>
         </socketContext.Provider>
       </globalContext.Provider>

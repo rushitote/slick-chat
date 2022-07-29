@@ -3,7 +3,7 @@ import Users from '../models/users'
 import { getUserNameOfUser } from '../ops/users'
 import { customAlphabet } from 'nanoid'
 import { getUsersOfRoom } from './mappingUserToRoom'
-
+import { onlineUsers } from '../../index'
 export async function createRoom(userId: string, roomName: string) {
   const user = await Users.findOne({ where: { userId } })
   if (!user) return
@@ -21,16 +21,24 @@ export async function createRoom(userId: string, roomName: string) {
   return roomId
 }
 
-export async function getRoomDetails(roomId: string) {
+export async function getRoomDetails(roomId: string, currUser) {
   const room = await Rooms.findOne({ where: { roomId } })
   if (!room) return
+
+  const groupOnlineUsers = onlineUsers?.get(roomId)
+
+  const users = await getUsersOfRoom(roomId)
+  const userInRoom = users.map(user => user.userId).includes(currUser.userId)
+  const roomOwner = users.filter(user => user.userId === room.get('createdByUserId'))[0]
 
   return {
     roomId,
     roomName: room.get('roomName'),
-    roomOwnerId: room.get('createdByUserId'),
-    roomOwnerUsername: await getUserNameOfUser(room.get('createdByUserId')),
-    users: await getUsersOfRoom(roomId),
+    roomOwner,
+    users: users.map(user => {
+      return { ...user, online: groupOnlineUsers?.has(user.username) ?? false }
+    }), // adds online status to each user
+    userInRoom,
   }
 }
 

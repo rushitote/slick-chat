@@ -34,7 +34,7 @@ export async function getRoomInfo(req: RoomInfoRequest, res: Response) {
   }
 
   try {
-    const roomInfo = await roomOps.getRoomDetails(roomID)
+    const roomInfo = await roomOps.getRoomDetails(roomID, req.user)
     if (roomInfo) {
       res.status(200).send(roomInfo)
     } else {

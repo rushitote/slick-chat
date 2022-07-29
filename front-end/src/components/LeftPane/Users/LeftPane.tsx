@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from 'react'
-import { removeFromRoom, getRoomInfo } from '../../../utils/Rooms'
+import { removeFromRoom } from '../../../utils/Rooms'
 import { useHistory } from 'react-router'
 import messageContext from '../../../utils/Contexts/messagesContext'
 import Button from '../../UI/Button'
 import styles from './LeftPane.module.css'
+import socketContext from '../../../utils/Contexts/socketContext'
 export interface ILeftPaneProps {
   image: string
   roomId: string
@@ -19,24 +20,17 @@ export default function LeftPane(props: ILeftPaneProps) {
       history.push('/')
     }
   }
-  useEffect(() => {
-    const getRoomDetails = async () => {
-      let { roomOwnerUsername } = await getRoomInfo(props.roomId)
-      setRoomOwnerUsername(roomOwnerUsername)
-    }
-    getRoomDetails()
-  }, [props.roomId])
-  const [roomOwnerUsername, setRoomOwnerUsername] = useState<string>('')
+  const { roomOwner } = useContext(socketContext)
   return (
     <div className={styles['left-pane']}>
       <h1 className={styles['user-list-heading']}>Users</h1>
       <div className={styles['user-list-users']}>
         <li>
           <img src={props.image} alt='' className={styles['user-image']} />
-          {roomOwnerUsername} 👑
+          {roomOwner?.username} 👑
         </li>
         {ctx.users
-          .filter((user) => user.username !== roomOwnerUsername)
+          .filter((user) => user.username !== roomOwner?.username)
           .map((user) => (
             <li key={Math.random()}>
               <img src={props.image} alt='' className={styles['user-image']} />
@@ -45,7 +39,7 @@ export default function LeftPane(props: ILeftPaneProps) {
             </li>
           ))}
       </div>
-      {currentUser !== roomOwnerUsername && (
+      {currentUser !== roomOwner?.username && (
         <div className={styles['exit-group']}>
           <Button text='Leave Room' onClick={leaveRoom} color='red' />
         </div>

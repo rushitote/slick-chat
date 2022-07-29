@@ -20,7 +20,6 @@ router.use('/rooms/:url', function(req, res, next) {
 
 router.post('/rooms/create', roomConfig.createRoom)
 router.get('/rooms/info', roomConfig.getRoomInfo)
-router.get('/rooms/get', mappingConfig.getUsersOfRoom)
 router.post('/rooms/add', mappingConfig.addUserRoomMapping)
 router.post('/rooms/remove', mappingConfig.removeUserRoomMapping)
 

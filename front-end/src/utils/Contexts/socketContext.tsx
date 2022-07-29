@@ -1,16 +1,14 @@
 import { createContext } from 'react'
 import { Socket } from 'socket.io-client'
+import { User } from '../../Interfaces/Responses'
 
-interface socketContextInterface {
-  socket: Socket | undefined
-  roomId: string
-  roomName: string
+export interface socketContextInterface {
+  socket?: Socket
+  roomId?: string
+  roomName?: string
+  roomOwner?: User
 }
 
-const socketContext = createContext<socketContextInterface>({
-  socket: undefined,
-  roomId: ' ',
-  roomName: ' ',
-})
+const socketContext = createContext<socketContextInterface>({})
 
 export default socketContext

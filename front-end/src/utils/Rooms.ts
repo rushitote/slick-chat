@@ -7,53 +7,38 @@ const isValidRoom = (roomId: string): boolean => {
 }
 
 const roomExists = async (roomId: string) => {
-  const { users, userInRoom } = await getUsersOfRoom(roomId)
-  return { exists: users.length !== 0, users, userInRoom }
+  const { users, ...rest } = await getRoomInfo(roomId)
+  return { exists: users.length !== 0, users, ...rest }
 }
 
-const getUsersOfRoom = async (roomId: string) => {
+const getRoomInfo = async (roomID: string) => {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_HOST}/rooms/get`, {
+    const response = await axios.get(`${process.env.REACT_APP_HOST}/rooms/info`, {
       params: {
-        roomId,
+        roomID,
       },
       withCredentials: true,
     })
+    const roomName: string = (response.data as any).roomName as string
+    const roomOwner: User = (response.data as any).roomOwner as User
     const users: User[] = (response.data as any).users as User[]
     const userInRoom = (response.data as any).userInRoom as boolean
-    return { users, userInRoom }
+
+    return { roomName, roomOwner, users, userInRoom }
   } catch (e) {
-    throw new Error('Cannot get users of room')
+    throw new Error('Cannot get room info')
   }
 }
-const getRoomInfo=async(roomID:string)=>{
-  try{
-    const response=await axios.get(`${process.env.REACT_APP_HOST}/rooms/info`,{
-      params:{
-        roomID,
-      },
-      withCredentials:true,
-    })
-    const roomName:string=(response.data as any).roomName as string
-    const roomOwnerId:string=(response.data as any).roomOwnerId as string
-    const roomOwnerUsername:string=(response.data as any).roomOwnerUsername as string
-    return {roomName,roomOwnerId,roomOwnerUsername}
-  }
-  catch(e){
-    throw new Error("Cannot get room info")
-  }
-}
-const getUserDetails=async(userID:string)=>{
-  try{
-    let params={userID}
-    const response=await axios.get(`${process.env.REACT_APP_HOST}/users/info`,{
+const getUserDetails = async (userID: string) => {
+  try {
+    let params = { userID }
+    const response = await axios.get(`${process.env.REACT_APP_HOST}/users/info`, {
       params,
-      withCredentials:true
+      withCredentials: true,
     })
-    const username:string=(response.data as any).username as string
-    return {username}
-  }
-  catch(e){
+    const username: string = (response.data as any).username as string
+    return { username }
+  } catch (e) {
     throw new Error("Cannot get user's info")
   }
 }
@@ -103,4 +88,4 @@ const getMessages = async (roomId: string, lastMessage?: Message) => {
     throw new Error(e.response.msg)
   }
 }
-export { isValidRoom, roomExists, addToRoom, removeFromRoom, getMessages, getUsersOfRoom,getRoomInfo,getUserDetails }
+export { isValidRoom, roomExists, addToRoom, removeFromRoom, getMessages, getUserDetails }
