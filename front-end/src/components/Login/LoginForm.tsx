@@ -5,6 +5,7 @@ import Button from '../UI/Button'
 import { Link, Redirect } from 'react-router-dom'
 import InputField from '../UI/InputField'
 import { useState, useEffect } from 'react'
+import BottomFormPopup from '../UI/ButtonFormPopup'
 export interface IAppProps {}
 
 export default function App(props: IAppProps) {
@@ -12,6 +13,8 @@ export default function App(props: IAppProps) {
   const usernameRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
   const [redirectPath, setRedirectPath] = useState<string | null>(null)
+  const [errorShow, setErrorShow] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
     setRedirectPath(sessionStorage.getItem('lastPage'))
@@ -35,7 +38,9 @@ export default function App(props: IAppProps) {
 
       if (validCredentials) {
         localStorage.setItem('username', usernameRef.current!.value)
-        console.log('Logged in successfully')
+      } else {
+        setErrorMessage('Invalid Credentials')
+        setErrorShow(true)
       }
       setIsLoggedIn(validCredentials)
     }
@@ -58,13 +63,15 @@ export default function App(props: IAppProps) {
         <label htmlFor='password'>Password</label>
         <InputField type='password' name='password' id='password' ref={passwordRef} />
       </div>
-      <Button text='Login' onClick={loginHandler} />
-      <div className={styles['register-text']}>
-        <p> Not registered? </p>
-        <p>
-          You can create an account for free <Link to='/signUp'> here</Link>
-        </p>
-      </div>
+      <BottomFormPopup show={errorShow} message={errorMessage}>
+        <Button text='Login' onClick={loginHandler} />
+        <div className={styles['register-text']}>
+          <p> Not registered? </p>
+          <p>
+            You can create an account for free <Link to='/signUp'> here</Link>
+          </p>
+        </div>
+      </BottomFormPopup>
     </form>
   )
 }

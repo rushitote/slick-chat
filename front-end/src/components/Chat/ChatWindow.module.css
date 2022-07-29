@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 1em;
-  padding: 2em;
+  padding-bottom: 2em;
   max-height: 100vh;
   width: 100%;
   background: linear-gradient(
@@ -12,4 +12,19 @@
   );
 
   border-radius: 10px;
+}
+.roomTitle{
+  color: var(--text-color);
+}
+.participant{
+  padding-top: 0.3rem;
+  color: var(--text-color);
+  font-weight: 200;
+}
+.roomHeading{
+  background-color: var(--secondary-color);
+  width: 100%;
+  padding: 1.2rem;
+  display: flex;
+  justify-content: space-evenly;
 }

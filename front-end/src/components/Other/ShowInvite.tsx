@@ -2,28 +2,31 @@ import styles from './ShowInvite.module.css'
 import Heading from '../UI/Heading'
 import Button from '../UI/Button'
 import { addToRoom } from '../../utils/Rooms'
-import { useContext } from 'react'
 import { useHistory } from 'react-router'
-import notificationContext from '../../utils/Contexts/notificationContext'
+import toast from '../UI/Toast'
+import { useContext } from 'react'
+import socketContext from '../../utils/Contexts/socketContext'
 export interface IShowInviteProps {
-  roomName: string
-  roomId: string
   loadMessages: Function
   onJoin: Function
 }
 
 export default function ShowInvite(props: IShowInviteProps) {
-  const { showNotification } = useContext(notificationContext)
   const history = useHistory()
+  const { roomName, roomId } = useContext(socketContext)
   const addTomRoomClickHandler = async () => {
+    if (!roomId) {
+      return
+    }
     try {
-      const { username, userId } = await addToRoom(props.roomId)
+      const { username, userId } = await addToRoom(roomId)
       await props.loadMessages()
       props.onJoin(username, userId)
+      toast(`🦄 You've joined ${roomName}`)
     } catch (e) {
       console.log(e)
       history.push('/')
-      showNotification('Something went wrong. Please try again later')
+      toast('Something went wrong. Please try again later')
     }
   }
   const denyRoomJoinClickHandler = () => {
@@ -34,7 +37,7 @@ export default function ShowInvite(props: IShowInviteProps) {
       <div className={styles['container']}>
         <div className={styles['about']}>
           <Heading text='Invite to' className={styles['heading-text']} />
-          <div className={styles['room-name']}>{props.roomName}</div>
+          <div className={styles['room-name']}>{roomName}</div>
         </div>
         <div className={styles['separator']}></div>
 
