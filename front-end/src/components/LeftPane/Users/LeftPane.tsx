@@ -26,12 +26,12 @@ export default function LeftPane(props: ILeftPaneProps) {
     }
     getRoomDetails()
   }, [props.roomId])
-  const [roomOwnerUsername, setRoomOwnerUsername] = useState('')
+  const [roomOwnerUsername, setRoomOwnerUsername] = useState<string>('')
   return (
     <div className={styles['left-pane']}>
       <h1 className={styles['user-list-heading']}>Users</h1>
       <div className={styles['user-list-users']}>
-        <li key={Math.random()}>
+        <li>
           <img src={props.image} alt='' className={styles['user-image']} />
           {roomOwnerUsername} 👑
         </li>
@@ -45,12 +45,10 @@ export default function LeftPane(props: ILeftPaneProps) {
             </li>
           ))}
       </div>
-      {currentUser !== roomOwnerUsername ? (
+      {currentUser !== roomOwnerUsername && (
         <div className={styles['exit-group']}>
           <Button text='Leave Room' onClick={leaveRoom} color='red' />
         </div>
-      ) : (
-        ''
       )}
     </div>
   )

@@ -1,5 +1,4 @@
 .chat-window {
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1em;
@@ -23,7 +22,7 @@
   font-weight: 200;
 }
 .roomHeading{
-  background-color: #232526;
+  background-color: var(--secondary-color);
   width: 100%;
   padding: 1.2rem;
   display: flex;

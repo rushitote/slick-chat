@@ -4,22 +4,22 @@ import Button from '../UI/Button'
 import { addToRoom } from '../../utils/Rooms'
 import { useHistory } from 'react-router'
 import toast from '../UI/Toast'
+import { useContext } from 'react'
+import socketContext from '../../utils/Contexts/socketContext'
 export interface IShowInviteProps {
-  roomName: string
-  roomId: string
   loadMessages: Function
   onJoin: Function
 }
 
 export default function ShowInvite(props: IShowInviteProps) {
   const history = useHistory()
+  const { roomName, roomId } = useContext(socketContext)
   const addTomRoomClickHandler = async () => {
     try {
-      const { username, userId } = await addToRoom(props.roomId)
+      const { username, userId } = await addToRoom(roomId)
       await props.loadMessages()
       props.onJoin(username, userId)
-      console.log(props)
-      toast(`You've joined ${props.roomName}`)
+      toast(`🦄 You've joined ${roomName}`)
     } catch (e) {
       console.log(e)
       history.push('/')
@@ -34,7 +34,7 @@ export default function ShowInvite(props: IShowInviteProps) {
       <div className={styles['container']}>
         <div className={styles['about']}>
           <Heading text='Invite to' className={styles['heading-text']} />
-          <div className={styles['room-name']}>{props.roomName}</div>
+          <div className={styles['room-name']}>{roomName}</div>
         </div>
         <div className={styles['separator']}></div>
 
@@ -42,7 +42,11 @@ export default function ShowInvite(props: IShowInviteProps) {
           <h2 className={styles['lucky-text']}>Your friends are waiting!</h2>
           <div className={styles['btn-pair']}>
             <Button text='Yes, take me in!' onClick={addTomRoomClickHandler} />
-            <Button text='No, thanks' onClick={denyRoomJoinClickHandler} color='red' />
+            <Button
+              text='No, thanks'
+              onClick={denyRoomJoinClickHandler}
+              color='red'
+            />
           </div>
         </div>
       </div>

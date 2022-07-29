@@ -1,21 +1,20 @@
 import styles from './ChatWindow.module.css'
 import Input from '../Input/Input'
 import Messages from './Messages'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { getRoomInfo } from '../../utils/Rooms'
+import messageContext from '../../utils/Contexts/messagesContext'
 export interface IChatWindowProps {
   roomId: string
 }
 
 export default function ChatWindow(props: IChatWindowProps) {
   const [roomTitle, setRoomTitle] = useState<string>('')
-  const [roomMemberCount, setRoomMemberCount] = useState<number>(0)
-
+  const users = useContext(messageContext).users
   useEffect(() => {
     const getRoomDetails = async () => {
-      let { roomName, users } = await getRoomInfo(props.roomId)
+      let { roomName } = await getRoomInfo(props.roomId)
       setRoomTitle(roomName)
-      setRoomMemberCount(users.length)
     }
     getRoomDetails()
   }, [])
@@ -23,6 +22,7 @@ export default function ChatWindow(props: IChatWindowProps) {
     <div className={styles['chat-window']}>
       <div className={styles['roomHeading']}>
         <h2 className={styles['roomTitle']}>{roomTitle}</h2>
+        <h3 className={styles['participant']}>{users.length} participants</h3>
       </div>
       <Messages />
       <Input />
