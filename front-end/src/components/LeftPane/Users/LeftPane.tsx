@@ -20,6 +20,9 @@ export default function LeftPane(props: ILeftPaneProps) {
       history.push('/')
     }
   }
+  const createInvite = () => {
+    navigator.clipboard.writeText(`${process.env.REACT_APP_HOST}/group/${props.roomId}`)
+  }
   const { roomOwner } = useContext(socketContext)
   const roomOwnerStatus = ctx?.users?.filter((user) => user.userId === roomOwner?.userId)[0]?.online
   return (
@@ -41,9 +44,13 @@ export default function LeftPane(props: ILeftPaneProps) {
             </li>
           ))}
       </div>
-      {currentUser !== roomOwner?.username && (
+      {currentUser !== roomOwner?.username ? (
         <div className={styles['exit-group']}>
           <Button text='Leave Room' onClick={leaveRoom} color='red' />
+        </div>
+      ) : (
+        <div className={styles['exit-group']}>
+          <Button text='Create Invite' onClick={createInvite} color='blue' />
         </div>
       )}
     </div>

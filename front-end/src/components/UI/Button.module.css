@@ -18,13 +18,13 @@
   background: linear-gradient(to right, #24c6dc, #514a9d);
   box-shadow: 1px 1px 1px 0px rgba(134, 134, 134, 0.8);
   background-size: 200% 200%;
+  color: beige;
 }
 
 .btn-red {
   background: var(--gradient-danger);
   background-size: 200% 200%;
   color: white;
-  /* box-shadow: 1px 1px 1px 0px rgba(255, 0, 0, 0.8); */
 }
 
 .btn:hover {
