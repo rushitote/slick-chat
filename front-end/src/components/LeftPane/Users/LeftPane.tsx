@@ -21,6 +21,7 @@ export default function LeftPane(props: ILeftPaneProps) {
     }
   }
   const { roomOwner } = useContext(socketContext)
+  const roomOwnerStatus = ctx?.users?.filter((user) => user.userId === roomOwner?.userId)[0]?.online
   return (
     <div className={styles['left-pane']}>
       <h1 className={styles['user-list-heading']}>Users</h1>
@@ -28,6 +29,7 @@ export default function LeftPane(props: ILeftPaneProps) {
         <li>
           <img src={props.image} alt='' className={styles['user-image']} />
           {roomOwner?.username} 👑
+          <div className={styles[`user-${roomOwnerStatus ? 'online' : 'offline'}`]}></div>
         </li>
         {ctx.users
           .filter((user) => user.username !== roomOwner?.username)

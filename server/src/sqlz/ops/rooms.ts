@@ -27,7 +27,11 @@ export async function getRoomDetails(roomId: string, currUser) {
 
   const groupOnlineUsers = onlineUsers?.get(roomId)
 
-  const users = await getUsersOfRoom(roomId)
+  // adds online status to each user
+  const users = (await getUsersOfRoom(roomId)).map(user => {
+    return { ...user, online: groupOnlineUsers?.has(user.username) ?? false }
+  })
+
   const userInRoom = users.map(user => user.userId).includes(currUser.userId)
   const roomOwner = users.filter(user => user.userId === room.get('createdByUserId'))[0]
 
@@ -35,9 +39,7 @@ export async function getRoomDetails(roomId: string, currUser) {
     roomId,
     roomName: room.get('roomName'),
     roomOwner,
-    users: users.map(user => {
-      return { ...user, online: groupOnlineUsers?.has(user.username) ?? false }
-    }), // adds online status to each user
+    users,
     userInRoom,
   }
 }
