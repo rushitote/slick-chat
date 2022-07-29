@@ -27,6 +27,7 @@ export default function LeftPane(props: ILeftPaneProps) {
           <li key={Math.random()}>
             <img src={props.image} alt='' className={styles['user-image']} />
             {user.username}
+            <div className={styles[`user-${user.online ? 'online' : 'offline'}`]}></div>
           </li>
         ))}
       </div>

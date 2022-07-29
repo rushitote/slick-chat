@@ -48,6 +48,18 @@ const connectSocket = async (
   newSocket.on('userLeaveRoom', (user: User) => {
     removeUserFromUsersList(user, setUsersList)
   })
+
+  newSocket.on('changeUserStatus', ({ username, online }) => {
+    setUsersList((users: User[]) => {
+      return users.map((u: User) => {
+        if (u.username === username) {
+          return { ...u, online }
+        }
+        return u
+      })
+    })
+  })
+
   await loadInitialMessages()
   return newSocket
 }

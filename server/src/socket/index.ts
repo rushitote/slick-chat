@@ -4,7 +4,7 @@ import passport from 'passport'
 import { sessionMiddleware } from '../server/index'
 import { postMessage } from './socketOps'
 import { socketRequest } from './types'
-
+import { onlineUsers } from '../index'
 export class SocketIO {
   public io: Server
 
@@ -43,10 +43,38 @@ export class SocketIO {
       console.info(`Socket disconnected : ${socket.id}`)
     })
 
+    socket.on('disconnecting', () => {
+      for (const room of socket.rooms) {
+        if (onlineUsers.has(room)) {
+          // remove user from online Set
+          onlineUsers.get(room).delete((socket.request as socketRequest).user.dataValues.username)
+
+          // emit an event to all users in the room that the user has disconnected
+          socket.to(room).emit('changeUserStatus', {
+            username: (socket.request as socketRequest).user.dataValues.username,
+            online: false,
+          })
+        }
+      }
+    })
+
     socket.on('joinRoom', msg => {
       const { roomId } = JSON.parse(msg)
       console.log('Socket:', socket.id, 'joined', roomId)
       socket.join(roomId)
+
+      if (!onlineUsers.has(roomId)) {
+        // if the room doesn't exist, create it
+        onlineUsers.set(roomId, new Set([(socket.request as socketRequest).user.dataValues.username]))
+      } else {
+        // add user to online Set
+        onlineUsers.get(roomId).add((socket.request as socketRequest).user.dataValues.username)
+      }
+      // emit online event
+      this.io.to(roomId).emit('changeUserStatus', {
+        username: (socket.request as socketRequest).user.dataValues.username,
+        online: true,
+      })
     })
 
     socket.on('newMessage', msg => {

@@ -52,7 +52,7 @@ export default function Groups(props: IAppProps) {
     const newSocket = await connectSocket(params.id, setMessages, setUsersList, loadInitialMessages)
     setSocket(newSocket)
     setUsersList((users) => {
-      return users?.concat({ username, userId })
+      return users?.concat({ username, userId, online: true })
     })
   }
 
@@ -61,7 +61,6 @@ export default function Groups(props: IAppProps) {
     const asyncWrapper = async (id: string) => {
       try {
         const { users, exists, userInRoom } = await roomExists(id)
-        console.log(users)
         setUsersList(users)
         setRoomFound(exists)
         setInRoom(userInRoom)
