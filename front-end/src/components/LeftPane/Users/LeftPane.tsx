@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { removeFromRoom } from '../../../utils/Rooms'
 import { useHistory } from 'react-router'
 import messageContext from '../../../utils/Contexts/messagesContext'
