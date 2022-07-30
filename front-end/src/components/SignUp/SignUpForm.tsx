@@ -7,6 +7,7 @@ import { useHistory } from 'react-router'
 import BottomFormPopup from '../UI/ButtonFormPopup'
 import InputField from '../UI/InputField'
 import toast from '../UI/Toast'
+import PasswordField from '../UI/PasswordField'
 
 export interface ISignUpForm {}
 
@@ -15,7 +16,7 @@ export default function SignUpForm(props: ISignUpForm) {
   const passwordRef = useRef<HTMLInputElement>(null)
   const confirmPasswordRef = useRef<HTMLInputElement>(null)
   const [errorShow, setErrorShow] = useState<boolean>(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string>('')
   const history = useHistory()
   const signUpHandler = (e: any) => {
     e.preventDefault()
@@ -61,11 +62,11 @@ export default function SignUpForm(props: ISignUpForm) {
       </div>
       <div className={styles['pair']}>
         <label htmlFor='password'>Password</label>
-        <InputField type='password' name='password' id='password' ref={passwordRef} />
+        <PasswordField ref={passwordRef} />
       </div>
       <div className={styles['pair']}>
         <label htmlFor='confirmPassword'>Confirm Password</label>
-        <InputField type='password' name='confirmPassword' id='confirmPassword' ref={confirmPasswordRef} />
+        <PasswordField ref={confirmPasswordRef} disabled />
       </div>
       <BottomFormPopup show={errorShow} message={errorMessage}>
         <Button text='Create account' onClick={signUpHandler} />
