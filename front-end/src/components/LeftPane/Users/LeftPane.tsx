@@ -14,17 +14,18 @@ export default function LeftPane(props: ILeftPaneProps) {
   const ctx = useContext(messageContext)
   const currentUser = localStorage.getItem('username')
   const history = useHistory()
+  const { roomOwner, roomName } = useContext(socketContext)
+  const roomOwnerStatus = ctx?.users?.filter((user) => user.userId === roomOwner?.userId)[0]?.online
+
   const leaveRoom = async () => {
     const userLeft = await removeFromRoom(props.roomId)
     if (userLeft) {
       history.push('/')
     }
   }
-  const createInvite = () => {
-    navigator.clipboard.writeText(`${process.env.REACT_APP_HOST}/group/${props.roomId}`)
+  const openDialogBox = () => {
+    history.push(`/group/invite/${props.roomId}/${roomName}`)
   }
-  const { roomOwner } = useContext(socketContext)
-  const roomOwnerStatus = ctx?.users?.filter((user) => user.userId === roomOwner?.userId)[0]?.online
   return (
     <div className={styles['left-pane']}>
       <h1 className={styles['user-list-heading']}>Users</h1>
@@ -50,7 +51,7 @@ export default function LeftPane(props: ILeftPaneProps) {
         </div>
       ) : (
         <div className={styles['exit-group']}>
-          <Button text='Create Invite' onClick={createInvite} color='blue' />
+          <Button text='Create Invite' onClick={openDialogBox} color='blue' />
         </div>
       )}
     </div>

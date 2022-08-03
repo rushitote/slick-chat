@@ -40,7 +40,7 @@
 }
 
 .user-online {
-  background-color: rgb(43, 102, 43);
+  background-color: var(--online-color);
   border-radius: 50%;
   height: 20px;
   position: absolute;

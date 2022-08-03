@@ -3,7 +3,8 @@ import styles from './PasswordField.module.css'
 import { useState } from 'react'
 import InputField, { IInputFieldProps } from './InputField'
 import { Ref } from 'react'
-import eyeBtn from '../../images/eyeBtn.png'
+import eyeOpen from '../../images/eyeOpen.png'
+import eyeClosed from '../../images/eyeClosed.png'
 import { forwardRef } from 'react'
 
 const PasswordField = forwardRef((props: IInputFieldProps, ref: Ref<HTMLInputElement>) => {
@@ -23,7 +24,7 @@ const PasswordField = forwardRef((props: IInputFieldProps, ref: Ref<HTMLInputEle
       />
       {!props.disabled && (
         <button className={styles['span-eye-btn']} onClick={showPassword}>
-          <img src={eyeBtn} alt='' />
+          <img src={!showingPassword ? eyeClosed : eyeOpen} alt='' />
         </button>
       )}
     </span>
