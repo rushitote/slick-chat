@@ -1,7 +1,8 @@
+import { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import styles from './DialogBox.module.css'
 import Button from '../components/UI/Button'
-import { useState } from 'react'
+import { generateInviteLink } from '../utils/Rooms'
 export interface Dialog {
   id: string
   name: string
@@ -10,7 +11,7 @@ export interface IDialogBoxProps {}
 const DialogBox = (props: IDialogBoxProps) => {
   const params = useParams<Dialog>()
   const history = useHistory()
-  const link = window.location.protocol + '//' + window.location.host + `/group/${params.id}`
+  const link = generateInviteLink(params.id)
   const [isClicked, setIsClicked] = useState<boolean>(false)
   const copyInviteLink = () => {
     setIsClicked(true)

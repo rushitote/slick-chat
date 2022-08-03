@@ -50,7 +50,7 @@ export default function LeftPane(props: ILeftPaneProps) {
           <Button text='Leave Room' onClick={leaveRoom} color='red' />
         </div>
       ) : (
-        <div className={styles['exit-group']}>
+        <div className={styles['create-invite']}>
           <Button text='Create Invite' onClick={openDialogBox} color='blue' />
         </div>
       )}

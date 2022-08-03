@@ -1,11 +1,8 @@
-import * as React from 'react'
+import { useState, Ref, forwardRef } from 'react'
 import styles from './PasswordField.module.css'
-import { useState } from 'react'
 import InputField, { IInputFieldProps } from './InputField'
-import { Ref } from 'react'
 import eyeOpen from '../../images/eyeOpen.png'
 import eyeClosed from '../../images/eyeClosed.png'
-import { forwardRef } from 'react'
 
 const PasswordField = forwardRef((props: IInputFieldProps, ref: Ref<HTMLInputElement>) => {
   const showPassword = (e: any) => {
