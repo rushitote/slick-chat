@@ -14,14 +14,18 @@ export default function LeftPane(props: ILeftPaneProps) {
   const ctx = useContext(messageContext)
   const currentUser = localStorage.getItem('username')
   const history = useHistory()
+  const { roomOwner, roomName } = useContext(socketContext)
+  const roomOwnerStatus = ctx?.users?.filter((user) => user.userId === roomOwner?.userId)[0]?.online
+
   const leaveRoom = async () => {
     const userLeft = await removeFromRoom(props.roomId)
     if (userLeft) {
       history.push('/')
     }
   }
-  const { roomOwner } = useContext(socketContext)
-  const roomOwnerStatus = ctx?.users?.filter((user) => user.userId === roomOwner?.userId)[0]?.online
+  const openDialogBox = () => {
+    history.push(`/group/invite/${props.roomId}/${roomName}`)
+  }
   return (
     <div className={styles['left-pane']}>
       <h1 className={styles['user-list-heading']}>Users</h1>
@@ -41,9 +45,13 @@ export default function LeftPane(props: ILeftPaneProps) {
             </li>
           ))}
       </div>
-      {currentUser !== roomOwner?.username && (
+      {currentUser !== roomOwner?.username ? (
         <div className={styles['exit-group']}>
           <Button text='Leave Room' onClick={leaveRoom} color='red' />
+        </div>
+      ) : (
+        <div className={styles['create-invite']}>
+          <Button text='Create Invite' onClick={openDialogBox} color='blue' />
         </div>
       )}
     </div>

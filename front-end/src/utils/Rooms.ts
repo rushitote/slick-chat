@@ -88,4 +88,9 @@ const getMessages = async (roomId: string, lastMessage?: Message) => {
     throw new Error(e.response.msg)
   }
 }
-export { isValidRoom, roomExists, addToRoom, removeFromRoom, getMessages, getUserDetails }
+
+const generateInviteLink=(roomId:string)=>{
+  return `${window.location.protocol}//${window.location.host}/group/${roomId}`
+}
+
+export { isValidRoom, roomExists, addToRoom, removeFromRoom, getMessages, getUserDetails,generateInviteLink }

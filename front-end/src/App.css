@@ -14,6 +14,8 @@ body {
   --gradient-danger: linear-gradient(to right, #da4453, #89216b);
   --danger-gradient: linear-gradient(to left, #ee0979, #ff6a00);
   --background-gradient: linear-gradient(to bottom right, var(--primary-color) 0%, var(--secondary-color) 100%);
+  --online-color:#3cd64e;
+  --overlay-background:rgba(0,0,0,0.45);
 }
 
 body,

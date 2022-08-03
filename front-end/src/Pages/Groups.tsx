@@ -77,8 +77,6 @@ export default function Groups(props: IAppProps) {
       } catch (e: any) {
         // if the user doesn't belong to this room
         // the get requests throws a 401
-        if (e.response.status === 401) {
-        }
       }
     }
     asyncWrapper(params.id)

@@ -8,6 +8,7 @@ import Home from '../../Pages/Home'
 import Authenticated from '../Other/Authenticated'
 import { ComponentTransition, AnimationTypes } from 'react-component-transition'
 import { Switch } from 'react-router-dom'
+import DialogBox from '../../Pages/DialogBox'
 
 export interface IRouterProps {}
 
@@ -26,6 +27,11 @@ export default function Router(props: IRouterProps) {
           <Authenticated>
             <Groups />
           </Authenticated>
+          <Route path='/group/invite/:id/:name'>
+            <Authenticated>
+              <Groups />
+            </Authenticated>
+          </Route>
         </Route>
         <Route path='/login'>
           <Login />
@@ -40,6 +46,11 @@ export default function Router(props: IRouterProps) {
           <JoinRoom />
         </Route>
       </Switch>
+      <Route path='/group/invite/:id/:name'>
+        <Authenticated>
+          <DialogBox />
+        </Authenticated>
+      </Route>
     </ComponentTransition>
   )
 }

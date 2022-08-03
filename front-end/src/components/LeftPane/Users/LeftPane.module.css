@@ -34,13 +34,13 @@
   width: 50px;
 }
 
-.exit-group {
+.exit-group,.create-invite{
   width: 100%;
   margin-top: auto;
 }
 
 .user-online {
-  background-color: rgb(43, 102, 43);
+  background-color: var(--online-color);
   border-radius: 50%;
   height: 20px;
   position: absolute;

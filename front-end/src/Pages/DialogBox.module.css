@@ -1,0 +1,54 @@
+.overlay{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 10;
+    background-color: var(--overlay-background);
+}
+.invite-heading{
+    font-weight: 300;
+    text-align: center;
+}
+.invite-desc{
+    font-weight: 100;
+    font-size: 1.2em;
+}
+.roomname{
+    color:var(--username-color);
+    font-weight: 100;
+}
+.inviteBox{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    color: var(--text-color);
+    background-color: var(--secondary-color);
+    box-shadow: 0 0 4px 4px #00c9ff;
+    height: 20em;
+    width: 30em;
+    padding: 2em;
+}
+.invite-link{
+    display: flex;
+}
+.link-box{
+    border: 1px solid var(--primary-color);
+    background-color: var(--primary-color);
+    padding: 0.5em;
+}
+.closing-button{
+    position: absolute;
+    border: none;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    font-size: 1.3em;
+    font-weight: 900;
+    left: 22em;
+    top: 0.5em;
+}

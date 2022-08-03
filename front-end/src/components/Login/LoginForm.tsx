@@ -6,6 +6,7 @@ import { Link, Redirect } from 'react-router-dom'
 import InputField from '../UI/InputField'
 import { useState, useEffect } from 'react'
 import BottomFormPopup from '../UI/ButtonFormPopup'
+import PasswordField from '../UI/PasswordField'
 export interface IAppProps {}
 
 export default function App(props: IAppProps) {
@@ -61,7 +62,7 @@ export default function App(props: IAppProps) {
       </div>
       <div className={styles['pair']}>
         <label htmlFor='password'>Password</label>
-        <InputField type='password' name='password' id='password' ref={passwordRef} />
+        <PasswordField ref={passwordRef} />
       </div>
       <BottomFormPopup show={errorShow} message={errorMessage}>
         <Button text='Login' onClick={loginHandler} />
