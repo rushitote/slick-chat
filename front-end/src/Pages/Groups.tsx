@@ -14,6 +14,7 @@ import connectSocket from '../socket/socket'
 import ErrorPage from '../components/UI/Error'
 import fetchMessages from '../utils/Messages'
 import ShowInvite from '../components/Other/ShowInvite'
+import DialogBox from './DialogBox'
 export interface Group {
   id: string
 }
@@ -31,7 +32,7 @@ export default function Groups(props: IAppProps) {
   const [inRoom, setInRoom] = useState(false)
   const [currRoomName, setCurrRoomName] = useState<string>('')
   const [roomOwner, setRoomOwner] = useState<User>()
-
+  const [showInvite, setShowInvite] = useState(false)
   // if user is not in room, they're shown a page asking if they want to join
 
   // isLoading is for the initial page load
@@ -120,8 +121,9 @@ export default function Groups(props: IAppProps) {
         <socketContext.Provider
           value={{ socket, roomId: params.id, roomName: currRoomName, roomOwner }}
         >
+          {showInvite && <DialogBox hideInvite={() => setShowInvite(false)} />}
           <div id={styles['root']}>
-            <LeftPane image={avatar} roomId={params.id} />
+            <LeftPane image={avatar} roomId={params.id} showInvite={() => setShowInvite(true)} />
             <ChatWindow roomId={params.id} />
             <ToastContainer toastStyle={{ backgroundColor: 'black', color: 'white' }} />
           </div>

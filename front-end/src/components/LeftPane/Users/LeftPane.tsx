@@ -8,13 +8,14 @@ import socketContext from '../../../utils/Contexts/socketContext'
 export interface ILeftPaneProps {
   image: string
   roomId: string
+  showInvite: () => void
 }
 
 export default function LeftPane(props: ILeftPaneProps) {
   const ctx = useContext(messageContext)
   const currentUser = localStorage.getItem('username')
   const history = useHistory()
-  const { roomOwner, roomName } = useContext(socketContext)
+  const { roomOwner } = useContext(socketContext)
   const roomOwnerStatus = ctx?.users?.filter((user) => user.userId === roomOwner?.userId)[0]?.online
 
   const leaveRoom = async () => {
@@ -22,9 +23,6 @@ export default function LeftPane(props: ILeftPaneProps) {
     if (userLeft) {
       history.push('/')
     }
-  }
-  const openDialogBox = () => {
-    history.push(`/group/invite/${props.roomId}/${roomName}`)
   }
   return (
     <div className={styles['left-pane']}>
@@ -51,7 +49,7 @@ export default function LeftPane(props: ILeftPaneProps) {
         </div>
       ) : (
         <div className={styles['create-invite']}>
-          <Button text='Create Invite' onClick={openDialogBox} color='blue' />
+          <Button text='Create Invite' onClick={props.showInvite} color='blue' />
         </div>
       )}
     </div>

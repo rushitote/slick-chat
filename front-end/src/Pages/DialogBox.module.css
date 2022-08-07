@@ -17,6 +17,9 @@
 .invite-desc{
     font-weight: 100;
     font-size: 1.2em;
+    display: grid;
+    place-items: center;
+    gap: 0.5em;
 }
 .roomname{
     color:var(--username-color);
@@ -35,6 +38,7 @@
 }
 .invite-link{
     display: flex;
+    gap: 1em;
 }
 .link-box{
     border: 1px solid var(--primary-color);
