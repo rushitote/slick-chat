@@ -30,8 +30,7 @@
     color: var(--text-color);
     background-color: var(--secondary-color);
     box-shadow: 0 0 4px 4px #00c9ff;
-    height: 20em;
-    width: 30em;
+    min-height: 45vh;
     padding: 2em;
 }
 .invite-link{
@@ -49,6 +48,6 @@
     color: var(--text-color);
     font-size: 1.3em;
     font-weight: 900;
-    left: 22em;
-    top: 0.5em;
+    left: 94%;
+    top: 4%;
 }
