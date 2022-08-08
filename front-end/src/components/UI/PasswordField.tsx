@@ -12,7 +12,7 @@ const PasswordField = forwardRef((props: IInputFieldProps, ref: Ref<HTMLInputEle
 
   const [showingPassword, setShowingPassword] = useState<boolean>(false)
   return (
-    <span className={styles['span-eye']}>
+    <div style={{ position: 'relative' }}>
       <InputField
         type={!showingPassword ? 'password' : 'text'}
         name='password'
@@ -20,11 +20,14 @@ const PasswordField = forwardRef((props: IInputFieldProps, ref: Ref<HTMLInputEle
         ref={ref}
       />
       {!props.disabled && (
-        <button className={styles['span-eye-btn']} onClick={showPassword}>
-          <img src={!showingPassword ? eyeClosed : eyeOpen} alt='' />
-        </button>
+        <img
+          src={!showingPassword ? eyeClosed : eyeOpen}
+          alt='show password'
+          onClick={showPassword}
+          className={styles['span-eye-btn']}
+        />
       )}
-    </span>
+    </div>
   )
 })
 
