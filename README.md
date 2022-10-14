@@ -50,5 +50,5 @@ npm start
 # Contributors
 
 - [Shashwat Khanna](https://github.com/TheTrio)
-- [Rushikesh Tote](https://github.com/rushitote)
 - [Varun Shrivastava](https://github.com/varun-s22)
+- [Rushikesh Tote](https://github.com/rushitote)

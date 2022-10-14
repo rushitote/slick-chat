@@ -6,6 +6,9 @@ Built using Express/WebSockets
 
 ### Install dependencies
 
+- Install [PostgreSQL](https://www.postgresql.org/download/)
+- Install [Redis](https://redis.io/download/)
+
 ```
 npm install
 ```
