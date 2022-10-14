@@ -20,7 +20,7 @@ This is the currently hosted application's architecture:
 - [x] Real time updates
 - [x] Responsive
 - [x] Infinite Scrolling for group chats
-- [x] A robust API to allow front-ends for other platforms(like [TUIs](https://www.wikiwand.com/en/Text-based_user_interface))  
+- [x] A robust API to allow front-ends for other platforms(like [TUIs](https://www.wikiwand.com/en/Text-based_user_interface))
 - [x] Home Page
 - [x] A catchy name
 - [x] Notification support
@@ -32,12 +32,15 @@ This is the currently hosted application's architecture:
 - Clone the repository on your system.
 - Replace the following files with the configuration as you want and save them without the '.example' suffix: [frontend env](./front-end/.env.example), [server env](./server/.env.example) and [database env](./server/src/sqlz/config/config.json.example)
 - Install deps and start the server by:
+
 ```sh
 cd server
 npm install
 npm run dev
 ```
+
 - Install deps and start the frontend dev server in another terminal tab by:
+
 ```sh
 cd front-end
 npm install
@@ -48,4 +51,4 @@ npm start
 
 - [Shashwat Khanna](https://github.com/TheTrio)
 - [Rushikesh Tote](https://github.com/rushitote)
-
+- [Varun Shrivastava](https://github.com/varun-s22)

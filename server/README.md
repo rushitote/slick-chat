@@ -1,8 +1,8 @@
 # Slick Chat
 
-### Front End
+### Back End
 
-Built using React.
+Built using Express/WebSockets
 
 ### Install dependencies
 
@@ -10,12 +10,12 @@ Built using React.
 npm install
 ```
 
-to install the dependencies required for front-end.
+to install the dependencies required for back-end.
 
 ### How to run
 
 ```
-npm start
+npm run dev
 ```
 
 brings up a development server.
