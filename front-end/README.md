@@ -1,8 +1,16 @@
-# Chat App
+# Slick Chat
 
 ### Front End
 
-Built using React. This is work in progress.
+Built using React.
+
+### Install dependencies
+
+```
+npm install
+```
+
+to install the dependencies required for front-end.
 
 ### How to run
 
@@ -10,6 +18,4 @@ Built using React. This is work in progress.
 npm start
 ```
 
-brings up a development server
-
-That's about it for now
+brings up a development server.
