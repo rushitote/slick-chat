@@ -8,6 +8,7 @@ import Home from '../../Pages/Home'
 import Authenticated from '../Other/Authenticated'
 import { ComponentTransition, AnimationTypes } from 'react-component-transition'
 import { Switch } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 
 export interface IRouterProps {}
 
@@ -45,6 +46,7 @@ export default function Router(props: IRouterProps) {
           <JoinRoom />
         </Route>
       </Switch>
+      <ToastContainer toastStyle={{ backgroundColor: 'black', color: 'white' }} />
     </ComponentTransition>
   )
 }
