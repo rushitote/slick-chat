@@ -16,12 +16,11 @@ const login = async (usernameRef :any,passwordRef:any) => {
   }
 const logout = async () => {
     try {
-      let res = await axios.post(`${process.env.REACT_APP_HOST}/logout`, {
+      let res = await axios.post(`${process.env.REACT_APP_HOST}/logout`,null,{
         withCredentials: true,
       })
       if (res.status === 200) {
         localStorage.removeItem('username')
-        document.cookie = 'connect.sid =; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
         return true
       }
     } catch (e) {
