@@ -14,14 +14,14 @@ const login = async (usernameRef :any,passwordRef:any) => {
     console.log(response)
     return response
   }
-const isLoggedOut = async () => {
+const logout = async () => {
     try {
       let res = await axios.post(`${process.env.REACT_APP_HOST}/logout`, {
         withCredentials: true,
       })
       if (res.status === 200) {
         localStorage.removeItem('username')
-        document.cookie = 'connect.sid' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+        document.cookie = 'connect.sid =; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
         return true
       }
     } catch (e) {
@@ -30,4 +30,4 @@ const isLoggedOut = async () => {
     }
   }
 
-export {isLoggedOut,login}
+export {logout,login}

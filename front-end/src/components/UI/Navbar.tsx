@@ -2,7 +2,7 @@ import styles from './Navbar.module.css'
 import { Link } from 'react-router-dom'
 import loggedInContext from '../../utils/Contexts/loggedInContext'
 import { useContext } from 'react'
-import { isLoggedOut } from '../../utils/auth'
+import { logout } from '../../utils/auth'
 export interface INavBarProps {
   id?: string
 }
@@ -10,7 +10,7 @@ export interface INavBarProps {
 export default function NavBar(props: INavBarProps) {
   const { isLoggedIn, setIsLoggedIn } = useContext(loggedInContext)
   const logoutHandler = () => {
-    setIsLoggedIn(!isLoggedOut())
+    setIsLoggedIn(!logout())
   }
   return (
     <ul className={styles['navbar']} id={props.id || ''}>
