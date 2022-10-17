@@ -14,6 +14,7 @@ import ShowInvite from '../components/Other/ShowInvite'
 import DialogBox from './DialogBox'
 import NavBar from '../components/UI/Navbar'
 import Rooms from '../components/LeftPane/Rooms/Rooms'
+import LandingPage from './LandingPage'
 export interface Group {
   id: string
 }
@@ -79,12 +80,21 @@ export default function Groups(props: IAppProps) {
         // the get requests throws a 401
       }
     }
-    asyncWrapper(params.id)
+    if (params.id !== 'landing') asyncWrapper(params.id)
     return () => {
       // closes socket before a new connection is established
       newSocket?.close()
     }
   }, [params.id, loadInitialMessages])
+  if (params.id === 'landing') {
+    return (
+      <div id={styles['root']}>
+        <NavBar id={styles['navbar']} />
+        <Rooms />
+        <LandingPage />
+      </div>
+    )
+  }
 
   if (roomFound === undefined) {
     // page is loading
@@ -122,8 +132,8 @@ export default function Groups(props: IAppProps) {
         >
           {showInvite && <DialogBox hideInvite={() => setShowInvite(false)} />}
           <>
-            <NavBar id={styles['navbar']} />
             <div id={styles['root']}>
+              <NavBar id={styles['navbar']} />
               <Rooms />
               <ChatWindow />
             </div>

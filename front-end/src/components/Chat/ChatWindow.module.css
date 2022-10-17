@@ -5,30 +5,26 @@
   padding-bottom: 1em;
   min-height: 100%;
   width: 100%;
-  background: linear-gradient(
-    to bottom left,
-    var(--primary-color),
-    var(--secondary-color)
-  );
-
+  background: linear-gradient(to bottom left, var(--primary-color), var(--secondary-color));
+  grid-area: chat-window;
   border-radius: 10px;
 }
-.roomTitle{
+.roomTitle {
   color: var(--text-color);
 }
-.participant{
+.participant {
   padding-top: 0.3rem;
   color: var(--text-color);
   font-weight: 200;
 }
-.roomHeading{
+.roomHeading {
   background-color: var(--secondary-color);
   width: 100%;
   padding: 1.2rem;
   display: flex;
   justify-content: space-evenly;
 }
-.landing-page-layout{
+.landing-page-layout {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;

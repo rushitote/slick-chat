@@ -9,6 +9,7 @@
   overflow: auto;
   min-width: 20%;
   gap: 1em;
+  grid-area: left-pane;
 }
 
 .user-list-users {
@@ -34,15 +35,16 @@
   height: 50px;
   width: 50px;
 }
-.room-info{
+.room-info {
   display: flex;
   align-items: center;
   justify-content: left;
 }
-.room-name{
+.room-name {
   padding-left: 0.6em;
 }
-.exit-group,.create-invite{
+.exit-group,
+.create-invite {
   width: 100%;
   margin-top: auto;
 }
