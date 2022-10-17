@@ -39,6 +39,7 @@ export default function CreateRoom(props: ICreateRoomProps) {
       )
       if (result.status === 200) {
         console.log('Added user successfully')
+        history.push(`/`)
         history.push(`/group/${result.data.roomId}`)
       } else {
         toast('Something went wrong. Please try again later')

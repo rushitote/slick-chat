@@ -4,13 +4,18 @@ import Messages from './Messages'
 import { useContext } from 'react'
 import messageContext from '../../utils/Contexts/messagesContext'
 import socketContext from '../../utils/Contexts/socketContext'
-export interface IChatWindowProps {
-  roomId: string
-}
+import LandingPage from '../../Pages/LandingPage'
 
-export default function ChatWindow(props: IChatWindowProps) {
+export default function ChatWindow() {
   const users = useContext(messageContext).users
   const { roomName } = useContext(socketContext)
+  if (!roomName) {
+    return (
+      <>
+        <LandingPage />
+      </>
+    )
+  }
   return (
     <div className={styles['chat-window']}>
       <div className={styles['roomHeading']}>

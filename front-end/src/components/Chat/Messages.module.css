@@ -7,7 +7,7 @@
 }
 
 .chat-messages-container {
-  height: 100%;
+  margin-top: auto;
   overflow-y: auto;
   scroll-behavior: smooth;
   display: flex;

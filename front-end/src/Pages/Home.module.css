@@ -63,6 +63,8 @@ a[id='github-btn'] {
   background: #151a1f;
   position: relative;
   z-index: 2;
+  padding: 0.6em;
+  height: 8vh;
   grid-area: navbar;
 }
 
@@ -102,7 +104,12 @@ a[id='github-btn'] {
   display: flex;
   gap: 1em;
 }
-
+.landing-page-layout{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 92vh;
+}
 @keyframes spinning {
   from {
     transform: rotate(0);

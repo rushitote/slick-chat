@@ -1,20 +1,19 @@
 import styles from './Group.module.css'
 import ChatWindow from '../components/Chat/ChatWindow'
 import globalContext, { Message } from '../utils/Contexts/messagesContext'
-import LeftPane from '../components/LeftPane/Users/LeftPane'
 import { useParams } from 'react-router-dom'
 import { useState, useEffect, useCallback } from 'react'
-import avatar from '../images/avatar.png'
 import { Socket } from 'socket.io-client'
 import socketContext from '../utils/Contexts/socketContext'
 import { User } from '../Interfaces/Responses'
 import { getMessages, roomExists } from '../utils/Rooms'
-import { ToastContainer } from 'react-toastify'
 import connectSocket from '../socket/socket'
 import ErrorPage from '../components/UI/Error'
 import fetchMessages from '../utils/Messages'
 import ShowInvite from '../components/Other/ShowInvite'
 import DialogBox from './DialogBox'
+import NavBar from '../components/UI/Navbar'
+import Rooms from '../components/LeftPane/Rooms/Rooms'
 export interface Group {
   id: string
 }
@@ -122,11 +121,13 @@ export default function Groups(props: IAppProps) {
           value={{ socket, roomId: params.id, roomName: currRoomName, roomOwner }}
         >
           {showInvite && <DialogBox hideInvite={() => setShowInvite(false)} />}
-          <div id={styles['root']}>
-            <LeftPane image={avatar} roomId={params.id} showInvite={() => setShowInvite(true)} />
-            <ChatWindow roomId={params.id} />
-            <ToastContainer toastStyle={{ backgroundColor: 'black', color: 'white' }} />
-          </div>
+          <>
+            <NavBar id={styles['navbar']} />
+            <div id={styles['root']}>
+              <Rooms />
+              <ChatWindow />
+            </div>
+          </>
         </socketContext.Provider>
       </globalContext.Provider>
     )

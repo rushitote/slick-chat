@@ -5,13 +5,22 @@ import { Link } from 'react-router-dom'
 import Technologies from '../components/Home/Technologies'
 import loggedInContext from '../utils/Contexts/loggedInContext'
 import { useContext } from 'react'
-import UserPage from './UserPage'
+import Rooms from '../components/LeftPane/Rooms/Rooms'
+import LandingPage from './LandingPage'
 export interface IHomeProps {}
 
 export default function Home(props: IHomeProps) {
   const { isLoggedIn } = useContext(loggedInContext)
   if (isLoggedIn) {
-    return <UserPage />
+    return (
+      <>
+        <NavBar id={styles['navbar']} />
+        <div className={styles['landing-page-layout']}>
+          <Rooms />
+          <LandingPage />
+        </div>
+      </>
+    )
   }
   return (
     <div className={styles['root']}>

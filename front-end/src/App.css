@@ -36,6 +36,7 @@ html {
 a:visited,
 a {
   color: var(--username-color);
+  text-decoration: none;
 }
 
 #root {

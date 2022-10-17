@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 1em;
-  padding-bottom: 2em;
-  max-height: 100vh;
+  padding-bottom: 1em;
+  min-height: 100%;
   width: 100%;
   background: linear-gradient(
     to bottom left,
@@ -27,4 +27,18 @@
   padding: 1.2rem;
   display: flex;
   justify-content: space-evenly;
+}
+.landing-page-layout{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 92vh;
+}
+#navbar {
+  background: #151a1f;
+  position: relative;
+  z-index: 2;
+  padding: 0.6em;
+  height: 8vh;
+  grid-area: navbar;
 }
