@@ -7,6 +7,7 @@ import InputField from '../UI/InputField'
 import { useState, useEffect } from 'react'
 import BottomFormPopup from '../UI/ButtonFormPopup'
 import PasswordField from '../UI/PasswordField'
+import { login } from '../../utils/auth'
 export interface IAppProps {}
 
 export default function App(props: IAppProps) {
@@ -21,37 +22,25 @@ export default function App(props: IAppProps) {
     setRedirectPath(sessionStorage.getItem('lastPage'))
   }, [])
 
-  const loginHandler = (e: any) => {
+  const loginHandler = async (e: any) => {
     e.preventDefault()
-    const login = async () => {
-      const response = await fetch(`${process.env.REACT_APP_HOST}/login`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: usernameRef.current?.value,
-          password: passwordRef.current?.value,
-        }),
-      })
-      const validCredentials = response.ok
 
-      if (validCredentials) {
-        localStorage.setItem('username', usernameRef.current!.value)
-      } else {
-        setErrorMessage('Invalid Credentials')
-        setErrorShow(true)
-      }
-      setIsLoggedIn(validCredentials)
+    const response = await login(usernameRef, passwordRef)
+    const validCredentials = response
+
+    if (validCredentials) {
+      localStorage.setItem('username', usernameRef.current!.value)
+    } else {
+      setErrorMessage('Invalid Credentials')
+      setErrorShow(true)
     }
-    login()
+    setIsLoggedIn(validCredentials)
   }
   if (isLoggedIn && redirectPath !== null) {
     sessionStorage.removeItem('lastPage')
     return <Redirect to={redirectPath} />
   } else if (isLoggedIn) {
-    return <Redirect to='/create' />
+    return <Redirect to='/' />
   }
 
   return (
