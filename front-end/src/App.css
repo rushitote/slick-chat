@@ -13,9 +13,13 @@ body {
   --green-color: #29ffc6;
   --gradient-danger: linear-gradient(to right, #da4453, #89216b);
   --danger-gradient: linear-gradient(to left, #ee0979, #ff6a00);
-  --background-gradient: linear-gradient(to bottom right, var(--primary-color) 0%, var(--secondary-color) 100%);
-  --online-color:#3cd64e;
-  --overlay-background:rgba(0,0,0,0.45);
+  --background-gradient: linear-gradient(
+    to bottom right,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
+  --online-color: #3cd64e;
+  --overlay-background: rgba(0, 0, 0, 0.45);
 }
 
 body,
@@ -41,4 +45,25 @@ a {
 
 #root {
   background: var(--background-gradient);
+}
+
+.bm-burger-button {
+  position: absolute;
+  width: 36px;
+  height: 30px;
+  right: 20px;
+  top: 20px;
+}
+
+.bm-burger-bars {
+  background: var(--text-color);
+}
+
+.bm-menu {
+  width: 100%;
+}
+.bm-item-list {
+  display: flex;
+  gap: 1em;
+  flex-direction: column;
 }

@@ -4,6 +4,7 @@ import { useHistory } from 'react-router'
 import messageContext from '../../../utils/Contexts/messagesContext'
 import Button from '../../UI/Button'
 import styles from './LeftPane.module.css'
+import { slide as Menu } from 'react-burger-menu'
 import socketContext from '../../../utils/Contexts/socketContext'
 export interface ILeftPaneProps {
   image: string
@@ -25,7 +26,7 @@ export default function LeftPane(props: ILeftPaneProps) {
     }
   }
   return (
-    <div className={styles['left-pane']}>
+    <Menu className={styles['left-pane']} itemListElement='div' right>
       <h1 className={styles['user-list-heading']}>Users</h1>
       <div className={styles['user-list-users']}>
         <li>
@@ -52,6 +53,6 @@ export default function LeftPane(props: ILeftPaneProps) {
           <Button text='Create Invite' onClick={props.showInvite} color='blue' />
         </div>
       )}
-    </div>
+    </Menu>
   )
 }
