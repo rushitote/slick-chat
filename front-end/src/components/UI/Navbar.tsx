@@ -27,10 +27,8 @@ export default function NavBar(props: INavBarProps) {
           <Link to='/login'>Login</Link>
         </>
       ) : (
-        <Link to='/'>
-          <span id={styles['account-sign-up']} onClick={logoutHandler}>
-            Logout
-          </span>
+        <Link to='/' id={styles['account-sign-up']}>
+          <span onClick={logoutHandler}>Logout</span>
         </Link>
       )}
     </ul>

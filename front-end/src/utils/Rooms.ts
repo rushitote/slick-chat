@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { User } from '../Interfaces/Responses'
+import { Room, User } from '../Interfaces/Responses'
 import { Message } from './Contexts/messagesContext'
 const isValidRoom = (roomId: string): boolean => {
   const validRoomRegex = /^[A-Za-z0-9]{7}$/
@@ -29,15 +29,13 @@ const getRoomInfo = async (roomID: string) => {
     throw new Error('Cannot get room info')
   }
 }
-const getUserDetails = async (userID: string) => {
+const getUserRooms = async () => {
   try {
-    let params = { userID }
     const response = await axios.get(`${process.env.REACT_APP_HOST}/users/info`, {
-      params,
       withCredentials: true,
     })
-    const username: string = (response.data as any).username as string
-    return { username }
+    const rooms: Room[] = (response.data as any).rooms as Room[]
+    return rooms
   } catch (e) {
     throw new Error("Cannot get user's info")
   }
@@ -89,8 +87,16 @@ const getMessages = async (roomId: string, lastMessage?: Message) => {
   }
 }
 
-const generateInviteLink=(roomId:string)=>{
+const generateInviteLink = (roomId: string) => {
   return `${window.location.protocol}//${window.location.host}/group/${roomId}`
 }
 
-export { isValidRoom, roomExists, addToRoom, removeFromRoom, getMessages, getUserDetails,generateInviteLink }
+export {
+  isValidRoom,
+  roomExists,
+  addToRoom,
+  removeFromRoom,
+  getMessages,
+  getUserRooms,
+  generateInviteLink,
+}

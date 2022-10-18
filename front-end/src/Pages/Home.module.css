@@ -63,6 +63,7 @@ a[id='github-btn'] {
   background: #151a1f;
   position: relative;
   z-index: 2;
+  padding: 1em;
   grid-area: navbar;
 }
 
@@ -101,6 +102,17 @@ a[id='github-btn'] {
 .btn-bar {
   display: flex;
   gap: 1em;
+}
+.landing-page-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: max-content 1fr;
+  /* overflow: hidden; */
+  /* background-color: var(--secondary-color); */
+  grid-template-areas:
+    'navbar navbar'
+    'left-pane chat-window';
+  min-height: 100vh;
 }
 
 @keyframes spinning {

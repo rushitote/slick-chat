@@ -13,13 +13,12 @@ import { ToastContainer } from 'react-toastify'
 export interface IRouterProps {}
 
 export default function Router(props: IRouterProps) {
-  const location = useLocation()
   return (
     <ComponentTransition
       enterAnimation={AnimationTypes.fade.enter}
       exitAnimation={AnimationTypes.fade.exit}
     >
-      <Switch key={location.key} location={location}>
+      <Switch>
         <Route path='/' exact>
           <Home />
         </Route>

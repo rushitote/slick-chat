@@ -5,7 +5,10 @@ export interface User {
   userId: String
   online: boolean
 }
-
+export interface Room {
+  roomId: string
+  roomName: string
+}
 export interface RoomCreateResponse extends AxiosResponse {
   data: {
     username: string

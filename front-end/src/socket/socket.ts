@@ -12,10 +12,12 @@ const addUserToUsersList = async (user: User, setUsersList: Function) => {
 }
 
 const removeUserFromUsersList = async (user: User, setUsersList: Function) => {
+  const currentUser = localStorage.getItem('username')
   setUsersList((prevState: any) => {
     return prevState.filter((u: User) => u.userId !== user.userId)
   })
-  toast(`👋 ${user.username} left the room`)
+  const displayUserName = currentUser === user.username ? 'You' : user.username
+  toast(`👋 ${displayUserName} left the room`)
 }
 
 const connectSocket = async (

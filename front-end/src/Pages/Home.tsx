@@ -1,17 +1,17 @@
 import styles from './Home.module.css'
 import react_logo from '../images/react.png'
 import NavBar from '../components/UI/Navbar'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import Technologies from '../components/Home/Technologies'
 import loggedInContext from '../utils/Contexts/loggedInContext'
 import { useContext } from 'react'
-import UserPage from './UserPage'
 export interface IHomeProps {}
 
 export default function Home(props: IHomeProps) {
   const { isLoggedIn } = useContext(loggedInContext)
+  if (isLoggedIn === undefined) return null
   if (isLoggedIn) {
-    return <UserPage />
+    return <Redirect to='/group/landing' />
   }
   return (
     <div className={styles['root']}>

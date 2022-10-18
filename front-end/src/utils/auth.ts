@@ -1,7 +1,11 @@
 import axios from 'axios'
+import { RefObject } from 'react'
 import toast from '../components/UI/Toast'
 
-const login = async (usernameRef: any, passwordRef: any) => {
+const login = async (
+  usernameRef: RefObject<HTMLInputElement>,
+  passwordRef: RefObject<HTMLInputElement>
+) => {
   const jsonResponse = JSON.stringify({
     username: usernameRef.current?.value,
     password: passwordRef.current?.value,
@@ -25,7 +29,7 @@ const logout = async () => {
     })
     if (res.status === 200) {
       localStorage.removeItem('username')
-      toast((res as any).data.msg)
+      toast(`👋 ${(res as any).data.msg}`)
       return true
     }
   } catch (e) {
@@ -33,5 +37,25 @@ const logout = async () => {
     console.log(e)
   }
 }
-
-export { logout, login }
+const signUp = async (
+  usernameRef: RefObject<HTMLInputElement>,
+  passwordRef: RefObject<HTMLInputElement>
+) => {
+  const jsonResponse = JSON.stringify({
+    username: usernameRef.current?.value,
+    password: passwordRef.current?.value,
+  })
+  try {
+    const response = await axios.post(`${process.env.REACT_APP_HOST}/create`, jsonResponse, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    return response
+  } catch (e: any) {
+    console.log('Error while signing up')
+    throw e.response
+  }
+}
+export { logout, login, signUp }

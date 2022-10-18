@@ -33,11 +33,7 @@ passport.use(
   })
 )
 
-export const isAuthenticated = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
   if (req.isAuthenticated()) {
     return next()
   }
@@ -57,6 +53,7 @@ export function create(req: Request, res: Response) {
         res.status(400).send({ msg: result.err })
       } else {
         res.status(200).send({ msg: 'Successfully created user' })
+        login(req, res, false)
       }
     })
     .catch(err => {
@@ -64,7 +61,11 @@ export function create(req: Request, res: Response) {
     })
 }
 
-export function login(req: Request, res: Response) {
+export function loginAPI(req: Request, res: Response) {
+  login(req, res, true)
+}
+
+export function login(req: Request, res: Response, shouldRespond: boolean) {
   passport.authenticate(
     'local',
     {
@@ -74,14 +75,15 @@ export function login(req: Request, res: Response) {
     },
     (err, user, info) => {
       if (err) {
-        return res.status(400).send({ msg: info.message })
+        if (shouldRespond) return res.status(400).send({ msg: info.message })
       } else {
         req.logIn(user, err => {
           if (err) {
-            return res.status(400).send({ msg: info.message })
+            console.log(err)
+            if (shouldRespond) return res.status(400).send({ msg: info.message })
           } else {
             req.session.save()
-            return res.status(200).send({ msg: 'Successfully logged in.' })
+            if (shouldRespond) return res.status(200).send({ msg: 'Successfully logged in.' })
           }
         })
       }

@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import BottomFormPopup from '../UI/ButtonFormPopup'
 import PasswordField from '../UI/PasswordField'
 import { login } from '../../utils/auth'
+import toast from '../UI/Toast'
 export interface IAppProps {}
 
 export default function App(props: IAppProps) {
@@ -25,11 +26,11 @@ export default function App(props: IAppProps) {
   const loginHandler = async (e: any) => {
     e.preventDefault()
 
-    const response = await login(usernameRef, passwordRef)
-    const validCredentials = response
+    const validCredentials = await login(usernameRef, passwordRef)
 
     if (validCredentials) {
       localStorage.setItem('username', usernameRef.current!.value)
+      toast('👍 Logged in successfully')
     } else {
       setErrorMessage('Invalid Credentials')
       setErrorShow(true)

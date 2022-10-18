@@ -5,9 +5,11 @@
   flex-direction: column;
   padding: 1em;
   color: var(--text-color);
-  height: 100vh;
+  height: 100%;
   overflow: auto;
+  min-width: 20%;
   gap: 1em;
+  grid-area: left-pane;
 }
 
 .user-list-users {
@@ -18,33 +20,31 @@
 }
 
 .user-list-users li {
-  display: grid;
-  grid-template-columns: 50px 1fr;
-  justify-items: center;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   color: var(--username-color);
   font-weight: 700;
-  column-gap: 10px;
+  font-size: 1.1em;
   overflow: hidden;
   position: relative;
+  padding: 0.6em;
 }
 
-.user-image {
+.room-image {
   height: 50px;
   width: 50px;
 }
-
-.exit-group,.create-invite{
+.room-info {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+.room-name {
+  padding-left: 0.6em;
+}
+.exit-group,
+.create-invite {
   width: 100%;
   margin-top: auto;
-}
-
-.user-online {
-  background-color: var(--online-color);
-  border-radius: 50%;
-  height: 18px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 18px;
 }

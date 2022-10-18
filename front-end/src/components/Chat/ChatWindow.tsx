@@ -4,11 +4,8 @@ import Messages from './Messages'
 import { useContext } from 'react'
 import messageContext from '../../utils/Contexts/messagesContext'
 import socketContext from '../../utils/Contexts/socketContext'
-export interface IChatWindowProps {
-  roomId: string
-}
 
-export default function ChatWindow(props: IChatWindowProps) {
+export default function ChatWindow() {
   const users = useContext(messageContext).users
   const { roomName } = useContext(socketContext)
   return (
