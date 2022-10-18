@@ -19,10 +19,10 @@ export default function Rooms() {
       <h1 className={styles['user-list-heading']}>Rooms</h1>
       <div className={styles['user-list-users']}>
         {rooms.map((room) => (
-          <li key={Math.random()}>
+          <li key={room.roomId}>
             <Link to={`/group/${room.roomId}`}>
               <div className={styles[`room-info`]}>
-                <img src={groupAvatar} alt="" className={styles['room-image']} />
+                <img src={groupAvatar} alt='' className={styles['room-image']} />
                 <div className={styles[`room-name`]}>{room.roomName}</div>
               </div>
             </Link>

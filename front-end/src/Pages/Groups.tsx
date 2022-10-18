@@ -2,7 +2,7 @@ import styles from './Group.module.css'
 import ChatWindow from '../components/Chat/ChatWindow'
 import globalContext, { Message } from '../utils/Contexts/messagesContext'
 import { useParams } from 'react-router-dom'
-import { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Socket } from 'socket.io-client'
 import socketContext from '../utils/Contexts/socketContext'
 import { User } from '../Interfaces/Responses'
@@ -38,11 +38,14 @@ export default function Groups(props: IAppProps) {
   // isLoading is for the initial page load
   // isRefreshing is for when the user scrolls up and requests past messages
 
-  const refreshMessages = async (lastMessage: Message) => {
-    setIsRefreshing(true)
-    await fetchMessages(moreMessages, params.id, lastMessage, setMoreMessages, setMessages)
-    setIsRefreshing(false)
-  }
+  const refreshMessages = useCallback(
+    async (lastMessage: Message) => {
+      setIsRefreshing(true)
+      await fetchMessages(moreMessages, params.id, lastMessage, setMoreMessages, setMessages)
+      setIsRefreshing(false)
+    },
+    [params.id, moreMessages]
+  ) // prevent infinite loop
 
   const loadInitialMessages = useCallback(async () => {
     setIsLoading(true)
@@ -58,7 +61,6 @@ export default function Groups(props: IAppProps) {
       return users?.concat({ username, userId, online: true })
     })
   }
-
   useEffect(() => {
     let newSocket: Socket
     const asyncWrapper = async (id: string) => {
