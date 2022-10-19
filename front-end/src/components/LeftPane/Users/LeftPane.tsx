@@ -4,7 +4,9 @@ import { useHistory } from 'react-router'
 import messageContext from '../../../utils/Contexts/messagesContext'
 import Button from '../../UI/Button'
 import styles from './LeftPane.module.css'
+import { slide as Menu } from 'react-burger-menu'
 import socketContext from '../../../utils/Contexts/socketContext'
+
 export interface ILeftPaneProps {
   image: string
   roomId: string
@@ -25,9 +27,9 @@ export default function LeftPane(props: ILeftPaneProps) {
     }
   }
   return (
-    <div className={styles['left-pane']}>
-      <h1 className={styles['user-list-heading']}>Users</h1>
-      <div className={styles['user-list-users']}>
+    <Menu className={styles['left-pane']} right>
+      <h1 className={`menu-item ${styles['user-list-heading']}`}>Users</h1>
+      <div className={`menu-item ${styles['user-list-users']}`}>
         <li>
           <img src={props.image} alt='' className={styles['user-image']} />
           {roomOwner?.username} 👑
@@ -44,14 +46,14 @@ export default function LeftPane(props: ILeftPaneProps) {
           ))}
       </div>
       {currentUser !== roomOwner?.username ? (
-        <div className={styles['exit-group']}>
+        <div className={`menu-item ${styles['exit-group']}`}>
           <Button text='Leave Room' onClick={leaveRoom} color='red' />
         </div>
       ) : (
-        <div className={styles['create-invite']}>
+        <div className={`menu-item ${styles['create-invite']}`}>
           <Button text='Create Invite' onClick={props.showInvite} color='blue' />
         </div>
       )}
-    </div>
+    </Menu>
   )
 }
