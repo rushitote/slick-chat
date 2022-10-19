@@ -46,7 +46,6 @@ a {
 #root {
   background: var(--background-gradient);
 }
-
 .bm-burger-button {
   position: absolute;
   width: 36px;
@@ -54,14 +53,24 @@ a {
   right: 20px;
   top: 20px;
 }
-
 .bm-burger-bars {
   background: var(--text-color);
 }
 
 .bm-menu {
   width: 100%;
+  top: 0;
 }
+
+.bm-menu-wrap {
+  width: 100%;
+  top: 0;
+}
+
+.bm-overlay {
+  top: 0;
+}
+
 .bm-item-list {
   display: flex;
   gap: 1em;

@@ -11,10 +11,6 @@
   align-items: center;
 }
 
-#account-sign-up {
-  margin-left: auto;
-}
-
 .navbar > a {
   transition: color 250ms ease-in-out;
   text-decoration: none;

@@ -15,6 +15,8 @@ import DialogBox from './DialogBox'
 import NavBar from '../components/UI/Navbar'
 import Rooms from '../components/LeftPane/Rooms/Rooms'
 import LandingPage from './LandingPage'
+import avatar from '../images/avatar.png'
+import LeftPane from '../components/LeftPane/Users/LeftPane'
 export interface Group {
   id: string
 }
@@ -38,6 +40,14 @@ export default function Groups(props: IAppProps) {
   // isLoading is for the initial page load
   // isRefreshing is for when the user scrolls up and requests past messages
 
+  const loadInitialMessages = useCallback(async () => {
+    // this ensures that the boolean moreMessages is reset to true
+    setMoreMessages(true)
+    setIsLoading(true)
+    setMessages((await getMessages(params.id)).reverse())
+    setIsLoading(false)
+  }, [params.id])
+
   const refreshMessages = useCallback(
     async (lastMessage: Message) => {
       setIsRefreshing(true)
@@ -46,12 +56,6 @@ export default function Groups(props: IAppProps) {
     },
     [params.id, moreMessages]
   ) // prevent infinite loop
-
-  const loadInitialMessages = useCallback(async () => {
-    setIsLoading(true)
-    setMessages((await getMessages(params.id)).reverse())
-    setIsLoading(false)
-  }, [params.id])
 
   const onRoomJoin = async (username: string, userId: string) => {
     setInRoom(true)
@@ -138,6 +142,7 @@ export default function Groups(props: IAppProps) {
               <NavBar id={styles['navbar']} />
               <Rooms />
               <ChatWindow />
+              <LeftPane image={avatar} roomId={params.id} showInvite={() => setShowInvite(true)} />
             </div>
           </>
         </socketContext.Provider>
