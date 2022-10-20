@@ -1,6 +1,6 @@
 import styles from './CreateRoom.module.css'
 import Container from '../components/UI/Container'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import Button from '../components/UI/Button'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
@@ -49,6 +49,9 @@ export default function CreateRoom(props: ICreateRoomProps) {
       console.log("name can't be empty")
     }
   }
+  useEffect(() => {
+    document.title = 'Slick Chat | Create Room'
+  }, [])
   return (
     <Container className={styles['root']} type='grid'>
       <Heading text='Create Room' className={styles['title']} />

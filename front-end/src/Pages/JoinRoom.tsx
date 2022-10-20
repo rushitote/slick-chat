@@ -4,7 +4,7 @@ import Heading from '../components/UI/Heading'
 import InputField from '../components/UI/InputField'
 import Button from '../components/UI/Button'
 import { Link } from 'react-router-dom'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { isValidRoom, roomExists, addToRoom } from '../utils/Rooms'
 import BottomFormPopup from '../components/UI/ButtonFormPopup'
 import { useHistory } from 'react-router'
@@ -16,6 +16,9 @@ export default function JoinRoom(props: IJoinRoomProps) {
   const [errorShow, setErrorShow] = useState(false)
   const [errorMessage, setErrorMessage] = useState('initialState')
   const history = useHistory()
+  useEffect(() => {
+    document.title = 'Slick Chat | Join Room'
+  }, [])
   const roomJoinHandler = async (e: any) => {
     if (roomIdRef.current) {
       const roomId = roomIdRef.current.value
