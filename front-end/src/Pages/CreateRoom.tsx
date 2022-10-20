@@ -8,7 +8,6 @@ import { useState } from 'react'
 import BottomFormPopup from '../components/UI/ButtonFormPopup'
 import Heading from '../components/UI/Heading'
 import InputField from '../components/UI/InputField'
-import Authenticated from '../components/Other/Authenticated'
 import { Link } from 'react-router-dom'
 import { RoomCreateResponse } from '../Interfaces/Responses'
 import { generateSlug } from 'random-word-slugs'
@@ -51,28 +50,36 @@ export default function CreateRoom(props: ICreateRoomProps) {
     }
   }
   return (
-    <Authenticated>
-      <Container className={styles['root']} type='grid'>
-        <Heading text='Create Room' className={styles['title']} />
-        <div className={styles['create']}>
-          <InputField type='text' name='roomName' id='roomName' placeholder='Room Name' ref={roomNameRef} />
-          <BottomFormPopup show={errorShow} message={errorMessage}>
-            <Button text='Running out of ideas? Let us help you out!' onClick={generateRandomRoomName} color='blue' />
-            <Button text='Create' onClick={createRoom} color='green' />
-          </BottomFormPopup>
-          <p>
-            Already have a Room ID? You can join the Room by going <Link to='/join'>here</Link>
-          </p>
-        </div>
-        <div className={styles['info']}>
-          <p>Here are some things you might want to know</p>
-          <ul>
-            <li>Room IDs are generated randomly</li>
-            <li>Anyone with your Room ID can join your room</li>
-            <li>Changing your Room name later is not possible</li>
-          </ul>
-        </div>
-      </Container>
-    </Authenticated>
+    <Container className={styles['root']} type='grid'>
+      <Heading text='Create Room' className={styles['title']} />
+      <div className={styles['create']}>
+        <InputField
+          type='text'
+          name='roomName'
+          id='roomName'
+          placeholder='Room Name'
+          ref={roomNameRef}
+        />
+        <BottomFormPopup show={errorShow} message={errorMessage}>
+          <Button
+            text='Running out of ideas? Let us help you out!'
+            onClick={generateRandomRoomName}
+            color='blue'
+          />
+          <Button text='Create' onClick={createRoom} color='green' />
+        </BottomFormPopup>
+        <p>
+          Already have a Room ID? You can join the Room by going <Link to='/join'>here</Link>
+        </p>
+      </div>
+      <div className={styles['info']}>
+        <p>Here are some things you might want to know</p>
+        <ul>
+          <li>Room IDs are generated randomly</li>
+          <li>Anyone with your Room ID can join your room</li>
+          <li>Changing your Room name later is not possible</li>
+        </ul>
+      </div>
+    </Container>
   )
 }

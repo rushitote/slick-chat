@@ -1,4 +1,4 @@
-import { Route, useLocation } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import Groups from '../../Pages/Groups'
 import Login from '../../Pages/Login'
 import SignUp from '../../Pages/SignUp'
@@ -9,6 +9,7 @@ import Authenticated from '../Other/Authenticated'
 import { ComponentTransition, AnimationTypes } from 'react-component-transition'
 import { Switch } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import ErrorPage from '../UI/Error'
 
 export interface IRouterProps {}
 
@@ -23,11 +24,11 @@ export default function Router(props: IRouterProps) {
           <Home />
         </Route>
         <Route path='/group/:id'>
-          <Authenticated>
+          <Authenticated action='chat'>
             <Groups />
           </Authenticated>
           <Route path='/group/invite/:id/:name'>
-            <Authenticated>
+            <Authenticated action='create invites'>
               <Groups />
             </Authenticated>
           </Route>
@@ -39,10 +40,22 @@ export default function Router(props: IRouterProps) {
           <SignUp />
         </Route>
         <Route path='/create'>
-          <CreateRoom />
+          <Authenticated action='create rooms'>
+            <CreateRoom />
+          </Authenticated>
         </Route>
         <Route path='/join'>
-          <JoinRoom />
+          <Authenticated action='join rooms'>
+            <JoinRoom />
+          </Authenticated>
+        </Route>
+        <Route path='*'>
+          <ErrorPage
+            title='404'
+            link='/'
+            message='No page found'
+            recommend='Go to home by clicking'
+          />
         </Route>
       </Switch>
       <ToastContainer toastStyle={{ backgroundColor: 'black', color: 'white' }} />

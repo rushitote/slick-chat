@@ -4,6 +4,7 @@ import loggedInContext from '../../utils/Contexts/loggedInContext'
 import ErrorPage from '../UI/Error'
 export interface IAuthenticatedProps {
   children: any
+  action: string
 }
 
 /*
@@ -23,7 +24,7 @@ export default function Authenticated(props: IAuthenticatedProps) {
     return (
       <ErrorPage
         title='Not logged in'
-        message='You need to login to create rooms'
+        message={`You need to login to ${props.action}`}
         recommend='You can login by going'
         link='/login'
       />
