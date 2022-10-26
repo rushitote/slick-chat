@@ -17,6 +17,7 @@ import Rooms from '../components/LeftPane/Rooms/Rooms'
 import LandingPage from './LandingPage'
 import avatar from '../images/avatar.png'
 import LeftPane from '../components/LeftPane/Users/LeftPane'
+import Loading from '../components/UI/Loading'
 export interface Group {
   id: string
 }
@@ -92,6 +93,11 @@ export default function Groups(props: IAppProps) {
       newSocket?.close()
     }
   }, [params.id, loadInitialMessages])
+
+  useEffect(() => {
+    document.title = `Slick Chat | ${currRoomName ? currRoomName : 'Home'}`
+  }, [currRoomName])
+
   if (params.id === 'landing') {
     return (
       <div id={styles['root']}>
@@ -101,10 +107,9 @@ export default function Groups(props: IAppProps) {
       </div>
     )
   }
-
   if (roomFound === undefined) {
     // page is loading
-    return null
+    return <Loading />
   } else if (!roomFound) {
     return (
       <ErrorPage

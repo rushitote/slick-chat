@@ -1,11 +1,10 @@
 import Container from '../components/UI/Container'
 import styles from './JoinRoom.module.css'
 import Heading from '../components/UI/Heading'
-import Authenticated from '../components/Other/Authenticated'
 import InputField from '../components/UI/InputField'
 import Button from '../components/UI/Button'
 import { Link } from 'react-router-dom'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { isValidRoom, roomExists, addToRoom } from '../utils/Rooms'
 import BottomFormPopup from '../components/UI/ButtonFormPopup'
 import { useHistory } from 'react-router'
@@ -17,6 +16,9 @@ export default function JoinRoom(props: IJoinRoomProps) {
   const [errorShow, setErrorShow] = useState(false)
   const [errorMessage, setErrorMessage] = useState('initialState')
   const history = useHistory()
+  useEffect(() => {
+    document.title = 'Slick Chat | Join Room'
+  }, [])
   const roomJoinHandler = async (e: any) => {
     if (roomIdRef.current) {
       const roomId = roomIdRef.current.value
@@ -43,19 +45,22 @@ export default function JoinRoom(props: IJoinRoomProps) {
     }
   }
   return (
-    <Authenticated>
-      <Container type='grid' className={styles['root']}>
-        <Heading text='Join Room' className={styles['title']} />
-        <div className={styles['pair']}>
-          <InputField maxLength={7} className={styles['roomId']} placeholder='Room ID' ref={roomIdRef} />
-          <BottomFormPopup show={errorShow} message={errorMessage}>
-            <Button text='Join' onClick={roomJoinHandler} />
-            <p>
-              Don't have a Room ID? You can create one for yourself <Link to='/create'> here</Link>
-            </p>
-          </BottomFormPopup>
-        </div>
-      </Container>
-    </Authenticated>
+    <Container type='grid' className={styles['root']}>
+      <Heading text='Join Room' className={styles['title']} />
+      <div className={styles['pair']}>
+        <InputField
+          maxLength={7}
+          className={styles['roomId']}
+          placeholder='Room ID'
+          ref={roomIdRef}
+        />
+        <BottomFormPopup show={errorShow} message={errorMessage}>
+          <Button text='Join' onClick={roomJoinHandler} />
+          <p>
+            Don't have a Room ID? You can create one for yourself <Link to='/create'> here</Link>
+          </p>
+        </BottomFormPopup>
+      </div>
+    </Container>
   )
 }
