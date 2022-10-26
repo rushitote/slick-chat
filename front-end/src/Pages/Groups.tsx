@@ -88,12 +88,16 @@ export default function Groups(props: IAppProps) {
       }
     }
     if (params.id !== 'landing') asyncWrapper(params.id)
-    document.title = `Slick Chat | ${currRoomName ? currRoomName : 'Home'}`
     return () => {
       // closes socket before a new connection is established
       newSocket?.close()
     }
-  }, [params.id, loadInitialMessages, currRoomName])
+  }, [params.id, loadInitialMessages])
+
+  useEffect(() => {
+    document.title = `Slick Chat | ${currRoomName ? currRoomName : 'Home'}`
+  }, [currRoomName])
+
   if (params.id === 'landing') {
     return (
       <div id={styles['root']}>
