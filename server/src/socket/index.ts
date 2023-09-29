@@ -97,5 +97,14 @@ export class SocketIO {
         }
       })
     })
+
+    socket.on('typing', msg => {
+      const { roomId, typing } = JSON.parse(msg)
+      this.io.to(roomId).emit('typing', {
+        username: (socket.request as socketRequest).user.dataValues.username,
+        roomId,
+        typing,
+      })
+    })
   }
 }

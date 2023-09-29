@@ -61,6 +61,16 @@ const connectSocket = async (
       })
     })
   })
+  newSocket.on('typing', ({ username, typing }) => {
+    setUsersList((users: User[]) => {
+      return users.map((u: User) => {
+        if (u.username === username) {
+          return { ...u, typing }
+        }
+        return u
+      })
+    })
+  })
 
   await loadInitialMessages()
   return newSocket

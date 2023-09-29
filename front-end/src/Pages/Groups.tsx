@@ -63,7 +63,7 @@ export default function Groups(props: IAppProps) {
     const newSocket = await connectSocket(params.id, setMessages, setUsersList, loadInitialMessages)
     setSocket(newSocket)
     setUsersList((users) => {
-      return users?.concat({ username, userId, online: true })
+      return users?.concat({ username, userId, online: true, typing: false })
     })
   }
   useEffect(() => {
