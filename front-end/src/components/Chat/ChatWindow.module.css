@@ -17,13 +17,18 @@
   color: var(--text-color);
   font-weight: 200;
 }
+
 .roomHeading {
   background-color: var(--secondary-color);
   width: 100%;
-  padding: 1.2rem;
+  padding: 1em;
   display: flex;
+  gap: 1em;
+  flex-direction: column;
+  padding-top: 10px;
   justify-content: space-evenly;
 }
+
 .landing-page-layout {
   display: flex;
   align-items: flex-start;

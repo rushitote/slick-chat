@@ -4,6 +4,7 @@ export interface User {
   username: String
   userId: String
   online: boolean
+  typing: boolean
 }
 export interface Room {
   roomId: string

@@ -1,0 +1,7 @@
+.root {
+  color: #acbabf;
+  padding: 0 3em;
+  display: flex;
+  gap: 1em;
+  justify-content: center;
+}
