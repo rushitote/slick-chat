@@ -8,10 +8,6 @@ export const TypingIndicator = () => {
   const currentUser = localStorage.getItem('username')
 
   const usersTyping = ctx.users.filter((user) => user.typing && user.username !== currentUser)
-  if (usersTyping.length) {
-    usersTyping.push(usersTyping[0])
-    usersTyping.push(usersTyping[0])
-  }
   const count = usersTyping.length
   if (!count) {
     return null
